@@ -1,1 +1,7 @@
-@import '~nativescript-theme-core/css/core.light.css';
+.color-red{
+    background-color:green
+}
+
+.color-blue{
+    color:blue
+}
