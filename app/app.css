@@ -10,3 +10,18 @@ of writing your own CSS rules. For a full list of class names in the theme
 refer to http://docs.nativescript.org/ui/theme.
 */
 @import '~nativescript-theme-core/css/core.light.css';
+
+.action-bar {
+    background-color: #494848;
+    color: #C2C1C1;
+}
+
+.action-bar Image {
+    height: 10%;
+    width: 10%;
+    margin-right: 2%;
+}
+
+.action-bar Label {
+    font-size: 18%;
+}
