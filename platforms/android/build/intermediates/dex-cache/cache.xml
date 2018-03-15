@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\LENOVO\.android\build-cache\030d9adfee8703c85679816f212d2e33b9b48002\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dd431d6aa9ce9dc0d429fcd239d412a82ea0e9a7">
+        <dex dex="C:\Users\LENOVO\Documents\IFurniture\platforms\android\app\build\intermediates\pre-dexed\debug\classes_96a09d0c60513ed5fd9e263024dd16592afdd4f1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\LENOVO\.android\build-cache\d92a74a68418b47cf04bfc166f3191dd640d99e7\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="746274223beb11b1cda7854d7eec3038695c2c93">
+        <dex dex="C:\Users\LENOVO\Documents\IFurniture\platforms\android\app\build\intermediates\pre-dexed\debug\classes_596176420ff0a2e44d9f5da8333bda120dd44414.jar" />
+    </item>
+
+</items>
