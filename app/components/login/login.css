@@ -1,7 +1,7 @@
-.color-red {
-    background-color:red
+.login-box {
+    background-color: white;
 }
 
-.color-blue {
-    color:blue
+.login-box Image {
+    height: 20%;
 }

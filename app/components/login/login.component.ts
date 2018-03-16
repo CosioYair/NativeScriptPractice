@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Border } from "tns-core-modules/ui/border";
 
 @Component({
     selector: "ns-login",

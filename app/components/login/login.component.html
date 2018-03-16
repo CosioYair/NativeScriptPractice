@@ -1,7 +1,7 @@
 <ActionBar title="Mobile Sales Automation" class="action-bar">
     <GridLayout columns="*,*" rows="auto, *" >
         <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
-            <Image src="~/assets/logo.png"></Image>
+            <Image src="~/assets/images/logo.png"></Image>
             <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
         </StackLayout>
         <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
@@ -11,6 +11,14 @@
     </GridLayout>
 </ActionBar>
 
-<StackLayout>
-    
-</StackLayout>
+<GridLayout class="login-content" columns="*, 500, *" rows="50, 400, 50" >
+    <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
+    </StackLayout>
+    <Border class="login-box" row="1" col="1" borderRadius="8" borderWidth="3" borderColor="#FB8D70" horizontalAlignment="stretch">
+        <StackLayout horizontalAlignment="stretch">
+            <Image src="~/assets/images/ifd-international.png"></Image>
+        </StackLayout>
+    </Border>
+    <StackLayout col="2" orientation="horizontal" horizontalAlignment="left">
+    </StackLayout>
+</GridLayout>
