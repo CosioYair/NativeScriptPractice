@@ -6,6 +6,7 @@ import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
 // Uncomment and add to NgModule imports if you need to use two-way binding
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { ItemInquiry } from "./components/itemsInquiry/itemInquiry.component";
 
 // Uncomment and add to NgModule imports  if you need to use the HTTP wrapper
 //import { NativeScriptHttpModule } from "nativescript-angular/http";
@@ -23,7 +24,8 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
     declarations: [
         AppComponent,
         LoginComponent,
-        HomeComponent
+        HomeComponent,
+        ItemInquiry
     ],
     providers: [
     ],

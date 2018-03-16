@@ -1,0 +1,83 @@
+<ActionBar title="Mobile Sales Automation" class="action-bar">
+    <GridLayout columns="*,*" rows="auto, *" >
+        <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
+            <Image src="~/assets/images/logo.png"></Image>
+            <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+        </StackLayout>
+        <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
+            <Button text="&#xf021; Refresh" verticalAlignment="center"></Button>
+            <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
+        </StackLayout>
+    </GridLayout>
+</ActionBar>
+<StackLayout class="page">
+    <DockLayout>
+        <StackLayout class="itemInquiry-layout" width="50%">
+                             
+            <SearchBar row="0" hint="Search for a country and press enter" (clear)="onClear($event)" (submit)="onSubmit($event)"></SearchBar>
+            <GridLayout rows="*">
+                    <ListView [items]="myItems" (setupItemView)="onSetupItemView($event)">
+                        <ng-template let-item="item" let-i="index" let-third="third">
+                            <StackLayout [class.third]="third">
+                                <Label [text]='"index: " + i'></Label>
+                                <Label [text]='"[" + item.id +"] " + item.name'></Label>
+                            </StackLayout>
+                        </ng-template>
+                    </ListView>
+                </GridLayout>
+        </StackLayout>    
+            
+        <StackLayout class="itemInquiry-layout">
+            <DockLayout>
+                <StackLayout width="70%">
+                    <label text="Model forniture" fontSize="30"></label>
+                    <label text="IFD200121"></label>
+                </StackLayout>
+                <StackLayout>
+                    <DockLayout>
+                        <button text="&#xf075;" width="30%"></button>
+                        <button text="Cancel"></button>
+                    </DockLayout>                   
+                </StackLayout>
+            </DockLayout>
+            <DockLayout paddingTop="50%">
+                <StackLayout width="33%">
+                    <Label text="STD UM"></Label>
+                    <Label class="itemInquiry-label" text=""></Label>
+                    <Label text="STD PRICE"></Label>
+                    <Label class="itemInquiry-label" text=""></Label>
+                    <Label text="STYLES"></Label>
+                    <Label class="itemInquiry-label" text=""></Label>
+                    <Label text="PACKAGE"></Label>
+                    <Label text=""></Label>
+                </StackLayout>
+                <StackLayout width="33%">
+                    <Label text="SALES UM"></Label>
+                    <Label text=""></Label>
+                    <label text="STOCKSTATUS" paddingTop="100%"></label>
+                    <label text="CUBES" paddingTop="100%"></label>
+                    <label text=""></label>
+                    
+                </StackLayout>
+                <StackLayout width="33%">
+                    <Label text="PURCH UM"></Label>
+                    <Label text=""></Label>    
+                </StackLayout>
+            </DockLayout>
+            <DockLayout>
+                    <StackLayout width="33%">
+                        <label text="ON HAND"></label>
+                        <label text="0" fontSize="30" textAlignment="center"></label>
+                    </StackLayout>
+                    <StackLayout width="33%">
+                        <label text="ON SO & BO"></label>
+                        <label text="0" fontSize="30" textAlignment="center"></label>
+                    </StackLayout>
+                    <StackLayout width="33%">
+                        <label text="ON ----"></label>
+                        <label text="0" fontSize="30" textAlignment="center"></label>
+                    </StackLayout>
+                </DockLayout>
+        </StackLayout>
+    </DockLayout>
+</StackLayout>
