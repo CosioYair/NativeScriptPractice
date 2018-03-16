@@ -2,15 +2,16 @@ import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { AppRoutingModule } from "./app.routing";
 import { AppComponent } from "./app.component";
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
+
+//Components
 import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
 import { CustomerComponent } from "./components/customer/customer.component";
-// Uncomment and add to NgModule imports if you need to use two-way binding
-import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
-// Uncomment and add to NgModule imports  if you need to use the HTTP wrapper
-//import { NativeScriptHttpModule } from "nativescript-angular/http";
-
+//Services
+import { CustomerService } from "./services/customer.service";
 
 @NgModule({
     bootstrap: [
@@ -19,6 +20,7 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
     imports: [
         NativeScriptModule,
         NativeScriptFormsModule,
+        NativeScriptHttpClientModule,
         AppRoutingModule
     ],
     declarations: [
@@ -28,6 +30,7 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
         CustomerComponent
     ],
     providers: [
+        CustomerService
     ],
     schemas: [
         NO_ERRORS_SCHEMA
