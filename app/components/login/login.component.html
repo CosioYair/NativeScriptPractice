@@ -1,0 +1,32 @@
+<ActionBar title="Mobile Sales Automation" class="action-bar">
+    <GridLayout columns="*,*" rows="auto, *" >
+        <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
+            <Image src="~/assets/images/logo.png"></Image>
+            <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+        </StackLayout>
+        <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
+            <Button text="&#xf021; Refresh" verticalAlignment="center"></Button>
+            <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
+        </StackLayout>
+    </GridLayout>
+</ActionBar>
+
+<GridLayout class="login-content" columns="*, 500, *" rows="50, 400, 50" >
+    <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
+    </StackLayout>
+    <Border class="login-box" row="1" col="1" borderRadius="8" borderWidth="3" borderColor="#FB8D70" horizontalAlignment="stretch">
+        <StackLayout class="form" horizontalAlignment="stretch">
+            <Image src="~/assets/images/ifd-international.png"></Image>
+            <Border borderBottomWidth="2" borderBottomColor="#FB8D70">
+                <Label class="h2" text="User Login" verticalAlignment="center"></Label>
+            </Border>
+            <StackLayout class="form fields" horizontalAlignment="stretch">
+                <TextField hint="User ID" [(ngModel)]="user.id"></TextField>
+                <TextField type="password" hint="Password" [(ngModel)]="user.password" secure="true"></TextField>
+            </StackLayout>
+            <Button text="Login" (tap)="login()"></Button>
+        </StackLayout>
+    </Border>
+    <StackLayout col="2" orientation="horizontal" horizontalAlignment="left">
+    </StackLayout>
+</GridLayout>
