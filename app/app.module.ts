@@ -4,10 +4,11 @@ import { AppRoutingModule } from "./app.routing";
 import { AppComponent } from "./app.component";
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
-// import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 // Uncomment and add to NgModule imports  if you need to use the HTTP wrapper
-// import { NativeScriptHttpModule } from "nativescript-angular/http";
+//import { NativeScriptHttpModule } from "nativescript-angular/http";
+import { HomeComponent } from "./components/home/home.component";
 
 @NgModule({
     bootstrap: [
@@ -15,10 +16,12 @@ import { AppComponent } from "./app.component";
     ],
     imports: [
         NativeScriptModule,
+        NativeScriptFormsModule,
         AppRoutingModule
     ],
     declarations: [
         AppComponent,
+        HomeComponent
     ],
     providers: [
     ],
