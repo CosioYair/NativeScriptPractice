@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { Border } from "tns-core-modules/ui/border";
 import { Customer } from "../../interfaces/customer.interface";
+import { SearchBar } from "ui/search-bar";
+import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 
 @Component({
     selector: "ns-customer",
@@ -10,7 +12,8 @@ import { Customer } from "../../interfaces/customer.interface";
 })
 
 export class CustomerComponent {
-    public customers:Customer[];
+    private customers:Customer[];
+    public customerList: ObservableArray<Customer> = new ObservableArray<Customer>();
 
     constructor(){
         this.customers = [{
@@ -67,5 +70,31 @@ export class CustomerComponent {
             telephoneNo: "(615) 352-6085",
             zipCode: "37205"
         }];
+        this.customerList = new ObservableArray<Customer>(this.customers);
+    }
+
+    public onTextChanged(args) {
+        let searchBar = <SearchBar>args.object;
+        let searchValue = searchBar.text.toLowerCase();
+
+        if(searchValue.length > 0){
+            this.customerList = new ObservableArray<Customer>();
+            if (searchValue !== "") {
+                this.customers.map( (customer, index) => {
+                    if (this.customers[index].customerName.toLowerCase().indexOf(searchValue) !== -1)
+                        this.customerList.push(this.customers[index]);
+                });
+            }
+        }
+    }
+
+    public onClear(args) {
+        let searchBar = <SearchBar>args.object;
+        searchBar.text = "";
+
+        this.customerList = new ObservableArray<Customer>();
+        this.customers.forEach(item => {
+            this.customerList.push(item);
+        });
     }
  }

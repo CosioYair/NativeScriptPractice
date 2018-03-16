@@ -13,9 +13,9 @@
 
 <GridLayout class="" columns="*, *" rows="*">
     <StackLayout class="customer-content" row="0" col="0">
-        <SearchBar hint="Search" [(ngModel)]="searchPhrase" (textChange)="onTextChanged($event)" textFieldBackgroundColor="white"></SearchBar>
+        <SearchBar hint="Search" (textChange)="onTextChanged($event)" textFieldBackgroundColor="white"></SearchBar>
         <GridLayout class="" columns="*" rows="*" backgroundColor="white">
-            <ListView [items]="customers" class="list-group">
+            <ListView [items]="customerList" class="list-group">
                 <ng-template let-item="item">
                     <StackLayout class="item list-group-item">
                         <Label [text]="item.customerName" class="list-group-item-heading"></Label>
@@ -27,9 +27,9 @@
         </GridLayout>
     </StackLayout>
     <StackLayout class="customer-content customer-detail" row="0" col="1">
-        <SearchBar hint="Search" [(ngModel)]="searchPhrase" (textChange)="onTextChanged($event)" textFieldBackgroundColor="white"></SearchBar>
+        <SearchBar hint="Search" [(ngModel)]="searchPhrase" (clear)="onClear($event)" (textChange)="onTextChanged($event)" textFieldBackgroundColor="white"></SearchBar>
         <GridLayout class="" columns="*" rows="*" backgroundColor="white">
-            <ListView [items]="customers" class="list-group">
+            <ListView [items]="customerList" class="list-group">
                 <ng-template let-item="item">
                     <StackLayout class="item list-group-item">
                         <Label [text]="item.customerName" class="list-group-item-heading"></Label>
