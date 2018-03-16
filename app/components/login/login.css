@@ -5,3 +5,22 @@
 .login-box Image {
     height: 20%;
 }
+
+.login-box .form {
+    padding: 20%;
+    padding-bottom: 40%;
+}
+
+.login-box .h1 {
+    color: #494848;
+}
+
+.login-box .fields{
+    font-size: 18%;
+}
+
+.login-box Button {
+    background-color: #E15029;
+    color: #F9F6F5;
+    font-size: 20%;
+}
