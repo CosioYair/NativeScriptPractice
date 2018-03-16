@@ -1,0 +1,54 @@
+<ActionBar title="Mobile Sales Automation" class="action-bar">
+        <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" 
+        (tap)="onNavBtnTap()"></NavigationButton>
+</ActionBar>
+<StackLayout class="page">
+    <DockLayout>
+            <StackLayout class="home-transaction">
+                    <Image src="~/assets/images/ifd.png" width="30%" height="40%"></Image>
+                    <StackLayout>
+                        <label text="Adrian Cortes" fontSize="32"></label>
+                        <DockLayout>
+                            <label text="Unsend Transactions:" fontSize="16"></label>
+                            <label text="0" horizontalAlignment="right" verticalAligment="center" fontSize="28"></label>
+                        </DockLayout>
+                        <DockLayout>
+                            <label text="Avg Amount:" fontSize="16"></label>
+                            <DockLayout horizontalAlignment="right">
+                                    <label text="$"  verticalAligment="center" fontSize="28"></label>
+                                    <label text="0.00"  verticalAligment="center" fontSize="28"></label>
+                            </DockLayout>
+                            
+                        </DockLayout>
+                        <DockLayout>
+                            <label text="Total Amount:" fontSize="16"></label>
+                            <DockLayout horizontalAlignment="right">
+                                    <label text="$"  verticalAligment="center" fontSize="28"></label>
+                                    <label text="0.00"  verticalAligment="center" fontSize="28"></label>
+                            </DockLayout>
+                        </DockLayout>
+                    </StackLayout>
+            </StackLayout>
+            <DockLayout class="home-options" paddingTop="100%">
+                                
+                            <StackLayout width="50%">
+                                    <label text="Transactions" fontSize="30"></label>
+                                    <button text="New Transaction" fontSize="18" color="white" backgroundColor="orange"></button>
+                                    <button text="Review Transactions" fontSize="18" color="white" backgroundColor="orange"></button>
+                                    <label text="Communications" fontSize="30"></label>
+                                    <button text="Send Data" fontSize="18" color="white" backgroundColor="#2196F3"></button>
+                                    <button text="Refresh Data" fontSize="18" color="white" backgroundColor="#2196F3"></button>
+                                </StackLayout>
+                                <StackLayout>
+                                    <label text="Inquiries" fontSize="30"></label>
+                                    <button text="Customer Inquiry" fontSize="18" color="white" backgroundColor="gray"></button>
+                                    <button text="Item Inquiry" fontSize="18" color="white" backgroundColor="gray"></button>
+                                    <label text="Settings" fontSize="30"></label>
+                                    <button text="Settings" fontSize="18" color="white" backgroundColor="purple"></button>
+                            </StackLayout>
+            </DockLayout>
+            
+            
+    </DockLayout>
+    
+</StackLayout>
