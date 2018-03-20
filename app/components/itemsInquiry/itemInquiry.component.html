@@ -12,15 +12,14 @@
 </ActionBar>
 <StackLayout class="page">
     <DockLayout>
-        <StackLayout class="itemInquiry-layout" width="50%">
-                             
-            <SearchBar row="0" hint="Search for a country and press enter" (clear)="onClear($event)" (submit)="onSubmit($event)"></SearchBar>
+        <StackLayout class="itemInquiry-layout" width="50%">                             
+            <SearchBar row="0" hint="Search" (textChange)="onTextChanged($event)"></SearchBar>
             <GridLayout rows="*">
-                    <ListView [items]="myItems" (setupItemView)="onSetupItemView($event)">
-                        <ng-template let-item="item" let-i="index" let-third="third">
-                            <StackLayout [class.third]="third">
-                                <Label [text]='"index: " + i'></Label>
-                                <Label [text]='"[" + item.id +"] " + item.name'></Label>
+                    <ListView [items]="productList" class="list-group" >
+                        <ng-template let-item="item">
+                            <StackLayout class="item list-group-item" [class.highlight]="item.ItemCode == selectedProduct.ItemCode" (tap)="setSelectedProduct(item)">
+                                <label [text]="item.ItemCodeDesc" class="list-group-item-heading" fontSize="26ID"></label>
+                                <label [text]="item.ItemCode" class="list-group-item-heading" color="gray"></label>
                             </StackLayout>
                         </ng-template>
                     </ListView>
@@ -30,8 +29,8 @@
         <StackLayout class="itemInquiry-layout">
             <DockLayout>
                 <StackLayout width="70%">
-                    <label text="Model forniture" fontSize="30"></label>
-                    <label text="IFD200121"></label>
+                    <label class="itemInquiry-itemNameLabel" [text]="selectedProduct.ItemCodeDesc"></label>
+                    <label [text]="selectedProduct.ItemCode"></label>
                 </StackLayout>
                 <StackLayout>
                     <DockLayout>
@@ -42,29 +41,32 @@
             </DockLayout>
             <DockLayout paddingTop="50%">
                 <StackLayout width="33%">
-                    <Label text="STD UM"></Label>
-                    <Label class="itemInquiry-label" text=""></Label>
-                    <Label text="STD PRICE"></Label>
-                    <Label class="itemInquiry-label" text=""></Label>
-                    <Label text="STYLES"></Label>
-                    <Label class="itemInquiry-label" text=""></Label>
-                    <Label text="PACKAGE"></Label>
-                    <Label text=""></Label>
+                    <Label class="itemInquiry-labelBold" text="STD UM"></Label>
+                    <Label class="itemInquiry-label" [text]=""></Label>
+                    <Label class="itemInquiry-labelBold" text="STD PRICE"></Label>       
+                    <DockLayout>
+                        <Label class="itemInquiry-numberLabel" text="$"></Label>
+                        <Label class="itemInquiry-numberLabel" [text]="selectedProduct.StandardUnitPrice"></Label>
+                    </DockLayout>
+                    <Label class="itemInquiry-labelBold" text="STYLES"></Label>
+                    <Label class="itemInquiry-label" [text]="selectedProduct.Category1"></Label>
+                    <Label class="itemInquiry-labelBold" text="PACKAGE"></Label>
+                    <Label class="itemInquiry-label" [text]="selectedProduct.Category2"></Label>
                 </StackLayout>
                 <StackLayout width="33%">
-                    <Label text="SALES UM"></Label>
+                    <Label class="itemInquiry-labelBold" text="SALES UM"></Label>
                     <Label text=""></Label>
-                    <label text="STOCKSTATUS" paddingTop="100%"></label>
-                    <label text="CUBES" paddingTop="100%"></label>
-                    <label text=""></label>
+                    <label  class="itemInquiry-labelBold" text="STOCK STATUS" paddingTop="145%"></label>
+                    <label class="itemInquiry-labelBold" text="CUBES" paddingTop="100%"></label>
+                    <label class="itemInquiry-numberLabel" [text]="selectedProduct.Category4"></label>
                     
                 </StackLayout>
                 <StackLayout width="33%">
-                    <Label text="PURCH UM"></Label>
+                    <Label class="itemInquiry-labelBold" text="PURCH UM"></Label>
                     <Label text=""></Label>    
                 </StackLayout>
             </DockLayout>
-            <DockLayout>
+            <DockLayout padding="10%">
                     <StackLayout width="33%">
                         <label text="ON HAND"></label>
                         <label text="0" fontSize="30" textAlignment="center"></label>

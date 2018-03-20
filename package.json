@@ -7,6 +7,9 @@
 		"id": "org.nativescript.IFurniture",
 		"tns-android": {
 			"version": "3.4.2"
+		},
+		"tns-ios": {
+			"version": "3.4.1"
 		}
 	},
 	"dependencies": {
@@ -21,6 +24,7 @@
 		"@angular/router": "~5.2.0",
 		"font-awesome": "^4.7.0",
 		"nativescript-angular": "~5.2.0",
+		"nativescript-couchbase": "^1.0.18",
 		"nativescript-drop-down": "^3.2.4",
 		"nativescript-theme-core": "~1.0.4",
 		"reflect-metadata": "~0.1.8",
