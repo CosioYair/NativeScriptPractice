@@ -42,3 +42,9 @@ Page {
     background-color: transparent;
     width: 15%;
 }
+
+.option-button {
+    background-color: #DE6427;
+    color: white;
+    font-size: 20%;
+}

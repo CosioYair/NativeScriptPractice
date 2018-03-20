@@ -14,3 +14,16 @@
 .highlight Label {
     color: white;
 }
+
+.customer-detail .list-group-item-heading {
+    font-size: 20%;
+}
+
+.customer-detail .h1 {
+    font-size: 30%;
+}
+
+.customer-detail .h2 {
+    padding-top: 15%;
+    font-size: 20%;
+}

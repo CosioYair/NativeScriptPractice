@@ -32,22 +32,48 @@
     </StackLayout>
     <StackLayout class="customer-content customer-detail" row="0" col="1">
         <Border borderRadius="8" borderRightWidth="3" borderLeftWidth="3" borderColor="#DE6427" horizontalAlignment="stretch">
-            <GridLayout borderRadius="8" class="" columns="*, *" rows="100, *" backgroundColor="white">
-                <Border marginBottom="5%" margin="3%" colSpan="2" borderBottomWidth="2" borderColor="#DE6427" horizontalAlignment="stretch">
+            <GridLayout borderRadius="8" class="" columns="*, *" rows="100, *, auto" backgroundColor="white">
+                <Border margin="3%" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
                     <StackLayout>
-                            <Label [text]="selectedCustomer.CustomerName" class="list-group-item-heading h2"></Label>
-                            <Label [text]="selectedCustomer.CustomerNo" class="list-group-item-heading"></Label>
+                        <Label [text]="selectedCustomer.CustomerName" class="h1"></Label>
+                        <Label [text]="selectedCustomer.CustomerNo" class="list-group-item-heading"></Label>
                     </StackLayout>
                 </Border>
-                <StackLayout col="0" row="1">
-                        <Label text="1111111111111111111" class="list-group-item-heading"></Label>
-                        <Label text="2" class="list-group-item-heading"></Label>
-                        <Label text="3" class="list-group-item-heading"></Label>
+                <StackLayout margin="3%" col="0" row="1">
+                    <Label text="ADDRESS" class="h2"></Label>
+                    <Label [text]="selectedCustomer.City + ' ' + selectedCustomer.State + ' ' + selectedCustomer.ZipCode" class="list-group-item-heading"></Label>
+                    <Label [text]="selectedCustomer.AddressLine1" class="list-group-item-heading"></Label>}
+
+                    <Label text="PHONE" class="h2"></Label>
+                    <Label [text]="selectedCustomer.TelephoneNo" class="list-group-item-heading"></Label>
+
+                    <Label text="PRIMARY CONTACT" class="h2"></Label>
+                    <Label [text]="selectedCustomer.TelephoneNo" class="list-group-item-heading"></Label>
+
+                    <Label text="TERMS" class="h2"></Label>
+                    <Label [text]="" class="list-group-item-heading"></Label>
+
+                    <Label text="BALANCE" class="h2"></Label>
+                    <Label [text]="" class="list-group-item-heading"></Label>
+
+                    <Label text="PRICE LEVEL" class="h2"></Label>
+                    <Label [text]="" class="list-group-item-heading"></Label>
                 </StackLayout>
-                <StackLayout col="1" row="1">
-                        <Label text="11111111111111111111111" class="list-group-item-heading"></Label>
-                        <Label text="2" class="list-group-item-heading"></Label>
-                        <Label text="3" class="list-group-item-heading"></Label>
+                <StackLayout margin="3%"  col="1" row="1">
+                    <Label text="SALESREP" class="h2"></Label>
+                    <Label [text]="" class="list-group-item-heading"></Label>
+
+                    <Label text="TAX SCHEDULE" class="h2"></Label>
+                    <Label [text]="" class="list-group-item-heading"></Label>
+
+                    <Label text="CREDIT LIMIT" class="h2"></Label>
+                    <Label [text]="" class="list-group-item-heading"></Label>
+
+                    <Label text="DISCOUNT RATE" class="h2"></Label>
+                    <Label [text]="selectedCustomer.CustomerDiscountRate" class="list-group-item-heading"></Label>
+                </StackLayout>
+                <StackLayout margin="3%" row="2" colSpan="2">
+                    <Button class="option-button" text="Create Transaction"></Button>
                 </StackLayout>
             </GridLayout>
         </Border>

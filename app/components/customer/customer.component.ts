@@ -22,8 +22,24 @@ export class CustomerComponent implements OnInit{
     public selectedCustomer:any = {};
 
     constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService){
-        this.selectedCustomer.CustomerName = "Customer details";
-        this.selectedCustomer.CustomerNo = "";
+        this.selectedCustomer = {
+            CustomerNo: "",
+            AddressLine1: "",
+            AddressLine2: "",
+            City: "",
+            Comment: "",
+            CountryCode: "",
+            CustomerDiscountRate: 0,
+            CustomerName: "Customer details",
+            CustomerStatus: "",
+            CustomerType: "",
+            DateCreated: "",
+            DateLastActivity: "",
+            DateUpdated: "",
+            State: "",
+            TelephoneNo: "",
+            ZipCode: ""
+        }
     }
 
     ngOnInit() {
