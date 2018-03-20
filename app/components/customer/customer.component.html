@@ -55,14 +55,15 @@
 
                     <Label text="BALANCE" class="h2"></Label>
                     <Label [text]="" class="list-group-item-heading"></Label>
-
+                    <!--
                     <Label text="PRICE LEVEL" class="h2"></Label>
                     <Label [text]="" class="list-group-item-heading"></Label>
+                    -->
                 </StackLayout>
                 <StackLayout margin="3%"  col="1" row="1">
                     <Label text="SALESREP" class="h2"></Label>
                     <Label [text]="" class="list-group-item-heading"></Label>
-
+                    <!--
                     <Label text="TAX SCHEDULE" class="h2"></Label>
                     <Label [text]="" class="list-group-item-heading"></Label>
 
@@ -71,9 +72,11 @@
 
                     <Label text="DISCOUNT RATE" class="h2"></Label>
                     <Label [text]="selectedCustomer.CustomerDiscountRate" class="list-group-item-heading"></Label>
+                    -->
                 </StackLayout>
-                <StackLayout margin="3%" row="2" colSpan="2">
-                    <Button class="option-button" text="Create Transaction"></Button>
+                <StackLayout margin="3%" row="2" colSpan="2" orientation="horizontal" horizontalAlignment="center">
+                    <Button class="option-button" text="Quote"></Button>
+                    <Button class="option-button" text="Sales Order"></Button>
                 </StackLayout>
             </GridLayout>
         </Border>

@@ -47,4 +47,6 @@ Page {
     background-color: #DE6427;
     color: white;
     font-size: 20%;
+    min-width: 300px;
+    min-height: 120px;
 }

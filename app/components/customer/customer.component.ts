@@ -6,6 +6,7 @@ import { ObservableArray } from "tns-core-modules/data/observable-array/observab
 import { CustomerService } from "../../services/customer.service";
 import { CouchbaseService } from "../../services/couchbase.service";
 import { SERVER } from "../../config/server.config";
+import * as dialogs from "ui/dialogs";
 
 @Component({
     selector: "ns-customer",
@@ -23,7 +24,7 @@ export class CustomerComponent implements OnInit{
 
     constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService){
         this.selectedCustomer = {
-            CustomerNo: "",
+            CustomerNo: "Select a customer to view details",
             AddressLine1: "",
             AddressLine2: "",
             City: "",
@@ -93,5 +94,11 @@ export class CustomerComponent implements OnInit{
 
     public setSelectedCustomer(customer:Customer){
         this.selectedCustomer = customer;
+    }
+
+    public createTransaction(){
+        dialogs.alert("Your message").then(result => {
+            console.log("Dialog result: " + result);
+        });
     }
  }
