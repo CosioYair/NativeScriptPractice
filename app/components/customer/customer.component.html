@@ -17,7 +17,7 @@
         <GridLayout class="" columns="*" rows="*" backgroundColor="white">
             <ListView [items]="customerList" class="list-group">
                 <ng-template let-item="item">
-                    <StackLayout class="item list-group-item" [class.highlight]="selectedCustomer == item.CustomerNo" (tap)="setSelectedCustomer(item.CustomerNo)">
+                    <StackLayout class="item list-group-item" [class.highlight]="selectedCustomer.CustomerNo == item.CustomerNo" (tap)="setSelectedCustomer(item)">
                         <Label [text]="item.CustomerName" class="list-group-item-heading h2"></Label>
                         <StackLayout marginLeft="5%">
                             <Label [text]="item.CustomerNo" class="list-group-item-heading"></Label>

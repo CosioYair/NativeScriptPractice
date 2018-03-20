@@ -19,9 +19,10 @@ export class CustomerComponent implements OnInit{
     private _docId:string = "customer";
     public customerList: ObservableArray<Customer> = new ObservableArray<Customer>();
     public data = {};
-    public selectedCustomer:string = "";
+    public selectedCustomer:any = {};
 
     constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService){
+        this.selectedCustomer.CustomerNo = "";
     }
 
     ngOnInit() {
@@ -73,7 +74,7 @@ export class CustomerComponent implements OnInit{
         });
     }
 
-    public setSelectedCustomer(customerNo:string){
-        this.selectedCustomer = customerNo;
+    public setSelectedCustomer(customer:Customer){
+        this.selectedCustomer = customer;
     }
  }
