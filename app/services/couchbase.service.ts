@@ -6,7 +6,7 @@ export class CouchbaseService {
     private database: any;
 
     constructor(){
-        this.database = new Couchbase("IFDAPP");
+        this.database = new Couchbase("ifdapp");
     }
 
     public getDocument(docId:string){

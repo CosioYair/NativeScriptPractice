@@ -11,6 +11,7 @@ import { HomeComponent } from "./components/home/home.component";
 import { CustomerComponent } from "./components/customer/customer.component";
 
 //Services
+import { CouchbaseService } from "./services/couchbase.service";
 import { CustomerService } from "./services/customer.service";
 
 @NgModule({
@@ -30,6 +31,7 @@ import { CustomerService } from "./services/customer.service";
         CustomerComponent
     ],
     providers: [
+        CouchbaseService,
         CustomerService
     ],
     schemas: [
