@@ -13,8 +13,8 @@
 
 <GridLayout class="" columns="*, *" rows="*">
     <StackLayout class="customer-content" row="0" col="0">
-        <SearchBar hint="Search" (textChange)="onTextChanged($event)" textFieldBackgroundColor="white"></SearchBar>
-        <Border class="login-box" borderRadius="8" borderBottomWidth="2" borderTopWidth="2" borderColor="#DE6427" horizontalAlignment="stretch">
+        <SearchBar hint="Search" (textChange)="onTextChanged($event)" (clear)="onClear($event)" textFieldBackgroundColor="white"></SearchBar>
+        <Border borderRadius="8" borderBottomWidth="2" borderTopWidth="2" borderColor="#DE6427" horizontalAlignment="stretch">
             <GridLayout borderRadius="8" class="" columns="*" rows="*" backgroundColor="white">
                 <ListView [items]="customerList" class="list-group">
                     <ng-template let-item="item">
@@ -31,13 +31,14 @@
         </Border>
     </StackLayout>
     <StackLayout class="customer-content customer-detail" row="0" col="1">
-        <Border class="login-box" borderRadius="8" borderRightWidth="3" borderLeftWidth="3" borderColor="#DE6427" horizontalAlignment="stretch">
+        <Border borderRadius="8" borderRightWidth="3" borderLeftWidth="3" borderColor="#DE6427" horizontalAlignment="stretch">
             <GridLayout borderRadius="8" class="" columns="*, *" rows="100, *" backgroundColor="white">
-                <StackLayout colSpan="2">
-                        <Label text="11111111111111111111111111111133333333333333333333333333333333" class="list-group-item-heading"></Label>
-                        <Label text="2" class="list-group-item-heading"></Label>
-                        <Label text="3" class="list-group-item-heading"></Label>
-                </StackLayout>
+                <Border marginBottom="5%" margin="3%" colSpan="2" borderBottomWidth="2" borderColor="#DE6427" horizontalAlignment="stretch">
+                    <StackLayout>
+                            <Label [text]="selectedCustomer.CustomerName" class="list-group-item-heading h2"></Label>
+                            <Label [text]="selectedCustomer.CustomerNo" class="list-group-item-heading"></Label>
+                    </StackLayout>
+                </Border>
                 <StackLayout col="0" row="1">
                         <Label text="1111111111111111111" class="list-group-item-heading"></Label>
                         <Label text="2" class="list-group-item-heading"></Label>

@@ -22,6 +22,7 @@ export class CustomerComponent implements OnInit{
     public selectedCustomer:any = {};
 
     constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService){
+        this.selectedCustomer.CustomerName = "Customer details";
         this.selectedCustomer.CustomerNo = "";
     }
 
