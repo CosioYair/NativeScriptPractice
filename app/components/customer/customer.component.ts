@@ -19,6 +19,7 @@ export class CustomerComponent implements OnInit{
     private _docId:string = "customer";
     public customerList: ObservableArray<Customer> = new ObservableArray<Customer>();
     public data = {};
+    public selectedCustomer:string = "";
 
     constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService){
     }
@@ -70,5 +71,9 @@ export class CustomerComponent implements OnInit{
         this._customers.forEach(item => {
             this.customerList.push(item);
         });
+    }
+
+    public setSelectedCustomer(customerNo:string){
+        this.selectedCustomer = customerNo;
     }
  }

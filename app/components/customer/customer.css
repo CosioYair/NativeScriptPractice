@@ -6,3 +6,11 @@
 .customer-detail {
     padding-left: 0;
 }
+
+.highlight {
+    background-color: #58578D;
+}
+
+.highlight Label {
+    color: white;
+}
