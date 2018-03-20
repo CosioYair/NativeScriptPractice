@@ -39,7 +39,7 @@
                         <Label [text]="selectedCustomer.CustomerNo" class="list-group-item-heading"></Label>
                     </StackLayout>
                 </Border>
-                <StackLayout margin="3%" col="0" row="1">
+                <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%" col="0" row="1">
                     <Label text="ADDRESS" class="h2"></Label>
                     <Label [text]="selectedCustomer.City + ' ' + selectedCustomer.State + ' ' + selectedCustomer.ZipCode" class="list-group-item-heading"></Label>
                     <Label [text]="selectedCustomer.AddressLine1" class="list-group-item-heading"></Label>}
@@ -60,7 +60,7 @@
                     <Label [text]="" class="list-group-item-heading"></Label>
                     -->
                 </StackLayout>
-                <StackLayout margin="3%"  col="1" row="1">
+                <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%"  col="1" row="1">
                     <Label text="SALESREP" class="h2"></Label>
                     <Label [text]="" class="list-group-item-heading"></Label>
                     <!--
@@ -74,7 +74,7 @@
                     <Label [text]="selectedCustomer.CustomerDiscountRate" class="list-group-item-heading"></Label>
                     -->
                 </StackLayout>
-                <StackLayout margin="3%" row="2" colSpan="2" orientation="horizontal" horizontalAlignment="center">
+                <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%" row="2" colSpan="2" orientation="horizontal" horizontalAlignment="center">
                     <Button class="option-button" text="Quote"></Button>
                     <Button class="option-button" text="Sales Order"></Button>
                 </StackLayout>
