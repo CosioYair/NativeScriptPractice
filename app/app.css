@@ -50,3 +50,11 @@ Page {
     min-width: 300px;
     min-height: 120px;
 }
+
+.highlight {
+    background-color: #4F8B51;
+}
+
+.highlight Label {
+    color: white;
+}
