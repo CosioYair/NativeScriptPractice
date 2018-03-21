@@ -9,6 +9,7 @@ import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
 import { CustomerComponent } from "./components/customer/customer.component";
+import { SaleOrderComponent } from "./components/transaction/sale-order.component";
 
 //Services
 import { CouchbaseService } from "./services/couchbase.service";
@@ -28,7 +29,8 @@ import { CustomerService } from "./services/customer.service";
         AppComponent,
         LoginComponent,
         HomeComponent,
-        CustomerComponent
+        CustomerComponent,
+        SaleOrderComponent
     ],
     providers: [
         CouchbaseService,

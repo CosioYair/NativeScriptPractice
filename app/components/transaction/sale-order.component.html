@@ -1,0 +1,27 @@
+<ActionBar title="Mobile Sales Automation" class="action-bar">
+    <GridLayout columns="*,*" rows="auto, *" >
+        <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
+            <Image src="~/assets/images/logo.png"></Image>
+            <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+        </StackLayout>
+        <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
+            <Button text="&#xf0b0; Filter" verticalAlignment="center"></Button>
+            <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
+        </StackLayout>
+    </GridLayout>
+</ActionBar>
+
+<TabView selectedIndex="0" androidSelectedTabHighlightColor="#DE6427" tabTextColor="#C2C1C1" sdkExampleTitle sdkToggleNavButton>
+    <StackLayout *tabItem="{title: '&#xf05a; HEADER'}" >
+        <Label text="First tab item"></Label>
+    </StackLayout>
+    <StackLayout *tabItem="{title: '&#xf2ba; ADDRESS'}" >
+        <Label text="First tab item"></Label>
+    </StackLayout>
+    <StackLayout *tabItem="{title: '&#xf02e; LINES'}" >
+        <Label text="First tab item"></Label>
+    </StackLayout>
+    <StackLayout *tabItem="{title: '&#xf2b5; TOTALS'}" >
+        <Label text="First tab item"></Label>
+    </StackLayout>
+</TabView>
