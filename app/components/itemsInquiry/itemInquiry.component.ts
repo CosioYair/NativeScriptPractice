@@ -4,8 +4,14 @@ import { SearchBar} from "ui/search-bar";
 import { ObservableArray} from "tns-core-modules/data/observable-array/observable-array";
 import { ProductService } from "../../services/item.service";
 import { CouchbaseService} from "../../services/couchbase.service";
-import { SetupItemViewArgs } from "nativescript-angular/directives"
+import { SetupItemViewArgs } from "nativescript-angular/directives";
 import { SERVER } from "../../config/server.config";
+
+//import para descarga de imagenes
+
+import * as imageSource from "tns-core-modules/image-source";
+import * as fs from "tns-core-modules/file-system";
+import * as http from "http";
 
 @Component({
     selector: "ns-itemInquiry",
@@ -21,6 +27,7 @@ export class ItemInquiryComponent implements OnInit{
     public productList: ObservableArray<Product> = new ObservableArray<Product>();
     public data = {};
     public selectedProduct:any = {};
+    public picture:any;
 
     constructor(private _couchbaseService: CouchbaseService, private _productService: ProductService){
         this.selectedProduct = {
@@ -45,9 +52,9 @@ export class ItemInquiryComponent implements OnInit{
             DateUpdated: "",
             TimeUpdated: "",
             TimeCreated: ""
-
-
         }
+
+        this.picture = "";
     }
 
     ngOnInit() {
@@ -101,6 +108,31 @@ export class ItemInquiryComponent implements OnInit{
 
     public setSelectedProduct(product:Product){
         this.selectedProduct = product;
+        this.downloadImagesProducts();
     }
 
+//descargar imagenes
+    public downloadImagesProducts(){
+
+        http.getFile("https://raw.githubusercontent.com/NativeScript/NativeScript/master/tests/app/logo.png").then(function (r) {
+            //// Argument (r) is File!
+            console.log(r.path);//nombre que trae desde el servidor
+            const img = imageSource.fromFile(r.path);
+            const folder = fs.knownFolders.documents();
+            const path = fs.path.join(folder.path, "test.png");//nombre con el que se guarda
+            const saved = img.saveToFile(path, "png");
+        }, function (e) {
+            //// Argument (e) is Error!
+        });
+
+        const folder = fs.knownFolders.documents();
+        const path = fs.path.join(folder.path, "test.png");//nombre para buscarlo
+        const img = imageSource.fromFile(path);
+        
+        this.picture = path;
+        console.log(path+"888888888");
+
+        console.log(this.picture+"888888888");
+    }
+    
  }
