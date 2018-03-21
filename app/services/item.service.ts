@@ -17,4 +17,9 @@ export class ProductService{
         return this._http.get(`${SERVER.baseUrl}/Product`)
         .map(res => res);
     }
+
+    //checar servicio
+    public getProductImage(id){
+        return this._http.get(`${SERVER.baseUrl}/Image/${id}`);
+    }
 }

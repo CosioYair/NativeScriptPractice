@@ -68,9 +68,11 @@ export class ItemInquiryComponent implements OnInit{
             this._couchbaseService.createDocument(this.data, this._docId);
             this._products = result["Product"];
             this.productList = new ObservableArray<Product>(this._products);
+
         }, (error) => {
             alert(error);
         });
+
     }
 
     public setDocument(){
@@ -108,11 +110,18 @@ export class ItemInquiryComponent implements OnInit{
 
     public setSelectedProduct(product:Product){
         this.selectedProduct = product;
-        this.downloadImagesProducts();
+        this.downloadImagesProducts(this.productList);
     }
 
 //descargar imagenes
-    public downloadImagesProducts(){
+    public downloadImagesProducts(productList: ObservableArray<Product>){
+
+        productList.map(product => {
+            if(product.ImageFile != null){
+                console.log(`${SERVER.baseUrl}/Image/${product.ImageFile}`);
+            }
+            
+        });
 
         http.getFile("https://raw.githubusercontent.com/NativeScript/NativeScript/master/tests/app/logo.png").then(function (r) {
             //// Argument (r) is File!
