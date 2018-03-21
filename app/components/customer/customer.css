@@ -1,0 +1,21 @@
+.customer-content {
+    padding: 30%;
+    padding-top: 10%;
+}
+
+.customer-detail {
+    padding-left: 0;
+}
+
+.customer-detail .list-group-item-heading {
+    font-size: 20%;
+}
+
+.customer-detail .h1 {
+    font-size: 30%;
+}
+
+.customer-detail .h2 {
+    padding-top: 15%;
+    font-size: 20%;
+}
