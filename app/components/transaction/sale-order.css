@@ -39,3 +39,8 @@ TabView {
 .tab-list {
     margin-right: 5%;
 }
+
+.tab-list Label, .tab-list StackLayout, .tab-list DockLayout, .tab-list GridLayout {
+    width: 100%;
+    font-size: 15%;
+}
