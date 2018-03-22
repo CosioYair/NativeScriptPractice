@@ -22,7 +22,7 @@
                     <Label text="Ship Date"></Label>
                     <TextField hint="Ship Date" [(ngModel)]="dates.shipDate" (tap)="showModal('shipDate')"></TextField>
                     <Label text="Wharehouse"></Label>
-                    <TextField hint="Wharehouse"></TextField>
+                    <DropDown [items]="wharehouses" [(ngModel)]="wharehouse"></DropDown>
                     <Label text="Ship Via"></Label>
                     <TextField hint="Ship Via"></TextField>
                     <Label text="Terms"></Label>

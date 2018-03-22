@@ -5,6 +5,7 @@ import { AppComponent } from "./app.component";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 import { ModalDialogService } from "nativescript-angular/modal-dialog";
+import { DropDownModule } from "nativescript-drop-down/angular";
 
 //Components
 import { LoginComponent } from "./components/login/login.component";
@@ -26,7 +27,8 @@ import { CustomerService } from "./services/customer.service";
         NativeScriptModule,
         NativeScriptFormsModule,
         NativeScriptHttpClientModule,
-        AppRoutingModule
+        AppRoutingModule,
+        DropDownModule
     ],
     entryComponents: [
         ModalDateComponent

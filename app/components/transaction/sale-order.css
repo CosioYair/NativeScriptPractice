@@ -5,3 +5,8 @@ TabView {
 .tab-content {
     margin: 7%;
 }
+
+.tab-content Label {
+    font-weight: bold;
+    margin-top: 3%;
+}

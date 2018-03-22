@@ -3,6 +3,8 @@ import { Border } from "tns-core-modules/ui/border";
 import { CouchbaseService } from "../../services/couchbase.service";
 import { ModalDialogOptions, ModalDialogService } from "nativescript-angular/modal-dialog";
 import { ModalDateComponent } from "../modal/modal-date.component";
+import { DropDownModule } from "nativescript-drop-down/angular";
+import { CONSTANTS } from "../../config/constants.config";
 
 @Component({
     selector: "ns-sale-order",
@@ -14,13 +16,19 @@ import { ModalDateComponent } from "../modal/modal-date.component";
 export class SaleOrderComponent implements OnInit{
     private _docId:string = "customer";
     public dates:any;
+    public wharehouses:any;
+    public wharehouse:number = 0;
 
     constructor(private _couchbaseService: CouchbaseService, private modalService:ModalDialogService, private vcRef:ViewContainerRef){
         this.dates = [];
+        this.wharehouses = [];
         this.dates.shipDate = new Date();
         this.dates.date = new Date();
         this.dates.shipDate = `${this.dates.shipDate.getDate() + 1}/${this.dates.shipDate.getMonth() + 1}/${this.dates.shipDate.getFullYear()}`;
         this.dates.date = `${this.dates.date.getDate() + 1}/${this.dates.date.getMonth() + 1}/${this.dates.date.getFullYear()}`;
+        CONSTANTS.wharehouses.map(wharehouse => {
+            this.wharehouses.push(wharehouse.name);
+        });
     }
 
     ngOnInit() {
