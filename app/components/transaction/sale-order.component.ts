@@ -18,16 +18,22 @@ export class SaleOrderComponent implements OnInit{
     public dates:any;
     public wharehouses:any;
     public wharehouse:number = 0;
+    public shipVias:any;
+    public shipVia:number = 0;
 
     constructor(private _couchbaseService: CouchbaseService, private modalService:ModalDialogService, private vcRef:ViewContainerRef){
         this.dates = [];
         this.wharehouses = [];
+        this.shipVias = [];
         this.dates.shipDate = new Date();
         this.dates.date = new Date();
         this.dates.shipDate = `${this.dates.shipDate.getDate() + 1}/${this.dates.shipDate.getMonth() + 1}/${this.dates.shipDate.getFullYear()}`;
-        this.dates.date = `${this.dates.date.getDate() + 1}/${this.dates.date.getMonth() + 1}/${this.dates.date.getFullYear()}`;
+        this.dates.date = `${this.dates.date.getDate()}/${this.dates.date.getMonth()}/${this.dates.date.getFullYear()}`;
         CONSTANTS.wharehouses.map(wharehouse => {
             this.wharehouses.push(wharehouse.name);
+        });
+        CONSTANTS.shipVias.map(shipVia => {
+            this.shipVias.push(shipVia.name);
         });
     }
 

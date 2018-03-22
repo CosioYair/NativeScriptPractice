@@ -15,20 +15,30 @@
     <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
         <GridLayout class="tab-content" columns="*, *" rows="*">
             <StackLayout row="0" col="0">
+                <DockLayout>
                     <Label text="Customer No"></Label>
                     <TextField hint="Customer No" isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
                     <Label text="Date"></Label>
                     <TextField hint="Date" [(ngModel)]="dates.date" (tap)="showModal('date')"></TextField>
+                </DockLayout>
+                <DockLayout>
                     <Label text="Ship Date"></Label>
                     <TextField hint="Ship Date" [(ngModel)]="dates.shipDate" (tap)="showModal('shipDate')"></TextField>
+                </DockLayout>
+                <DockLayout>
                     <Label text="Wharehouse"></Label>
-                    <DropDown [items]="wharehouses" [(ngModel)]="wharehouse"></DropDown>
+                    <DropDown [items]="wharehouses" [(ngModel)]="wharehouse" colSpan="2"></DropDown>    
+                </DockLayout>
+                <DockLayout>
                     <Label text="Ship Via"></Label>
-                    <TextField hint="Ship Via"></TextField>
+                    <DropDown [items]="shipVias" [(ngModel)]="shipVia"></DropDown>
+                </DockLayout>
+                <DockLayout>
                     <Label text="Terms"></Label>
-                    <TextField hint="Terms"></TextField>
-                    <Label text="Tax Schedule"></Label>
-                    <TextField hint="Tax Schedule"></TextField>
+                    <TextField hint="Terms" isEnabled="false"></TextField>
+                </DockLayout>
             </StackLayout>
             <StackLayout row="0" col="1">
                     

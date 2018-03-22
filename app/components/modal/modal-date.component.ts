@@ -25,7 +25,7 @@ export class ModalDateComponent {
     }
 
     public close() {
-        this._date = `${this._date.getDate() + 1}/${this._date.getMonth() + 1}/${this._date.getFullYear()}`;
+        this._date = `${this._date.getDate()}/${this._date.getMonth()}/${this._date.getFullYear()}`;
         this.params.closeCallback(this._date);
     }
 }

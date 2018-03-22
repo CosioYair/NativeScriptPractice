@@ -4,9 +4,23 @@ TabView {
 
 .tab-content {
     margin: 7%;
+    font-size: 20%;
 }
 
 .tab-content Label {
     font-weight: bold;
-    margin-top: 3%;
+    margin-top: 2%;
+    width: 30%;;
+}
+
+.tab-content TextField, .tab-content Dropdown {
+    width: 50%;
+}
+
+.tab-content Dropdown {
+    padding: 8%;
+}
+
+.tab-content DockLayout {
+    margin-top: 5%;
 }
