@@ -13,18 +13,22 @@ import { ModalDateComponent } from "../modal/modal-date.component";
 
 export class SaleOrderComponent implements OnInit{
     private _docId:string = "customer";
-    public date:any;
+    public dates:any;
 
     constructor(private _couchbaseService: CouchbaseService, private modalService:ModalDialogService, private vcRef:ViewContainerRef){
-        this.date = new Date();
+        this.dates = [];
+        this.dates.shipDate = new Date();
+        this.dates.date = new Date();
+        this.dates.shipDate = `${this.dates.shipDate.getDate() + 1}/${this.dates.shipDate.getMonth() + 1}/${this.dates.shipDate.getFullYear()}`;
+        this.dates.date = `${this.dates.date.getDate() + 1}/${this.dates.date.getMonth() + 1}/${this.dates.date.getFullYear()}`;
     }
 
     ngOnInit() {
     }
 
-    public showModal() {
+    public showModal(input:string) {
         this.createModelView().then(result => {
-           this.date = result;
+           this.dates[input] = result;
         }).catch(error => alert(error));
     }
     
