@@ -1,3 +1,7 @@
 TabView {
     font-size: 18%;
 }
+
+.tab-content {
+    margin: 7%;
+}

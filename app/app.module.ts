@@ -4,12 +4,15 @@ import { AppRoutingModule } from "./app.routing";
 import { AppComponent } from "./app.component";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
+import { ModalDialogService } from "nativescript-angular/modal-dialog";
 
 //Components
 import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
 import { CustomerComponent } from "./components/customer/customer.component";
 import { SaleOrderComponent } from "./components/transaction/sale-order.component";
+import { ModalDateComponent } from "./components/modal/modal-date.component";
+
 
 //Services
 import { CouchbaseService } from "./services/couchbase.service";
@@ -25,16 +28,21 @@ import { CustomerService } from "./services/customer.service";
         NativeScriptHttpClientModule,
         AppRoutingModule
     ],
+    entryComponents: [
+        ModalDateComponent
+    ],
     declarations: [
         AppComponent,
         LoginComponent,
         HomeComponent,
         CustomerComponent,
-        SaleOrderComponent
+        SaleOrderComponent,
+        ModalDateComponent
     ],
     providers: [
         CouchbaseService,
-        CustomerService
+        CustomerService,
+        ModalDialogService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

@@ -5,15 +5,35 @@
             <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
         </StackLayout>
         <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
-            <Button text="&#xf0b0; Filter" verticalAlignment="center"></Button>
+            <Button text="&#xf0b0; Filter" verticalAlignment="center"  (tap)="showModal()"></Button>
             <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
         </StackLayout>
     </GridLayout>
 </ActionBar>
 
 <TabView selectedIndex="0" androidSelectedTabHighlightColor="#DE6427" tabTextColor="#C2C1C1" sdkExampleTitle sdkToggleNavButton>
-    <StackLayout *tabItem="{title: '&#xf05a; HEADER'}" >
-        <Label text="First tab item"></Label>
+    <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
+        <GridLayout class="tab-content" columns="*, *" rows="*">
+            <StackLayout row="0" col="0">
+                    <Label text="Customer No"></Label>
+                    <TextField hint="Customer No" isEnabled="false"></TextField>
+                    <Label text="Date"></Label>
+                    <TextField hint="Date" [(ngModel)]="date" (tap)="showModal()"></TextField>
+                    <Label text="Ship Date"></Label>
+                    <TextField hint="Ship Date"></TextField>
+                    <Label text="Wharehouse"></Label>
+                    <TextField hint="Wharehouse"></TextField>
+                    <Label text="Ship Via"></Label>
+                    <TextField hint="Ship Via"></TextField>
+                    <Label text="Terms"></Label>
+                    <TextField hint="Terms"></TextField>
+                    <Label text="Tax Schedule"></Label>
+                    <TextField hint="Tax Schedule"></TextField>
+            </StackLayout>
+            <StackLayout row="0" col="1">
+                    
+            </StackLayout>
+        </GridLayout>
     </StackLayout>
     <StackLayout *tabItem="{title: '&#xf2ba; ADDRESS'}" >
         <Label text="First tab item"></Label>

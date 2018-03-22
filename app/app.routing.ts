@@ -11,9 +11,9 @@ const routes: Routes = [
     { path: "", redirectTo: "/saleOrder", pathMatch: "full" },
     { path: "app", component: AppComponent },
     { path: "login", component: LoginComponent },
-    { path: "home", component: HomeComponent },
-    { path: "customer", component: CustomerComponent },
-    { path: "saleOrder", component: SaleOrderComponent },
+    { path: "home", component: HomeComponent},
+    { path: "customer", component: CustomerComponent},
+    { path: "saleOrder", component: SaleOrderComponent}
 ];
 
 @NgModule({
