@@ -11,7 +11,7 @@
     </GridLayout>
 </ActionBar>
 
-<TabView selectedIndex="0" androidSelectedTabHighlightColor="#DE6427" tabTextColor="#C2C1C1" sdkExampleTitle sdkToggleNavButton>
+<TabView selectedIndex="1" androidSelectedTabHighlightColor="#DE6427" tabTextColor="#C2C1C1" sdkExampleTitle sdkToggleNavButton>
     <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
         <GridLayout class="tab-content" columns="*, *" rows="*">
             <StackLayout row="0" col="0">
@@ -46,7 +46,7 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Customer PO"></Label>
-                    <TextField></TextField>
+                    <TextField text=""></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Confirm To"></Label>
@@ -61,14 +61,105 @@
                     <TextField></TextField>
                 </DockLayout>
                 <DockLayout>
-                    <Label text="Price Level" isEnabled="false"></Label>
-                    <TextField></TextField>
+                    <Label text="Price Level"></Label>
+                    <TextField isEnabled="false"></TextField>
                 </DockLayout>   
             </StackLayout>
         </GridLayout>
     </StackLayout>
     <StackLayout *tabItem="{title: '&#xf2ba; ADDRESS'}" >
-        <Label text="First tab item"></Label>
+        <GridLayout class="tab-content" columns="*, *" rows="*">
+            <StackLayout row="0" col="0">
+                <DockLayout>
+                    <Label class="h3" text="BILL TO ADDRESS"></Label>
+                </DockLayout>
+                <DockLayout>
+                    <Label text="Bill To"></Label>
+                    <TextField hint="Bill To" isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
+                    <Label text="Name"></Label>
+                    <TextField hint="Name" isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
+                    <Label text="Address"></Label>
+                    <TextField hint="Address" isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
+                    <Label></Label>
+                    <TextField isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
+                    <Label></Label>
+                    <TextField isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
+                    <GridLayout class="tab-subContent" columns="*, *" rows="*">
+                        <StackLayout row="0" col="0">
+                            <DockLayout>
+                                <Label text="City"></Label>
+                                <TextField hint="City" isEnabled="false"></TextField>
+                            </DockLayout>
+                            <DockLayout>
+                                <Label text="Zip"></Label>
+                                <TextField hint="Zip" isEnabled="false"></TextField>
+                            </DockLayout>
+                        </StackLayout>
+                        <StackLayout row="0" col="1">
+                            <DockLayout>
+                                <Label text="State"></Label>
+                                <TextField hint="State" isEnabled="false"></TextField>
+                            </DockLayout>
+                        </StackLayout>
+                    </GridLayout>
+                </DockLayout>
+            </StackLayout>
+            <StackLayout row="0" col="1">
+                <DockLayout>
+                    <Label class="h3" text="SHIP TO ADDRESS"></Label>
+                </DockLayout>
+                <DockLayout>
+                    <Label text="Ship To"></Label>
+                    <DropDown [items]="shipsTo" [(ngModel)]="shipTo" colSpan="2"></DropDown> 
+                </DockLayout>
+                <DockLayout>
+                    <Label text="Name"></Label>
+                    <TextField hint="Name" isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
+                    <Label text="Address"></Label>
+                    <TextField hint="Address" isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
+                    <Label></Label>
+                    <TextField isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
+                    <Label></Label>
+                    <TextField isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
+                    <GridLayout class="tab-subContent" columns="*, *" rows="*">
+                        <StackLayout row="0" col="0">
+                            <DockLayout>
+                                <Label text="City"></Label>
+                                <TextField hint="City" isEnabled="false"></TextField>
+                            </DockLayout>
+                            <DockLayout>
+                                <Label text="Zip"></Label>
+                                <TextField hint="Zip" isEnabled="false"></TextField>
+                            </DockLayout>
+                        </StackLayout>
+                        <StackLayout row="0" col="1">
+                            <DockLayout>
+                                <Label text="State"></Label>
+                                <TextField hint="State" isEnabled="false"></TextField>
+                            </DockLayout>
+                        </StackLayout>
+                    </GridLayout>
+                </DockLayout>   
+            </StackLayout>
+        </GridLayout>
     </StackLayout>
     <StackLayout *tabItem="{title: '&#xf02e; LINES'}" >
         <Label text="First tab item"></Label>
