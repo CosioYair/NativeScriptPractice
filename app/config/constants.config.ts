@@ -21,18 +21,18 @@ export const CONSTANTS = {
     }],
     shipVias: [{
         code: "0",
-        name: "Vacational and Home Forniture"
-    },
-    {
-        code: "1",
-        name: "SFB Trucking"
-    },
-    {
-        code: "2",
         name: "Advanced Distribution"
     },
     {
-        code: "3",
+        code: "1",
         name: "ALCO DELIVERY"
+    },
+    {
+        code: "2",
+        name: "SFB Trucking"
+    },
+    {
+        code: "3",
+        name: "Vacational and Home Forniture"
     }]
 };
