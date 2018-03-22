@@ -35,3 +35,7 @@ TabView {
 .tab-suContent Label {
     width: 20%;
 }
+
+.tab-list {
+    margin-right: 5%;
+}
