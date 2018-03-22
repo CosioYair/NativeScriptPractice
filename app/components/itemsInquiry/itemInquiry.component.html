@@ -1,0 +1,86 @@
+<ActionBar title="Mobile Sales Automation" class="action-bar">
+    <GridLayout columns="*,*" rows="auto, *" >
+        <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
+            <Image src="~/assets/images/logo.png"></Image>
+            <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+        </StackLayout>
+        <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
+            <Button text="&#xf021; Refresh" verticalAlignment="center"></Button>
+            <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
+        </StackLayout>
+    </GridLayout>
+</ActionBar>
+<StackLayout class="page">
+    <DockLayout>
+        <StackLayout class="itemInquiry-layout" width="50%">                             
+            <SearchBar row="0" hint="Search" (textChange)="onTextChanged($event)"></SearchBar>
+            <GridLayout rows="*">
+                    <ListView [items]="productList" class="list-group" >
+                        <ng-template let-item="item">
+                            <StackLayout class="item list-group-item" [class.highlight]="item.ItemCode == selectedProduct.ItemCode" (tap)="setSelectedProduct(item)">
+                                <label [text]="item.ItemCodeDesc" class="list-group-item-heading" fontSize="26ID"></label>
+                                <label [text]="item.ItemCode" class="list-group-item-heading" color="gray"></label>
+                            </StackLayout>
+                        </ng-template>
+                    </ListView>
+                </GridLayout>
+        </StackLayout>    
+            
+        <StackLayout class="itemInquiry-layout">
+            <DockLayout>
+                <StackLayout width="70%">
+                    <label class="itemInquiry-itemNameLabel" [text]="selectedProduct.ItemCodeDesc"></label>
+                    <label [text]="selectedProduct.ItemCode"></label>
+                </StackLayout>
+                <StackLayout>
+                    <DockLayout>
+                        <button text="&#xf075;" width="30%"></button>
+                        <button text="Cancel"></button>
+                    </DockLayout>                   
+                </StackLayout>
+            </DockLayout>
+            <DockLayout paddingTop="50%">
+                <StackLayout width="33%">
+                    <Label class="itemInquiry-labelBold" text="STD UM"></Label>
+                    <Label class="itemInquiry-label" [text]=""></Label>
+                    <Label class="itemInquiry-labelBold" text="STD PRICE"></Label>       
+                    <DockLayout>
+                        <Label class="itemInquiry-numberLabel" text="$"></Label>
+                        <Label class="itemInquiry-numberLabel" [text]="selectedProduct.StandardUnitPrice"></Label>
+                    </DockLayout>
+                    <Label class="itemInquiry-labelBold" text="STYLES"></Label>
+                    <Label class="itemInquiry-label" [text]="selectedProduct.Category1"></Label>
+                    <Label class="itemInquiry-labelBold" text="PACKAGE"></Label>
+                    <Label class="itemInquiry-label" [text]="selectedProduct.Category2"></Label>
+                </StackLayout>
+                <StackLayout width="33%">
+                    <Label class="itemInquiry-labelBold" text="SALES UM"></Label>
+                    <Label text=""></Label>
+                    <label  class="itemInquiry-labelBold" text="STOCK STATUS" paddingTop="145%"></label>
+                    <label class="itemInquiry-labelBold" text="CUBES" paddingTop="100%"></label>
+                    <label class="itemInquiry-numberLabel" [text]="selectedProduct.Category4"></label>
+                    
+                </StackLayout>
+                <StackLayout width="33%">
+                    <Label class="itemInquiry-labelBold" text="PURCH UM"></Label>
+                    <Label [text]="picture"></Label>
+                    <Image src="{{ picture }}"></Image>    
+                </StackLayout>
+            </DockLayout>
+            <DockLayout padding="10%">
+                    <StackLayout width="33%">
+                        <label text="ON HAND"></label>
+                        <label text="0" fontSize="30" textAlignment="center"></label>
+                    </StackLayout>
+                    <StackLayout width="33%">
+                        <label text="ON SO & BO"></label>
+                        <label text="0" fontSize="30" textAlignment="center"></label>
+                    </StackLayout>
+                    <StackLayout width="33%">
+                        <label text="ON ----"></label>
+                        <label text="0" fontSize="30" textAlignment="center"></label>
+                    </StackLayout>
+                </DockLayout>
+        </StackLayout>
+    </DockLayout>
+</StackLayout>

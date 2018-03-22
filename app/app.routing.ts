@@ -4,6 +4,7 @@ import { Routes } from "@angular/router";
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
+import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.component";
 import { CustomerComponent } from "./components/customer/customer.component";
 import { SaleOrderComponent } from "./components/transaction/sale-order.component";
 
@@ -12,6 +13,7 @@ const routes: Routes = [
     { path: "app", component: AppComponent },
     { path: "login", component: LoginComponent },
     { path: "home", component: HomeComponent},
+    { path: "itemInquiry", component:ItemInquiryComponent},
     { path: "customer", component: CustomerComponent},
     { path: "saleOrder", component: SaleOrderComponent}
 ];

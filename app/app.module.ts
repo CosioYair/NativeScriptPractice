@@ -13,11 +13,12 @@ import { HomeComponent } from "./components/home/home.component";
 import { CustomerComponent } from "./components/customer/customer.component";
 import { SaleOrderComponent } from "./components/transaction/sale-order.component";
 import { ModalDateComponent } from "./components/modal/modal-date.component";
-
+import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.component";
 
 //Services
 import { CouchbaseService } from "./services/couchbase.service";
 import { CustomerService } from "./services/customer.service";
+import { ProductService } from "./services/item.service";
 
 @NgModule({
     bootstrap: [
@@ -39,12 +40,14 @@ import { CustomerService } from "./services/customer.service";
         HomeComponent,
         CustomerComponent,
         SaleOrderComponent,
-        ModalDateComponent
+        ModalDateComponent,
+        ItemInquiryComponent
     ],
     providers: [
         CouchbaseService,
         CustomerService,
-        ModalDialogService
+        ModalDialogService,
+        ProductService
     ],
     schemas: [
         NO_ERRORS_SCHEMA
