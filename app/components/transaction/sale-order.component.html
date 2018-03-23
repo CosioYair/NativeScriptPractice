@@ -224,11 +224,11 @@
                                         <StackLayout class="" row="0" col="0">
                                             <DockLayout>
                                                 <Label text="Qty"></Label>
-                                                <TextField hint=""></TextField>
+                                                <TextField [(ngModel)]="productQuantity" keyboardType="number" hint=""></TextField>
                                             </DockLayout>
                                             <DockLayout marginTop="50px">
                                                 <Label text="Price"></Label>
-                                                <TextField hint="" isEnabled="false"></TextField>
+                                                <TextField [(ngModel)]="selectedProduct.StandartUnitCost" hint="" isEnabled="false"></TextField>
                                             </DockLayout>
                                         </StackLayout>
                                         <StackLayout row="0" col="1">
@@ -246,7 +246,7 @@
                                             <Label text="Whse"></Label>
                                             <DropDown [items]="wharehousesProduct" [(ngModel)]="wharehouseProduct"></DropDown>
                                         </DockLayout>
-                                        <TextView  style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="300px" marginBottom="100px" marginTop="100px" hint="Comment" class="input input-border"></TextView>
+                                        <TextView backgroundColor="white" style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="300px" marginBottom="100px" marginTop="100px" hint="Comment" class="input input-border"></TextView>
                                     </StackLayout>
                                     <GridLayout class="" columns="125, *, *" rows="*">
                                         <StackLayout class="" row="0" col="0" horizontalAlignment="right">
@@ -259,7 +259,7 @@
                                         </StackLayout>
                                         <StackLayout row="0" col="2" horizontalAlignment="right">
                                             <Label text="STD PRICE"></Label>
-                                            <Label text="325.00"></Label>
+                                            <Label [text]="selectedProduct.StandartUnitPrice"></Label>
                                         </StackLayout>
                                     </GridLayout>
                                 </StackLayout>

@@ -33,6 +33,7 @@ export class SaleOrderComponent implements OnInit{
     public showingProduct:Boolean = false;
     public itemCode:string = "";
     public cart:any = [];
+    public productQuantity:number = 1;
 
     constructor(private _productService: ProductService, private _couchbaseService: CouchbaseService, private modalService:ModalDialogService, private vcRef:ViewContainerRef){
         this.dates = [];
@@ -121,11 +122,16 @@ export class SaleOrderComponent implements OnInit{
     public cancel(){
         this.showingProduct = false;
         this.selectedProduct = {};
+        this.lineTitle =  "Item Details";
+        this.lineSubTitle = "Select an item to view details and add";
+        this.productQuantity = 1;
     }
 
     public viewProduct(product:Product){
         this.selectedProduct = product;
         this.showingProduct = true;
+        this.lineTitle = product.ItemCodeDesc;
+        this.lineSubTitle = product.ItemCode;
     }
 
     public searchItemCode(){
