@@ -220,7 +220,7 @@
                         <StackLayout *ngIf="showingProduct">
                             <GridLayout class="product-quantity" columns="340, *" rows="auto">
                                 <StackLayout class="" row="0" col="0">
-                                    <GridLayout class="" columns="*, *" rows="*">
+                                    <GridLayout class="product-sections" columns="*, *" rows="*">
                                         <StackLayout class="" row="0" col="0">
                                             <DockLayout>
                                                 <Label text="Qty"></Label>
@@ -228,7 +228,7 @@
                                             </DockLayout>
                                             <DockLayout marginTop="50px">
                                                 <Label text="Price"></Label>
-                                                <TextField [text]="selectedProduct.StandartUnitCost" hint="" isEnabled="false"></TextField>
+                                                <TextField [(ngModel)]="selectedProduct.StandardUnitCost" hint="" isEnabled="false"></TextField>
                                             </DockLayout>
                                         </StackLayout>
                                         <StackLayout row="0" col="1">
@@ -259,7 +259,7 @@
                                         </StackLayout>
                                         <StackLayout row="0" col="2" horizontalAlignment="right">
                                             <Label text="STD PRICE"></Label>
-                                            <Label [text]="selectedProduct.StandartUnitPrice"></Label>
+                                            <Label [text]="selectedProduct.StandardUnitPrice"></Label>
                                         </StackLayout>
                                     </GridLayout>
                                 </StackLayout>

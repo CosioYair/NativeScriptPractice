@@ -90,3 +90,7 @@ TabView {
 .product-quantity Label, .product-quantity TextField {
     margin-right: 10%;
 }
+
+.product-sections TextField {
+    height: 70px;
+}
