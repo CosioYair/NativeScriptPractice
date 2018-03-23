@@ -11,7 +11,7 @@
     </GridLayout>
 </ActionBar>
 
-<TabView selectedIndex="2" androidSelectedTabHighlightColor="#DE6427" tabTextColor="#C2C1C1" sdkExampleTitle sdkToggleNavButton>
+<TabView selectedIndex="3" androidSelectedTabHighlightColor="#DE6427" tabTextColor="#C2C1C1" sdkExampleTitle sdkToggleNavButton>
     <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
         <GridLayout class="tab-content" columns="*, *" rows="*">
             <StackLayout row="0" col="0">
@@ -276,6 +276,13 @@
         </GridLayout>
     </StackLayout>
     <StackLayout *tabItem="{title: '&#xf2b5; TOTALS'}" >
-        <Label text="First tab item"></Label>
+        <GridLayout class="tab-content" columns="300, *, 100" rows="*">
+            <StackLayout class="tab-list" row="0" col="0" backgroundColor="red">
+            </StackLayout>
+            <StackLayout class="product-detail" row="0" col="1" backgroundColor="blue">
+            </StackLayout>
+            <StackLayout class="product-detail" row="0" col="2" backgroundColor="yellow">
+            </StackLayout>
+        </GridLayout>   
     </StackLayout>
 </TabView>
