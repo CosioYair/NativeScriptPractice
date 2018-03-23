@@ -132,17 +132,40 @@ export class SaleOrderComponent implements OnInit{
         this.showingProduct = true;
         this.lineTitle = product.ItemCodeDesc;
         this.lineSubTitle = product.ItemCode;
+        this.itemCode = product.ItemCode;
     }
 
-    public searchItemCode(){
+    private searchItemCode(code:string, list:any){
         let notFound = true;
-        this._products.map( (product, index) => {
-            if(this._products[index].ItemCode.toLowerCase() == this.itemCode.toLowerCase()){
-                this.viewProduct(this._products[index]);
+        list.map( (product, index) => {
+            if(list[index].ItemCode.toLowerCase() == code.toLowerCase()){
                 notFound = false;
+                this.selectedProduct = this._products[index]; 
             }
         });
-        if(notFound)
+        return notFound;
+    }
+
+    public validateProductList(){
+        if(this.searchItemCode(this.itemCode, this._products))
             alert(`Invalid item code. ${this.itemCode} does not exist.`);
+        else
+            this.viewProduct(this.selectedProduct);
+    }
+
+    public addProduct(){
+        if(this.searchItemCode(this.itemCode, this.cart)){
+            this.selectedProduct.quantity = this.productQuantity;
+            this.selectedProduct.quantityPrice = this.selectedProduct.quantity * this.selectedProduct.StandartUnitPrice;
+            this.cart.push(this.selectedProduct);
+            alert(`Item ${this.itemCode} added to cart.`);
+        }
+        else
+            alert(`Item ${this.itemCode} is already in the cart.`);
+        this.cancel();
+    }
+
+    public showCart(){
+        console.log(JSON.stringify(this.cart));
     }
  }

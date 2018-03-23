@@ -192,7 +192,7 @@
                         <StackLayout *ngIf="!showingProduct">
                             <DockLayout>
                                 <Label text="Item Code"></Label>
-                                <TextField [(ngModel)]="itemCode" hint="" (returnPress)="searchItemCode()"></TextField>
+                                <TextField [(ngModel)]="itemCode" hint="" (returnPress)="validateProductList()"></TextField>
                                 <Image class="icon" src="~/assets/images/barCode.png"></Image>
                             </DockLayout>
                             <DockLayout>
@@ -228,7 +228,7 @@
                                             </DockLayout>
                                             <DockLayout marginTop="50px">
                                                 <Label text="Price"></Label>
-                                                <TextField [(ngModel)]="selectedProduct.StandartUnitCost" hint="" isEnabled="false"></TextField>
+                                                <TextField [text]="selectedProduct.StandartUnitCost" hint="" isEnabled="false"></TextField>
                                             </DockLayout>
                                         </StackLayout>
                                         <StackLayout row="0" col="1">
@@ -266,7 +266,7 @@
                                 <StackLayout class="" row="0" col="1">
                                     <Button class="option-button" text="Add" verticalAlignment="center" (tap)="addProduct()"></Button>
                                     <Button class="option-button" text="Cancel" verticalAlignment="center" (tap)="cancel()"></Button>
-                                    <Image class="productImage" src="~/assets/images/barCode.png"></Image>
+                                    <Image class="productImage" src="~/assets/images/barCode.png" (tap)="showCart()"></Image>
                                 </StackLayout>
                             </GridLayout>
                         </StackLayout>
