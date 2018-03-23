@@ -10,7 +10,7 @@ TabView {
 .tab-content Label {
     font-weight: bold;
     margin-top: 2%;
-    width: 30%;;
+    width: 30%;
 }
 
 .tab-content .h3 {
@@ -43,4 +43,8 @@ TabView {
 .tab-list Label, .tab-list StackLayout, .tab-list DockLayout, .tab-list GridLayout {
     width: 100%;
     font-size: 15%;
+}
+
+.tab-list ListView Label {
+    font-weight: normal;
 }
