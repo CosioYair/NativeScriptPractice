@@ -48,3 +48,29 @@ TabView {
 .tab-list ListView Label {
     font-weight: normal;
 }
+
+.product-detail-title Label, .product-detail StackLayout, .product-detail DockLayout, .product-detail GridLayout {
+    width: 100%;
+    font-size: 20%;
+}
+
+.icon {
+    height: 10%;
+    width: 10%;
+    margin-right: 2%;
+}
+
+.miniImage {
+    height: 50%;
+    width: 50%;
+}
+
+.product-description Label {
+    font-size: 17%;
+}
+
+.product-total Label {
+    width: 50%;
+    padding-top: 40%;
+    margin-left: 0;
+}

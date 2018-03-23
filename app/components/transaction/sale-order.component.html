@@ -180,23 +180,45 @@
                     </GridLayout>
                 </Border>
             </StackLayout>
-            <StackLayout class="" row="0" col="1">
-                <GridLayout borderRadius="8" class="" columns="*, *" rows="100, *, auto">
+            <StackLayout class="product-detail" row="0" col="1">
+                <GridLayout borderRadius="8" class="" columns="*" rows="100, *">
                     <Border margin="3%" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
-                        <StackLayout>
-                            <Label [(ngModel)]="lineTitle" class="h1"></Label>
-                            <Label [(ngModel)]="lineSubTitle" class="list-group-item-heading"></Label>
+                        <StackLayout class="product-detail-title">
+                            <Label [text]="lineTitle" class="h1"></Label>
+                            <Label [text]="lineSubTitle" class="list-group-item-heading"></Label>
                         </StackLayout>
                     </Border>
-                    <StackLayout *ngIf="false" margin="3%" col="0" row="1">
-                        
-                    </StackLayout>
-                    <StackLayout *ngIf="false" margin="3%"  col="1" row="1">
-                        
-                    </StackLayout>
-                    <StackLayout *ngIf="false" margin="3%" row="2" colSpan="2" orientation="horizontal" horizontalAlignment="center">
-                        <Button class="option-button" text="Quote"></Button>
-                        <Button class="option-button" text="Sales Order"></Button>
+                    <StackLayout class="product-description" margin="3%" col="0" row="1">
+                        <StackLayout *ngIf="true">
+                            <DockLayout>
+                                <Label text="Item Code"></Label>
+                                <TextField hint=""></TextField>
+                                <Image class="icon" src="~/assets/images/barCode.png"></Image>
+                            </DockLayout>
+                            <DockLayout>
+                                <Image class="miniImage" src="~/assets/images/taskList.png"></Image>
+                            </DockLayout>
+                            <GridLayout class="" columns="*, *" rows="*">
+                                <StackLayout class="product-total" row="0" col="0">
+                                    <Border borderBottomWidth="2">
+                                        <DockLayout>
+                                            <Label text="Total Qty:"></Label>
+                                            <Label class="h2" text="1"></Label>
+                                        </DockLayout>
+                                    </Border>
+                                </StackLayout>
+                                <StackLayout class="product-total" row="0" col="1">
+                                    <Border borderBottomWidth="2">
+                                        <DockLayout>
+                                            <Label text="Total Amt:"></Label>
+                                            <Label class="h2" text="$79.00"></Label>
+                                        </DockLayout>
+                                    </Border>
+                                </StackLayout>
+                            </GridLayout>
+                        </StackLayout>
+                        <StackLayout *ngIf="false">
+                        </StackLayout>
                     </StackLayout>
                 </GridLayout>
             </StackLayout>
