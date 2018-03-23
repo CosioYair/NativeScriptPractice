@@ -156,7 +156,7 @@ export class SaleOrderComponent implements OnInit{
     public addProduct(){
         if(this.searchItemCode(this.itemCode, this.cart)){
             this.selectedProduct.quantity = this.productQuantity;
-            this.selectedProduct.quantityPrice = this.selectedProduct.quantity * this.selectedProduct.StandartUnitPrice;
+            this.selectedProduct.quantityPrice = this.selectedProduct.quantity * parseFloat(this.selectedProduct.StandardUnitCost);
             this.cart.push(this.selectedProduct);
             alert(`Item ${this.itemCode} added to cart.`);
         }
