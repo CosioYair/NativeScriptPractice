@@ -27,6 +27,11 @@ Page {
     margin-right: 2%;
 }
 
+.productImage {
+    height: 80%;
+    width: 80%;
+}
+
 .action-bar Label {
     font-size: 18%;
 }
