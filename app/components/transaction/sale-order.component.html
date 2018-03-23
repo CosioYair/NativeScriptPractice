@@ -192,7 +192,7 @@
                         <StackLayout *ngIf="!showingProduct">
                             <DockLayout>
                                 <Label text="Item Code"></Label>
-                                <TextField hint=""></TextField>
+                                <TextField [(ngModel)]="itemCode" hint="" (returnPress)="searchItemCode()"></TextField>
                                 <Image class="icon" src="~/assets/images/barCode.png"></Image>
                             </DockLayout>
                             <DockLayout>

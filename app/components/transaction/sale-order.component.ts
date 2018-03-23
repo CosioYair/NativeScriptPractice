@@ -31,6 +31,8 @@ export class SaleOrderComponent implements OnInit{
     public lineTitle:string = "Item Details";
     public lineSubTitle:string = "Select an item to view details and add";
     public showingProduct:Boolean = false;
+    public itemCode:string = "";
+    public cart:any = [];
 
     constructor(private _productService: ProductService, private _couchbaseService: CouchbaseService, private modalService:ModalDialogService, private vcRef:ViewContainerRef){
         this.dates = [];
@@ -116,17 +118,25 @@ export class SaleOrderComponent implements OnInit{
         });
     }
 
-    public setSelectedProduct(product:Product){
-        this.selectedProduct = product;
-        this.showingProduct = true;
-    }
-
     public cancel(){
         this.showingProduct = false;
         this.selectedProduct = {};
     }
 
     public viewProduct(product:Product){
-        this.setSelectedProduct(product);
+        this.selectedProduct = product;
+        this.showingProduct = true;
+    }
+
+    public searchItemCode(){
+        let notFound = true;
+        this._products.map( (product, index) => {
+            if(this._products[index].ItemCode.toLowerCase() == this.itemCode.toLowerCase()){
+                this.viewProduct(this._products[index]);
+                notFound = false;
+            }
+        });
+        if(notFound)
+            alert(`Invalid item code. ${this.itemCode} does not exist.`);
     }
  }
