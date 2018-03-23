@@ -30,6 +30,7 @@ export class SaleOrderComponent implements OnInit{
     public shipVia:number = 0;
     public lineTitle:string = "Item Details";
     public lineSubTitle:string = "Select an item to view details and add";
+    public showingProduct:Boolean = false;
 
     constructor(private _productService: ProductService, private _couchbaseService: CouchbaseService, private modalService:ModalDialogService, private vcRef:ViewContainerRef){
         this.dates = [];
@@ -93,7 +94,8 @@ export class SaleOrderComponent implements OnInit{
 
     public onTextChanged(args) {
         let searchBar = <SearchBar>args.object;
-        let searchValue = searchBar.text.toLowerCase();
+        let searchValue = searchBar.text.toLowerCase()
+        this.cancel();
 
         if(searchValue.length > 0){
             this.productList = new ObservableArray<Product>();
@@ -116,5 +118,15 @@ export class SaleOrderComponent implements OnInit{
 
     public setSelectedProduct(product:Product){
         this.selectedProduct = product;
+        this.showingProduct = true;
+    }
+
+    public cancel(){
+        this.showingProduct = false;
+        this.selectedProduct = {};
+    }
+
+    public viewProduct(product:Product){
+        this.setSelectedProduct(product);
     }
  }
