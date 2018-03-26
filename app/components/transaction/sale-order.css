@@ -102,10 +102,6 @@ TabView {
     font-size: 18%;
 }
 
-.totals StackLayout {
-    padding-right: 15%;
-}
-
 .totals .h1 {
     font-size: 25%;
 }

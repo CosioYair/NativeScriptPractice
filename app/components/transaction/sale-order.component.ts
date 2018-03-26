@@ -23,6 +23,7 @@ export class SaleOrderComponent implements OnInit{
     private _docIdProduct:string = "product";
     public productList: ObservableArray<Product> = new ObservableArray<Product>();
     public selectedProduct:any = {};
+    public selectedCartProduct:any = {};
     public data = {};
     public dates:any;
     public wharehouses:any;
@@ -51,6 +52,7 @@ export class SaleOrderComponent implements OnInit{
             this.shipVias.push(shipVia.name);
         });
         this.selectedProduct.ItemCode = "";
+        this.selectedCartProduct.ItemCode = "";
     }
 
     ngOnInit() {
@@ -168,6 +170,10 @@ export class SaleOrderComponent implements OnInit{
 
     public showCart(){
         console.log(JSON.stringify(this.cart));
+    }
+
+    public setSelectedCartProduct(product:Product){
+        this.selectedCartProduct = product;
     }
 
     public onScan() {
