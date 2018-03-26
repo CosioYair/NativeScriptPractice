@@ -55,7 +55,7 @@
                 </StackLayout>
                 <StackLayout width="33%">
                     <Label class="itemInquiry-labelBold" text="SALES UM"></Label>
-                    <Label text=""></Label>
+                    <Label [text]="picture"></Label>
                     <label  class="itemInquiry-labelBold" text="STOCK STATUS" paddingTop="145%"></label>
                     <label class="itemInquiry-labelBold" text="CUBES" paddingTop="100%"></label>
                     <label class="itemInquiry-numberLabel" [text]="selectedProduct.Category4"></label>
@@ -71,6 +71,7 @@
                     <StackLayout width="33%">
                         <label text="ON HAND"></label>
                         <label text="0" fontSize="30" textAlignment="center"></label>
+                        <Label [text]="picture"></Label>
                     </StackLayout>
                     <StackLayout width="33%">
                         <label text="ON SO & BO"></label>

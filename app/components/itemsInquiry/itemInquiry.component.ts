@@ -7,11 +7,15 @@ import { CouchbaseService} from "../../services/couchbase.service";
 import { SetupItemViewArgs } from "nativescript-angular/directives";
 import { SERVER } from "../../config/server.config";
 
-//import para descarga de imagenes
+//import para descarga de imagenes http
 
 import * as imageSource from "tns-core-modules/image-source";
 import * as fs from "tns-core-modules/file-system";
 import * as http from "http";
+
+//Download Progress
+import { DownloadProgress } from "nativescript-download-progress"
+
 
 @Component({
     selector: "ns-itemInquiry",
@@ -28,6 +32,7 @@ export class ItemInquiryComponent implements OnInit{
     public data = {};
     public selectedProduct:any = {};
     public picture:any;
+    public urlImage: any;
 
     constructor(private _couchbaseService: CouchbaseService, private _productService: ProductService){
         this.selectedProduct = {
@@ -47,6 +52,7 @@ export class ItemInquiryComponent implements OnInit{
             ProductLine: "",
             ProductType: "",
             ExtendedDescriptionText: "",
+            ImageFile: "",
             LastSoldDate: "",
             DateCreated: "",
             DateUpdated: "",
@@ -110,38 +116,112 @@ export class ItemInquiryComponent implements OnInit{
 
     public setSelectedProduct(product:Product){
         this.selectedProduct = product;
-        this.downloadImagesProducts(this.productList);
+        //this.showImage(product);
+        //this.downloadImagesProducts(this.productList);
+        //this.downloadProgres();
+        this.getImage(product);
     }
 
 //descargar imagenes
     public downloadImagesProducts(productList: ObservableArray<Product>){
-
-        productList.map(product => {
-            if(product.ImageFile != null){
-                console.log(`${SERVER.baseUrl}/Image/${product.ImageFile}`);
-            }
-            
-        });
-
-        http.getFile("https://raw.githubusercontent.com/NativeScript/NativeScript/master/tests/app/logo.png").then(function (r) {
-            //// Argument (r) is File!
-            console.log(r.path);//nombre que trae desde el servidor
-            const img = imageSource.fromFile(r.path);
-            const folder = fs.knownFolders.documents();
-            const path = fs.path.join(folder.path, "test.png");//nombre con el que se guarda
-            const saved = img.saveToFile(path, "png");
-        }, function (e) {
-            //// Argument (e) is Error!
-        });
-
-        const folder = fs.knownFolders.documents();
-        const path = fs.path.join(folder.path, "test.png");//nombre para buscarlo
-        const img = imageSource.fromFile(path);
+        //var contWImage= 0;
+        //var contImage = 0;
+        var l: any;
+        var cont = 100;
+        l = productList.length;
+        var i = 0;
+        console.log("Largo del array__:"+l);
+            productList.map(product => {
+                if(product.ImageFile != null){
+                    console.log(`${SERVER.baseUrl}/Image/${product.ImageFile}`);
+                    this.urlImage = `${SERVER.baseUrl}/Image/${product.ImageFile}`;
+                    console.log(this.urlImage);
+                    //contImage++;
+                    
+                    
+                    
+                    setTimeout(() => {
+                        //this._productService.getProductImage(this.urlImage,product.ImageFile);
+                        //this.downloadProgress(this.urlImage);
+                    }, cont);
+                    
+                    i++;
+                    console.log(i);
+                }else{
+                    //console.log(product.ProductType + "____No tiene imagen___"+contWImage);
+                    //contWImage++;
+                }
+                cont += 250;
+            });
         
-        this.picture = path;
-        console.log(path+"888888888");
+        
+        console.log("Termino la descarga");
+        
+        
+    }
 
-        console.log(this.picture+"888888888");
+    public showImageLocal(product: Product){
+        //codigo para obtener los path de la imagen seleccionada
+        if(product.ImageFile != null && product.ImageFile != undefined){
+            const folder = fs.knownFolders.documents();
+            var path = fs.path.join(folder.path, product.ImageFile);//nombre para buscarlo
+            const img = imageSource.fromFile(path);
+             
+            this.picture = path;
+            console.log(path+"encontro imagen");
+
+            console.log(this.picture+"888888888");
+        }else{
+            const folder = fs.knownFolders.documents();
+            var path = fs.path.join(folder.path, "IFD1020NTST.jpg");//nombre para buscarlo
+            const img = imageSource.fromFile(path);
+            
+            this.picture = path;
+            console.log(path+"no encontro imagen");
+
+            console.log(this.picture+"888888888");
+        }
+        
+    }
+
+    //Plugin descarga de archivos grandes...
+    public async downloadProgress(urlImage: any){
+        var download = new DownloadProgress();
+        var uri: any = "uriVacia";
+        download.addProgressCallback((progress)=>{
+            console.log('Progress:', progress);
+        })
+            await download.downloadFile(urlImage).then((f)=>{
+            console.log("Success", f);
+            console.log("Funciona");
+            
+        }).catch((e)=>{
+            console.log("Error", e);
+        })
+        return uri;
+    }
+
+
+    //prueba de descarga por click
+    public getImage(product: Product){
+        
+                if(product.ImageFile != null || product.ImageFile != undefined){
+                    console.log(`${SERVER.baseUrl}/Image/${product.ImageFile}`);
+                    this.urlImage = `${SERVER.baseUrl}/Image/${product.ImageFile}`;
+                    console.log(this.urlImage);
+                    //contImage++;
+
+                    setTimeout(() => {
+                            this._productService.getProductImage(this.urlImage,product.ImageFile);
+                            this.picture = this.urlImage
+                            this.showImageLocal(product);
+                        }, 250);
+                    console.log("Se descargo imagen en la url___:" + this.urlImage);
+                }else{
+                    this.showImageLocal(product);
+                    console.log(product.ProductType + "____No tiene imagen___");
+                }
+                console.log("Termino la descarga");     
     }
     
  }

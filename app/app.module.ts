@@ -13,6 +13,8 @@ import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.comp
 import { CouchbaseService } from "./services/couchbase.service";
 import { ProductService } from "./services/item.service";
 
+
+
 // Uncomment and add to NgModule imports  if you need to use the HTTP wrapper
 //import { NativeScriptHttpModule } from "nativescript-angular/http";
 
@@ -35,7 +37,7 @@ import { ProductService } from "./services/item.service";
     ],
     providers: [
         CouchbaseService,
-        ProductService
+        ProductService,
     ],
     schemas: [
         NO_ERRORS_SCHEMA
