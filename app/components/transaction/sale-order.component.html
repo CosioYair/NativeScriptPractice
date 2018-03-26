@@ -328,7 +328,7 @@
                 </GridLayout>
                 <ListView [items]="cart" class="list-group">
                     <ng-template let-item="item">
-                        <GridLayout borderRadius="8" class="" columns="100, *, 120" rows="120" (tap)="setSelectedCartProduct(item)" [class.highlight]="item.ItemCode == selectedCartProduct.ItemCode">
+                        <GridLayout borderRadius="8" class="" columns="100, *, 120" rows="100" (tap)="setSelectedCartProduct(item)" [class.highlight]="item.ItemCode == selectedCartProduct.ItemCode">
                             <StackLayout col="0" verticalAlignment="center" paddingRight="20%">
                                 <Label [text]="item.quantity" horizontalAlignment="right"></Label>
                                 <Label class="totals-subtitle" text="EACH" horizontalAlignment="right"></Label>
@@ -347,7 +347,7 @@
             </StackLayout>
             <StackLayout class="product-detail-icons" row="0" col="2">
                 <Button class="option-button" text="&#xf044;" verticalAlignment="center"></Button>
-                <Button class="option-button" text="&#xf1f8;" verticalAlignment="center"></Button>
+                <Button class="option-button" text="&#xf1f8;" verticalAlignment="center" (tap)="deleteCartProduct()"></Button>
             </StackLayout>
         </GridLayout>   
     </StackLayout>

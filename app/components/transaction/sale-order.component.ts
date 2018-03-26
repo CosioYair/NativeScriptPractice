@@ -176,6 +176,13 @@ export class SaleOrderComponent implements OnInit{
         this.selectedCartProduct = product;
     }
 
+    public deleteCartProduct(){
+        this.cart.map( (product, index) => {
+            if(this.cart[index].ItemCode == this.selectedCartProduct.ItemCode)
+                this.cart.splice(index, 1);
+        });
+    }
+
     public onScan() {
         alert("sss");
         this.barcodeScanner.scan({
