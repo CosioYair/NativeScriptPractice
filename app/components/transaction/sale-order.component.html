@@ -21,11 +21,11 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Date"></Label>
-                    <TextField hint="Date" [(ngModel)]="dates.date" (tap)="showModal('date')"></TextField>
+                    <TextField hint="Date" [(ngModel)]="dates.date" (tap)="showDateModal('date')"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Ship Date"></Label>
-                    <TextField hint="Ship Date" [(ngModel)]="dates.shipDate" (tap)="showModal('shipDate')"></TextField>
+                    <TextField hint="Ship Date" [(ngModel)]="dates.shipDate" (tap)="showDateModal('shipDate')"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Wharehouse"></Label>
@@ -346,7 +346,7 @@
                 </ListView>
             </StackLayout>
             <StackLayout class="product-detail-icons" row="0" col="2">
-                <Button class="option-button" text="&#xf044;" verticalAlignment="center"></Button>
+                <Button class="option-button" text="&#xf044;" verticalAlignment="center" (tap)="createModelViewProductEdit('date')"></Button>
                 <Button class="option-button" text="&#xf1f8;" verticalAlignment="center" (tap)="deleteCartProduct()"></Button>
             </StackLayout>
         </GridLayout>   

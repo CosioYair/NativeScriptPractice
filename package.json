@@ -27,6 +27,7 @@
 		"nativescript-barcodescanner": "^2.7.6",
 		"nativescript-couchbase": "^1.0.18",
 		"nativescript-drop-down": "^3.2.4",
+		"nativescript-orientation": "^2.2.0",
 		"nativescript-theme-core": "~1.0.4",
 		"reflect-metadata": "~0.1.8",
 		"rxjs": "~5.5.2",

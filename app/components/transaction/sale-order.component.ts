@@ -2,7 +2,7 @@ import { Component, OnInit, ViewContainerRef } from "@angular/core";
 import { Border } from "tns-core-modules/ui/border";
 import { CouchbaseService } from "../../services/couchbase.service";
 import { ModalDialogOptions, ModalDialogService } from "nativescript-angular/modal-dialog";
-import { ModalDateComponent } from "../modal/modal-date.component";
+import { ModalDateComponent } from "../modal/datepicker/modal-date.component";
 import { DropDownModule } from "nativescript-drop-down/angular";
 import { CONSTANTS } from "../../config/constants.config";
 import { SearchBar } from "tns-core-modules/ui/search-bar/search-bar";
@@ -10,6 +10,7 @@ import { ObservableArray } from "tns-core-modules/data/observable-array/observab
 import { Product } from "../../interfaces/itemInquiry.interface";
 import { ProductService } from "../../services/item.service";
 import { BarcodeScanner } from 'nativescript-barcodescanner';
+import { ModalProductOrderComponent } from "../modal/productOrder/modal-product-order.component";
 
 @Component({
     selector: "ns-sale-order",
@@ -36,6 +37,7 @@ export class SaleOrderComponent implements OnInit{
     public itemCode:string = "";
     public cart:any = [];
     public productQuantity:number = 1;
+    private orientation = require('nativescript-orientation');
 
     constructor(private _productService: ProductService, private _couchbaseService: CouchbaseService, private modalService:ModalDialogService, private vcRef:ViewContainerRef, private barcodeScanner: BarcodeScanner){
         this.dates = [];
@@ -53,6 +55,7 @@ export class SaleOrderComponent implements OnInit{
         });
         this.selectedProduct.ItemCode = "";
         this.selectedCartProduct.ItemCode = "";
+        this.orientation.setOrientation("landscape");  
     }
 
     ngOnInit() {
@@ -82,7 +85,7 @@ export class SaleOrderComponent implements OnInit{
         }
     }
 
-    public showModal(input:string) {
+    public showDateModal(input:string) {
         this.createModelView().then(result => {
            this.dates[input] = result;
         }).catch(error => alert(error));
@@ -184,7 +187,6 @@ export class SaleOrderComponent implements OnInit{
     }
 
     public onScan() {
-        alert("sss");
         this.barcodeScanner.scan({
             formats: "QR_CODE, EAN_13",
             showFlipCameraButton: true,   
@@ -205,5 +207,21 @@ export class SaleOrderComponent implements OnInit{
                 console.log("Error when scanning " + errorMessage);
             }
         );
+    }
+
+    public showProductOrderModal(input:string) {
+        this.createModelViewProductEdit().then(result => {
+           alert("ok");
+        }).catch(error => alert(error));
+    }
+    
+    private createModelViewProductEdit(): Promise<any> {
+        const today = new Date();
+        const options: ModalDialogOptions = {
+            viewContainerRef: this.vcRef,
+            context: today.toDateString(),
+            fullscreen: false,
+        };
+        return this.modalService.showModal(ModalProductOrderComponent, options);
     }
  }

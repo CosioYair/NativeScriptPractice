@@ -13,13 +13,14 @@ import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
 import { CustomerComponent } from "./components/customer/customer.component";
 import { SaleOrderComponent } from "./components/transaction/sale-order.component";
-import { ModalDateComponent } from "./components/modal/modal-date.component";
+import { ModalDateComponent } from "./components/modal/datepicker/modal-date.component";
 import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.component";
 
 //Services
 import { CouchbaseService } from "./services/couchbase.service";
 import { CustomerService } from "./services/customer.service";
 import { ProductService } from "./services/item.service";
+import { ModalProductOrderComponent } from "./components/modal/productOrder/modal-product-order.component";
 
 @NgModule({
     bootstrap: [
@@ -33,7 +34,8 @@ import { ProductService } from "./services/item.service";
         DropDownModule
     ],
     entryComponents: [
-        ModalDateComponent
+        ModalDateComponent,
+        ModalProductOrderComponent
     ],
     declarations: [
         AppComponent,
@@ -42,7 +44,8 @@ import { ProductService } from "./services/item.service";
         CustomerComponent,
         SaleOrderComponent,
         ModalDateComponent,
-        ItemInquiryComponent
+        ItemInquiryComponent,
+        ModalProductOrderComponent
     ],
     providers: [
         CouchbaseService,
