@@ -166,18 +166,18 @@
             <StackLayout class="tab-list" row="0" col="0">
                 <SearchBar hint="Search" (textChange)="onTextChanged($event)" (clear)="onClear($event)" textFieldBackgroundColor="white"></SearchBar>
                 <Border borderRadius="8" borderBottomWidth="2" borderTopWidth="2" borderColor="#DE6427" horizontalAlignment="stretch">
-                    <GridLayout borderRadius="8" class="" columns="*" rows="*" backgroundColor="white">
-                        <ListView [items]="productList" class="list-group">
-                            <ng-template let-item="item">
-                                <StackLayout borderRadius="8" class="item list-group-item" [class.highlight]="item.ItemCode == selectedProduct.ItemCode" (tap)="viewProduct(item)">
+                    <ListView [items]="productList" class="list-group">
+                        <ng-template let-item="item">
+                            <GridLayout borderRadius="8" class="" columns="*" rows="*" backgroundColor="white">
+                            <StackLayout borderRadius="8" class="item list-group-item" [class.highlight]="item.ItemCode == selectedProduct.ItemCode" (tap)="viewProduct(item)">
                                     <Label [text]="item.ItemCodeDesc" class="list-group-item-heading" fontSize="24ID"></Label>
                                     <StackLayout marginLeft="5%">
                                         <Label [text]="item.ItemCode" class="list-group-item-heading"></Label>
                                     </StackLayout>
                                 </StackLayout>
-                            </ng-template>
-                        </ListView>
-                    </GridLayout>
+                            </GridLayout>
+                        </ng-template>
+                    </ListView>
                 </Border>
             </StackLayout>
             <StackLayout class="product-detail" row="0" col="1">
