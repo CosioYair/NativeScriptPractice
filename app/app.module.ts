@@ -6,6 +6,7 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 import { ModalDialogService } from "nativescript-angular/modal-dialog";
 import { DropDownModule } from "nativescript-drop-down/angular";
+import { BarcodeScanner } from 'nativescript-barcodescanner';
 
 //Components
 import { LoginComponent } from "./components/login/login.component";
@@ -47,7 +48,8 @@ import { ProductService } from "./services/item.service";
         CouchbaseService,
         CustomerService,
         ModalDialogService,
-        ProductService
+        ProductService,
+        BarcodeScanner
     ],
     schemas: [
         NO_ERRORS_SCHEMA

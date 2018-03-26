@@ -94,3 +94,27 @@ TabView {
 .product-sections TextField {
     height: 70px;
 }
+
+.totals Label {
+    width: auto;
+    padding: 0;
+    margin: 0;
+    font-size: 18%;
+}
+
+.totals StackLayout {
+    padding-right: 15%;
+}
+
+.totals .h1 {
+    font-size: 25%;
+}
+
+.totals-subtitle {
+    color: #D7D7D7;
+}
+
+.product-detail-icons {
+    padding-top: 100%;
+    padding-left: 20%;
+}

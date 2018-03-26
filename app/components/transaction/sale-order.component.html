@@ -193,7 +193,7 @@
                             <DockLayout>
                                 <Label text="Item Code"></Label>
                                 <TextField [(ngModel)]="itemCode" hint="" (returnPress)="validateProductList()"></TextField>
-                                <Image class="icon" src="~/assets/images/barCode.png"></Image>
+                                <Image class="icon" src="~/assets/images/barCode.png" (tap)="onScan()"></Image>
                             </DockLayout>
                             <DockLayout>
                                 <Image class="miniImage" src="~/assets/images/taskList.png"></Image>
@@ -277,11 +277,77 @@
     </StackLayout>
     <StackLayout *tabItem="{title: '&#xf2b5; TOTALS'}" >
         <GridLayout class="tab-content" columns="300, *, 100" rows="*">
-            <StackLayout class="tab-list" row="0" col="0" backgroundColor="red">
+            <StackLayout class="tab-list" row="0" col="0">
+                <GridLayout borderRadius="8" class="" columns="*" rows="50, *">
+                    <Border  verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
+                        <DockLayout class="totals">
+                            <Label text="Total Qty" class=""></Label>
+                            <Label text="3" class="h1" horizontalAlignment="right"></Label>
+                        </DockLayout>
+                    </Border>
+                    <StackLayout class="product-description" margin="3%" col="0" row="1">
+                        <StackLayout class="totals">
+                            <DockLayout>
+                                <Label text="NET AMOUNT"></Label>
+                                <Label text="669.00" horizontalAlignment="right"></Label>
+                            </DockLayout>
+                            <DockLayout>
+                                <Label text="DISC AMOUNT"></Label>
+                                <Label text="0.00" horizontalAlignment="right"></Label>
+                            </DockLayout>
+                            <DockLayout>
+                                <Label text="SALES TAX"></Label>
+                                <Label text="0.00" horizontalAlignment="right"></Label>
+                            </DockLayout>
+                            <DockLayout>
+                                <Label text="FREIGHT"></Label>
+                                <Label text="0.00" horizontalAlignment="right"></Label>
+                            </DockLayout>
+                            <Border verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
+                                <DockLayout paddingTop="30%" class="totals">
+                                    <Label text="Total Amount" class=""></Label>
+                                    <Label text="$669.00" class="h1" horizontalAlignment="right"></Label>
+                                </DockLayout>
+                            </Border>
+                        </StackLayout>
+                    </StackLayout>
+                </GridLayout>
             </StackLayout>
-            <StackLayout class="product-detail" row="0" col="1" backgroundColor="blue">
+            <StackLayout class="totals" row="0" col="1" backgroundColor="white">
+                <GridLayout color="white" backgroundColor="gray" borderRadius="8" class="" columns="100, *, 120" rows="60">
+                    <StackLayout col="0" verticalAlignment="center">
+                        <Label text="Quantity"></Label>
+                    </StackLayout>
+                    <StackLayout col="1" verticalAlignment="center">
+                        <Label text="Item"></Label>
+                    </StackLayout>
+                    <StackLayout col="2" verticalAlignment="center">
+                        <Label text="Unit Price" horizontalAlignment="left"></Label>
+                        <Label text="Extension" horizontalAlignment="left"></Label>
+                    </StackLayout>
+                </GridLayout>
+                <ListView [items]="cart" class="list-group">
+                    <ng-template let-item="item">
+                        <GridLayout borderRadius="8" class="" columns="100, *, 120" rows="120">
+                            <StackLayout col="0" verticalAlignment="center">
+                                <Label [text]="item.quantity" horizontalAlignment="right"></Label>
+                                <Label class="totals-subtitle" text="EACH" horizontalAlignment="right"></Label>
+                            </StackLayout>
+                            <StackLayout col="1" verticalAlignment="center">
+                                <Label [text]="item.ItemCodeDesc" horizontalAlignment="left"></Label>
+                                <Label class="totals-subtitle" [text]="item.ItemCode" horizontalAlignment="left"></Label>
+                            </StackLayout>
+                            <StackLayout col="2" verticalAlignment="center">
+                                <Label [text]="item.StandardUnitCost" horizontalAlignment="center"></Label>
+                                <Label class="totals-subtitle" [text]="item.StandardUnitPrice" horizontalAlignment="center"></Label>
+                            </StackLayout>
+                        </GridLayout>
+                    </ng-template>
+                </ListView>
             </StackLayout>
-            <StackLayout class="product-detail" row="0" col="2" backgroundColor="yellow">
+            <StackLayout class="product-detail-icons" row="0" col="2">
+                <Button class="option-button" text="&#xf044;" verticalAlignment="center"></Button>
+                <Button class="option-button" text="&#xf1f8;" verticalAlignment="center"></Button>
             </StackLayout>
         </GridLayout>   
     </StackLayout>

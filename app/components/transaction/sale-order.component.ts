@@ -9,6 +9,7 @@ import { SearchBar } from "tns-core-modules/ui/search-bar/search-bar";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { Product } from "../../interfaces/itemInquiry.interface";
 import { ProductService } from "../../services/item.service";
+import { BarcodeScanner } from 'nativescript-barcodescanner';
 
 @Component({
     selector: "ns-sale-order",
@@ -35,7 +36,7 @@ export class SaleOrderComponent implements OnInit{
     public cart:any = [];
     public productQuantity:number = 1;
 
-    constructor(private _productService: ProductService, private _couchbaseService: CouchbaseService, private modalService:ModalDialogService, private vcRef:ViewContainerRef){
+    constructor(private _productService: ProductService, private _couchbaseService: CouchbaseService, private modalService:ModalDialogService, private vcRef:ViewContainerRef, private barcodeScanner: BarcodeScanner){
         this.dates = [];
         this.wharehouses = [];
         this.shipVias = [];
@@ -167,5 +168,29 @@ export class SaleOrderComponent implements OnInit{
 
     public showCart(){
         console.log(JSON.stringify(this.cart));
+    }
+
+    public onScan() {
+        alert("sss");
+        this.barcodeScanner.scan({
+            formats: "QR_CODE, EAN_13",
+            showFlipCameraButton: true,   
+            preferFrontCamera: false,     
+            showTorchButton: true,        
+            beepOnScan: true,             
+            torchOn: false,               
+            resultDisplayDuration: 500,   
+            orientation: "orientation",     
+            openSettingsIfPermissionWasPreviouslyDenied: true
+        }).then((result) => {
+            alert({
+                title: "You Scanned ",
+                message: "Format: " + result.format + ",\nContent: " + result.text,
+                okButtonText: "OKK"
+            });
+            }, (errorMessage) => {
+                console.log("Error when scanning " + errorMessage);
+            }
+        );
     }
  }

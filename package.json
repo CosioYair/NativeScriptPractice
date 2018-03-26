@@ -24,6 +24,7 @@
 		"@angular/router": "~5.2.0",
 		"font-awesome": "^4.7.0",
 		"nativescript-angular": "~5.2.0",
+		"nativescript-barcodescanner": "^2.7.6",
 		"nativescript-couchbase": "^1.0.18",
 		"nativescript-drop-down": "^3.2.4",
 		"nativescript-theme-core": "~1.0.4",
