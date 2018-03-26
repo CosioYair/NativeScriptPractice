@@ -114,3 +114,8 @@ TabView {
     padding-top: 100%;
     padding-left: 20%;
 }
+
+.option-button {
+    min-width: 20%;
+    min-height: 120px;
+}
