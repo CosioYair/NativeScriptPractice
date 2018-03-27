@@ -84,12 +84,6 @@ export class SaleOrderComponent implements OnInit{
             this.productList = new ObservableArray<Product>(this._products);
         }
     }
-
-    public showDateModal(input:string) {
-        this.createModelView().then(result => {
-           this.dates[input] = result;
-        }).catch(error => alert(error));
-    }
     
     private createModelView(): Promise<any> {
         const today = new Date();
@@ -211,17 +205,21 @@ export class SaleOrderComponent implements OnInit{
 
     public showProductOrderModal(input:string) {
         this.createModelViewProductEdit().then(result => {
-           alert("ok");
+           //console.log(JSON.stringify(result));
         }).catch(error => alert(error));
     }
     
     private createModelViewProductEdit(): Promise<any> {
-        const today = new Date();
-        const options: ModalDialogOptions = {
-            viewContainerRef: this.vcRef,
-            context: today.toDateString(),
-            fullscreen: false,
-        };
-        return this.modalService.showModal(ModalProductOrderComponent, options);
+        if(this.selectedCartProduct.quantity != null){
+            const productDetails = {
+                selectedCartProduct: this.selectedCartProduct
+            };
+            const options: ModalDialogOptions = {
+                viewContainerRef: this.vcRef,
+                context: productDetails,
+                fullscreen: false,
+            };
+            return this.modalService.showModal(ModalProductOrderComponent, options);
+        }
     }
  }

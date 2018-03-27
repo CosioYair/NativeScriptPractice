@@ -1,24 +1,18 @@
-<StackLayout>
-    <GridLayout class="product-quantity" columns="340, *" rows="auto">
+<StackLayout padding="20%">
+    <GridLayout class="" columns="340, *" rows="auto">
         <StackLayout class="" row="0" col="0">
-            <GridLayout class="product-sections" columns="*, *" rows="*">
+            <GridLayout class="product-sections" columns="*" rows="*">
                 <StackLayout class="" row="0" col="0">
                     <DockLayout>
                         <Label text="Qty"></Label>
-                        <TextField [(ngModel)]="productQuantity" keyboardType="number" hint=""></TextField>
+                        <TextField [(ngModel)]="selectedCartProduct.quantity" keyboardType="number" hint=""></TextField>
                     </DockLayout>
+                    <DockLoyout>
+                        <DropDown [items]="eachs" [(ngModel)]="each"></DropDown>
+                    </DockLoyout>
                     <DockLayout marginTop="50px">
                         <Label text="Price"></Label>
-                        <TextField [(ngModel)]="selectedProduct.StandardUnitCost" hint="" isEnabled="false"></TextField>
-                    </DockLayout>
-                </StackLayout>
-                <StackLayout row="0" col="1">
-                    <DockLayout>
-                        <DropDown [items]="eachs" [(ngModel)]="each"></DropDown>
-                    </DockLayout>
-                    <DockLayout marginTop="50px">
-                        <Label text="Disc %"></Label>
-                        <TextField hint="" isEnabled="false"></TextField>
+                        <TextField [(ngModel)]="selectedCartProduct.StandardUnitCost" hint="" isEnabled="false"></TextField>
                     </DockLayout>
                 </StackLayout>
             </GridLayout>
@@ -40,14 +34,12 @@
                 </StackLayout>
                 <StackLayout row="0" col="2" horizontalAlignment="right">
                     <Label text="STD PRICE"></Label>
-                    <Label [text]="selectedProduct.StandardUnitPrice"></Label>
+                    <Label [text]="selectedCartProduct.StandardUnitPrice"></Label>
                 </StackLayout>
             </GridLayout>
         </StackLayout>
         <StackLayout class="" row="0" col="1">
-            <Button class="option-button" text="Add" verticalAlignment="center" (tap)="addProduct()"></Button>
-            <Button class="option-button" text="Cancel" verticalAlignment="center" (tap)="cancel()"></Button>
-            <Image class="productImage" src="~/assets/images/barCode.png" (tap)="showCart()"></Image>
+            <Button class="option-button" text="Save" verticalAlignment="center" (tap)="save()"></Button>
         </StackLayout>
     </GridLayout>
 </StackLayout>

@@ -9,23 +9,14 @@ import { EventData } from "data/observable";
 })
 export class ModalProductOrderComponent {
     public _date:any;
+    public selectedCartProduct:any;
 
     public constructor(private params: ModalDialogParams) {
         this._date = new Date();
+        this.selectedCartProduct = this.params.context.selectedCartProduct;
     }
 
-    public onPickerLoaded(args) {
-        let datePicker = <DatePicker>args.object;
-        datePicker.date =  new Date();
-        datePicker.minDate = new Date();
-    }
-
-    public onDateChanged(args) {
-        this._date = args.value;
-    }
-
-    public close() {
-        this._date = `${this._date.getDate()}/${this._date.getMonth()}/${this._date.getFullYear()}`;
-        this.params.closeCallback(this._date);
+    public save() {
+        this.params.closeCallback(this.selectedCartProduct);
     }
 }
