@@ -55,7 +55,7 @@ export class SaleOrderComponent implements OnInit{
         });
         this.selectedProduct.ItemCode = "";
         this.selectedCartProduct.ItemCode = "";
-        this.orientation.setOrientation("landscapeleft");  
+        this.orientation.setOrientation("landscaperight");  
     }
 
     ngOnInit() {
