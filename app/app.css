@@ -67,3 +67,7 @@ Page {
 TextField, Dropdown {
     background-color:white;
 }
+
+.enabled {
+    background-color: #D7D7D7;
+}
