@@ -8,15 +8,13 @@ import { EventData } from "data/observable";
     templateUrl: "./modal-product-order.component.html",
 })
 export class ModalProductOrderComponent {
-    public _date:any;
     public selectedCartProduct:any;
 
     public constructor(private params: ModalDialogParams) {
-        this._date = new Date();
         this.selectedCartProduct = this.params.context.selectedCartProduct;
     }
 
-    public save() {
+    public close() {
         this.params.closeCallback(this.selectedCartProduct);
     }
 }

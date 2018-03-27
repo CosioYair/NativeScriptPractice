@@ -206,9 +206,9 @@ export class SaleOrderComponent implements OnInit{
         );
     }
 
-    public showProductOrderModal(input:string) {
+    public showProductOrderModal() {
         this.createModelViewProductEdit().then(result => {
-           //console.log(JSON.stringify(result));
+            console.log(result.quantity);
         }).catch(error => alert(error));
     }
     
