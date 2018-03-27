@@ -55,7 +55,7 @@ export class SaleOrderComponent implements OnInit{
         });
         this.selectedProduct.ItemCode = "";
         this.selectedCartProduct.ItemCode = "";
-        this.orientation.setOrientation("landscape");  
+        this.orientation.setOrientation("landscapeleft");  
     }
 
     ngOnInit() {
@@ -83,6 +83,12 @@ export class SaleOrderComponent implements OnInit{
             this._products = doc[this._docIdProduct];
             this.productList = new ObservableArray<Product>(this._products);
         }
+    }
+
+    public showDateModal(input:string) {
+        this.createModelView().then(result => {
+            this.dates[input] = result;
+        }).catch(error => alert(error));
     }
     
     private createModelView(): Promise<any> {
@@ -192,11 +198,8 @@ export class SaleOrderComponent implements OnInit{
             orientation: "orientation",     
             openSettingsIfPermissionWasPreviouslyDenied: true
         }).then((result) => {
-            alert({
-                title: "You Scanned ",
-                message: "Format: " + result.format + ",\nContent: " + result.text,
-                okButtonText: "OKK"
-            });
+                this.itemCode = result.text;
+                this.validateProductList();
             }, (errorMessage) => {
                 console.log("Error when scanning " + errorMessage);
             }

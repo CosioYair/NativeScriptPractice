@@ -12,7 +12,7 @@ refer to http://docs.nativescript.org/ui/theme.
 @import '~nativescript-theme-core/css/core.light.css';
 
 Page {
-    font-family: "fontawesome-webfont";
+    font-family: FontAwesome, fontawesome-webfont;
     background-color: #EBEBEB;
 }
 
@@ -62,4 +62,8 @@ Page {
 
 .highlight Label {
     color: white;
+}
+
+TextField, Dropdown {
+    background-color:white;
 }

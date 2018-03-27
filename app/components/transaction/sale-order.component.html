@@ -10,8 +10,7 @@
         </StackLayout>
     </GridLayout>
 </ActionBar>
-
-<TabView selectedIndex="3" androidSelectedTabHighlightColor="#DE6427" tabTextColor="#C2C1C1" sdkExampleTitle sdkToggleNavButton>
+<TabView selectedIndex="0" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton>
     <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
         <GridLayout class="tab-content" columns="*, *" rows="*">
             <StackLayout row="0" col="0">
@@ -165,19 +164,23 @@
         <GridLayout class="tab-content" columns="*, *" rows="*">
             <StackLayout class="tab-list" row="0" col="0">
                 <SearchBar hint="Search" (textChange)="onTextChanged($event)" (clear)="onClear($event)" textFieldBackgroundColor="white"></SearchBar>
-                <Border  backgroundColor="white" borderRadius="8" borderBottomWidth="2" borderTopWidth="2" borderColor="#DE6427" horizontalAlignment="stretch">
-                    <ListView [items]="productList" class="list-group">
-                        <ng-template let-item="item">
-                            <GridLayout borderRadius="8" class="" columns="*" rows="100" (tap)="viewProduct(item)" [class.highlight]="item.ItemCode == selectedProduct.ItemCode">
-                                <StackLayout col="0" verticalAlignment="center" paddingLeft="20%">
-                                    <Label [text]="item.ItemCodeDesc" class="list-group-item-heading" fontSize="24ID"></Label>
-                                    <StackLayout marginLeft="5%">
-                                        <Label [text]="item.ItemCode" class="list-group-item-heading"></Label>
-                                    </StackLayout>
-                                </StackLayout>
-                            </GridLayout>
-                        </ng-template>
-                    </ListView>
+                <Border backgroundColor="white" borderRadius="8" borderBottomWidth="2" borderTopWidth="2" borderColor="#DE6427" horizontalAlignment="stretch">
+                    <GridLayout backgroundColor="white" class="tab-content" columns="*" rows="*">
+                        <StackLayout col="0" class="tab-list" row="0" col="0">
+                            <ListView [items]="productList" class="list-group">
+                                <ng-template let-item="item">
+                                    <GridLayout borderRadius="8" class="" columns="*" rows="100" (tap)="viewProduct(item)" [class.highlight]="item.ItemCode == selectedProduct.ItemCode">
+                                        <StackLayout col="0" verticalAlignment="center" paddingLeft="20%">
+                                            <Label [text]="item.ItemCodeDesc" class="list-group-item-heading" fontSize="24ID"></Label>
+                                            <StackLayout marginLeft="5%">
+                                                <Label [text]="item.ItemCode" class="list-group-item-heading"></Label>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </GridLayout>
+                                </ng-template>
+                            </ListView>
+                        </StackLayout> 
+                    </GridLayout>
                 </Border>
             </StackLayout>
             <StackLayout class="product-detail" row="0" col="1">
