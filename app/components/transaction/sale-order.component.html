@@ -1,15 +1,34 @@
-<ActionBar title="Mobile Sales Automation" class="action-bar">
-    <GridLayout columns="*,*" rows="auto, *" >
-        <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
+<android>
+    <ActionBar title="Mobile Sales Automation" class="action-bar">
+        <GridLayout columns="*,*" rows="auto, *" >
+            <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
+                <Image src="~/assets/images/logo.png"></Image>
+                <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+            </StackLayout>
+            <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
+                <Button text="&#xf0b0; Filter" verticalAlignment="center"></Button>
+                <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
+            </StackLayout>
+        </GridLayout>
+    </ActionBar>
+</android>
+
+<ios>
+    <ActionBar title="" class="action-bar">
+        <ActionItem ion.position="left">
             <Image src="~/assets/images/logo.png"></Image>
+        </ActionItem>
+        <ActionItem position="left">
             <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
-        </StackLayout>
-        <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
-            <Button text="&#xf0b0; Filter" verticalAlignment="center"></Button>
-            <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
-        </StackLayout>
-    </GridLayout>
-</ActionBar>
+        </ActionItem>
+        <ActionItem ios.position="right">
+            <StackLayout orientation="horizontal" horizontalAlignment="right">
+                <Button text="&#xf0b0; Filter" verticalAlignment="center"></Button>
+                <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
+            </StackLayout>
+        </ActionItem>
+    </ActionBar>
+</ios>
 <TabView selectedIndex="0" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton>
     <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
         <GridLayout class="tab-content" columns="*, *" rows="*">
