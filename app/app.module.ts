@@ -11,7 +11,7 @@ import { BarcodeScanner } from 'nativescript-barcodescanner';
 //Components
 import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
-import { CustomerComponent } from "./components/customer/customer.component";
+import { CustomerTransactionComponent } from "./components/customer/customer-transaction.component";
 import { SaleOrderComponent } from "./components/transaction/sale-order.component";
 import { ModalDateComponent } from "./components/modal/datepicker/modal-date.component";
 import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.component";
@@ -41,7 +41,7 @@ import { ModalProductOrderComponent } from "./components/modal/productOrder/moda
         AppComponent,
         LoginComponent,
         HomeComponent,
-        CustomerComponent,
+        CustomerTransactionComponent,
         SaleOrderComponent,
         ModalDateComponent,
         ItemInquiryComponent,
