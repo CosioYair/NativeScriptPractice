@@ -1,0 +1,26 @@
+
+<ActionBar title="" class="action-bar">
+    <ActionItem ion.position="left">
+        <Image src="~/assets/images/logo.png"></Image>
+    </ActionItem>
+    <ActionItem position="left">
+        <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+    </ActionItem>
+    <ActionItem ios.position="right">
+        <StackLayout orientation="horizontal" horizontalAlignment="right">
+            <Button text="&#xf0b0; Filter" verticalAlignment="center"></Button>
+            <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
+        </StackLayout>
+    </ActionItem>
+</ActionBar>
+<StackLayout row="0" col="0">
+        <StackLayout  *ngIf="visibility1" id="mainView" visibility="true">
+            <FirstView></FirstView>
+        </StackLayout>
+        <StackLayout  *ngIf="visibility2" id="mainView" visibility="{{ visibility2 ? 'visible' : 'collapsed' }}">
+            <SecondView></SecondView>
+        </StackLayout>
+        <StackLayout  *ngIf="visibility3" id="mainView" visibility="{{ visibility3 ? 'visible' : 'collapsed' }}">
+            <ThirdView></ThirdView>
+        </StackLayout>
+        </StackLayout>
