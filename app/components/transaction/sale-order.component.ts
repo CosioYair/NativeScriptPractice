@@ -11,6 +11,7 @@ import { Product } from "../../interfaces/itemInquiry.interface";
 import { ProductService } from "../../services/item.service";
 import { BarcodeScanner } from 'nativescript-barcodescanner';
 import { ModalProductOrderComponent } from "../modal/productOrder/modal-product-order.component";
+import { SegmentedBar, SegmentedBarItem } from "ui/segmented-bar";
 
 @Component({
     selector: "ns-sale-order",
@@ -38,6 +39,9 @@ export class SaleOrderComponent implements OnInit{
     public cart:any = [];
     public productQuantity:number = 1;
     private orientation = require('nativescript-orientation');
+    public tabs: Array<SegmentedBarItem>;
+    public selectionTabs:any;
+    public selectedIndex = 0;
 
     constructor(private _productService: ProductService, private _couchbaseService: CouchbaseService, private modalService:ModalDialogService, private vcRef:ViewContainerRef, private barcodeScanner: BarcodeScanner){
         this.dates = [];
@@ -56,6 +60,39 @@ export class SaleOrderComponent implements OnInit{
         this.selectedProduct.ItemCode = "";
         this.selectedCartProduct.ItemCode = "";
         this.orientation.setOrientation("landscaperight");  
+        this.tabs = [];
+        this.selectionTabs = [{
+            title: "HEADER",
+            visibility: true
+        },
+        {
+            title: "ADDRESS",
+            visibility: false
+        },
+        {
+            title: "LINES",
+            visibility: false
+        },
+        {
+            title: "TOTALS",
+            visibility: false
+        }];
+        this.selectionTabs.map(tab => {
+            let segmentedBarItem = <SegmentedBarItem>new SegmentedBarItem();
+            segmentedBarItem.title = tab.title;
+            this.tabs.push(segmentedBarItem);
+        });
+    }
+
+    public onSelectedIndexChange(args) {
+        let segmetedBar = <SegmentedBar>args.object;
+        this.selectedIndex = segmetedBar.selectedIndex;
+        this.selectionTabs.map( (tab, index) => {
+            if(index == segmetedBar.selectedIndex)
+                tab.visibility = true;
+            else
+                tab.visibility = false;
+        });
     }
 
     ngOnInit() {
