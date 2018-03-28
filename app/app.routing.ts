@@ -9,7 +9,7 @@ import { CustomerComponent } from "./components/customer/customer.component";
 import { SaleOrderComponent } from "./components/transaction/sale-order.component";
 
 const routes: Routes = [
-    { path: "", redirectTo: "/saleOrder", pathMatch: "full" },
+    { path: "", redirectTo: "/login", pathMatch: "full" },
     { path: "app", component: AppComponent },
     { path: "login", component: LoginComponent },
     { path: "home", component: HomeComponent},
