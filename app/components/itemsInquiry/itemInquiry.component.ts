@@ -132,10 +132,10 @@ export class ItemInquiryComponent implements OnInit{
         this.selectedProduct = product;
         //this.downloadImagesProducts(this.productList);
         //this.getImage(product);
-        this.picture = "";
+        //this.picture = "";
         //this.showImageLocal(product);
         //this.picture = `${SERVER.baseUrl}/Image/${product.ItemCode}`;
-        this.showImage(product);
+        //this.showImage(product);
     }
 
     public downloadImagesProducts(productList: ObservableArray<Product>){
@@ -211,7 +211,7 @@ export class ItemInquiryComponent implements OnInit{
     }
 
     //Plugin descarga de archivos grandes...
-    public async downloadProgress(url: string){
+    public downloadProgress(url: string){
         var download = new DownloadProgress();
         download.addProgressCallback((progress)=>{
             console.log('Progress:', progress);
@@ -316,6 +316,7 @@ export class ItemInquiryComponent implements OnInit{
 
     }
  
+    ///Metodo para descarga de imagenes todo en un json
     public listImage(productList: ObservableArray<Product>){
         var i=0, cont= 0, contColl=0;
         var colletions = 0;
@@ -328,10 +329,9 @@ export class ItemInquiryComponent implements OnInit{
         productList.map(product => {
             if(product.ImageFile != null){        
                 parameters = parameters+product.ItemCode+",";   
-                
+                //console.log(parameters);
             }
         });
-        console.log(parameters);
         this.downloadProgress(urlservice+parameters);
 /*
         productList.map(product => {
@@ -357,15 +357,7 @@ export class ItemInquiryComponent implements OnInit{
                 i++;       
             }
         });*/
-        
-
-                
-
-        console.log("Numero de imagenes:::"+i);
-        console.log("Numero de colecciones:::"+colletions);
-        console.log("Residuo:::"+residue);
-
-
+      
         /*console.log(arreglo.length);
         for(i=0;i<arreglo.length;i++){
             console.log(arreglo[i]+"   "+i);
