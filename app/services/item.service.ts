@@ -23,16 +23,21 @@ export class ProductService{
         .map(res => res);
     }
 
+    public getImages(parameters: string){
+        return this._http.get(`${SERVER.baseUrl}/Images.json?ItemCodes=${parameters}`)
+        .map(res => res);
+    }
+
     //Obtener imagenes de producto
     public async  getProductImage(url, fileName){
        
-        var filePath = fs.path.join(fs.knownFolders.documents().path, fileName);
+        var filePath = fs.path.join(fs.knownFolders.currentApp().path, fileName+".jpg");
             await http.getFile(url, filePath).then(function (r) {
                 //// Argument (r) is File!
-                
                 console.log(filePath);
             }, function (e) {
                 //// Argument (e) is Error!
             });
+            return filePath;
     }
 }

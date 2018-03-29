@@ -1,3 +1,5 @@
+import { NumberFormatStyle } from "@angular/common";
+
 export interface Product{
     Category1: string,
     Category2: string,
@@ -5,7 +7,7 @@ export interface Product{
     Category4: string,
     DateCreated: string,
     DateUpdate: string,
-    ExtendedDescriptionDate: string,
+    ExtendedDescriptionData: string,
     ImageFile: string,
     InactiveItem: string,
     ItemCode: string,
@@ -16,8 +18,8 @@ export interface Product{
     ProductLine: string,
     ProductType: string,
     ShipWeight: string,
-    StandardUnitCost: string,
-    StandardUnitPrice: string,
+    StandardUnitCost: NumberFormatStyle.Decimal,
+    StandardUnitPrice: NumberFormatStyle.Decimal,
     TimeCreated: string,
     TimeUpdated: string,
     Volume:string

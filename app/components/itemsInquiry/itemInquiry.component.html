@@ -41,8 +41,6 @@
             </DockLayout>
             <DockLayout paddingTop="50%">
                 <StackLayout width="33%">
-                    <Label class="itemInquiry-labelBold" text="STD UM"></Label>
-                    <Label class="itemInquiry-label" [text]=""></Label>
                     <Label class="itemInquiry-labelBold" text="STD PRICE"></Label>       
                     <DockLayout>
                         <Label class="itemInquiry-numberLabel" text="$"></Label>
@@ -54,8 +52,8 @@
                     <Label class="itemInquiry-label" [text]="selectedProduct.Category2"></Label>
                 </StackLayout>
                 <StackLayout width="33%">
-                    <Label class="itemInquiry-labelBold" text="SALES UM"></Label>
-                    <Label [text]="picture"></Label>
+                    <Label class="itemInquiry-labelBold" text="STD UNIT COST"></Label>
+                    <Label [text]="selectedProduct.StandardUnitCost"></Label>
                     <label  class="itemInquiry-labelBold" text="STOCK STATUS" paddingTop="145%"></label>
                     <label class="itemInquiry-labelBold" text="CUBES" paddingTop="100%"></label>
                     <label class="itemInquiry-numberLabel" [text]="selectedProduct.Category4"></label>
@@ -80,6 +78,7 @@
                     <StackLayout width="33%">
                         <label text="ON ----"></label>
                         <label text="0" fontSize="30" textAlignment="center"></label>
+                        <Button text="Imagenes" verticalAlignment="center" (tap)="listImage(productList)"></Button>
                     </StackLayout>
                 </DockLayout>
         </StackLayout>

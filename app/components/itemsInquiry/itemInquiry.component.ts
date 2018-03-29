@@ -15,6 +15,13 @@ import * as http from "http";
 
 //Download Progress
 import { DownloadProgress } from "nativescript-download-progress"
+//Unzip
+import { Zip } from "nativescript-zip";
+import * as fsuz from "file-system";
+//Image Cache
+import * as imageCacheModule from "tns-core-modules/ui/image-cache";
+
+
 
 
 @Component({
@@ -31,8 +38,15 @@ export class ItemInquiryComponent implements OnInit{
     public productList: ObservableArray<Product> = new ObservableArray<Product>();
     public data = {};
     public selectedProduct:any = {};
+    //obtencion de imagen
     public picture:any;
     public urlImage: any;
+    public startGetImage: 0;
+    public endGetImage = 80;
+    public path: any;
+  
+    
+    
 
     constructor(private _couchbaseService: CouchbaseService, private _productService: ProductService){
         this.selectedProduct = {
@@ -116,42 +130,50 @@ export class ItemInquiryComponent implements OnInit{
 
     public setSelectedProduct(product:Product){
         this.selectedProduct = product;
-        //this.showImage(product);
         //this.downloadImagesProducts(this.productList);
-        //this.downloadProgres();
-        this.getImage(product);
+        //this.getImage(product);
+        this.picture = "";
+        //this.showImageLocal(product);
+        //this.picture = `${SERVER.baseUrl}/Image/${product.ItemCode}`;
+        this.showImage(product);
     }
 
-//descargar imagenes
     public downloadImagesProducts(productList: ObservableArray<Product>){
-        //var contWImage= 0;
-        //var contImage = 0;
         var l: any;
-        var cont = 100;
+        var cont = 0;
         l = productList.length;
-        var i = 0;
+        var nameImage: any;
+        var i = 0, k = 0;
         console.log("Largo del array__:"+l);
-            productList.map(product => {
+            productList.slice(0,150).map(product => {
                 if(product.ImageFile != null){
                     console.log(`${SERVER.baseUrl}/Image/${product.ImageFile}`);
-                    this.urlImage = `${SERVER.baseUrl}/Image/${product.ImageFile}`;
+                    this.urlImage = `${SERVER.baseUrl}/Image/${product.ItemCode}`;
                     console.log(this.urlImage);
                     //contImage++;
                     
                     
                     
+                    
                     setTimeout(() => {
-                        //this._productService.getProductImage(this.urlImage,product.ImageFile);
+                        nameImage = product.ItemCodeDesc;
+                        this._productService.getProductImage(this.urlImage,product.ItemCode);
                         //this.downloadProgress(this.urlImage);
+                        console.log(k);
+                        k++;
                     }, cont);
                     
                     i++;
-                    console.log(i);
+                    if(i==100){
+                        cont += 500;
+                        i = 0;
+                    }
+                    console.log(k);
                 }else{
                     //console.log(product.ProductType + "____No tiene imagen___"+contWImage);
                     //contWImage++;
                 }
-                cont += 250;
+                cont += 200;
             });
         
         
@@ -163,65 +185,193 @@ export class ItemInquiryComponent implements OnInit{
     public showImageLocal(product: Product){
         //codigo para obtener los path de la imagen seleccionada
         if(product.ImageFile != null && product.ImageFile != undefined){
-            const folder = fs.knownFolders.documents();
-            var path = fs.path.join(folder.path, product.ImageFile);//nombre para buscarlo
-            const img = imageSource.fromFile(path);
+
+            //Busqueda en la imagen en la memoria local
+            var folder = fs.knownFolders.documents();
+            this.path = fs.path.join(folder.path, product.ItemCode+".jpg");
+            //const img = imageSource.fromFile(path);
              
-            this.picture = path;
-            console.log(path+"encontro imagen");
+            this.picture = this.path;
+            console.log(this.path+"   encontro imagen");
 
-            console.log(this.picture+"888888888");
+            console.log(this.picture+"  888888888");
+            alert(this.path);
         }else{
-            const folder = fs.knownFolders.documents();
-            var path = fs.path.join(folder.path, "IFD1020NTST.jpg");//nombre para buscarlo
-            const img = imageSource.fromFile(path);
+            var folder = fs.knownFolders.documents();
+            this.path = fs.path.join(folder.path, "IFD1020NTST.jpg");
+            const img = imageSource.fromFile(this.path);
             
-            this.picture = path;
-            console.log(path+"no encontro imagen");
+            this.picture = this.path;
+            console.log(this.path+"no encontro imagen");
 
             console.log(this.picture+"888888888");
+            //this.getImage(product);
         }
         
     }
 
     //Plugin descarga de archivos grandes...
-    public async downloadProgress(urlImage: any){
+    public async downloadProgress(url: string){
         var download = new DownloadProgress();
-        var uri: any = "uriVacia";
         download.addProgressCallback((progress)=>{
             console.log('Progress:', progress);
         })
-            await download.downloadFile(urlImage).then((f)=>{
-            console.log("Success", f);
-            console.log("Funciona");
-            
+        download.downloadFile(url).then((f)=>{
+            console.log("Success", f.path);
         }).catch((e)=>{
             console.log("Error", e);
         })
-        return uri;
+    }
+
+    public unzip(){
+        const folder = fsuz.knownFolders.documents();
+
+        let zipPath = fsuz.path.join(folder.path, "20MB.zip");
+        let dest = fsuz.path.join(fs.knownFolders.documents().path, "/assets");
+        console.log(zipPath+" Ubicacion en la que se busca para descomprimir..");
+        Zip.unzipWithProgress(zipPath,dest,onZipProgress);
+        
+        function onZipProgress(percent: number) {
+            console.log(`unzip progress: ${percent}`);
+        }
     }
 
 
     //prueba de descarga por click
     public getImage(product: Product){
-        
+        var nameImage: any;
+        var image: any;
                 if(product.ImageFile != null || product.ImageFile != undefined){
                     console.log(`${SERVER.baseUrl}/Image/${product.ImageFile}`);
-                    this.urlImage = `${SERVER.baseUrl}/Image/${product.ImageFile}`;
+                    this.urlImage = require(`${SERVER.baseUrl}/Image/${product.ImageFile}`);
                     console.log(this.urlImage);
+                    nameImage = product.ItemCodeDesc;
                     //contImage++;
+            
+                    //image = this._productService.getProductImage(this.urlImage, nameImage);
 
-                    setTimeout(() => {
-                            this._productService.getProductImage(this.urlImage,product.ImageFile);
-                            this.picture = this.urlImage
-                            this.showImageLocal(product);
-                        }, 250);
+                    var filePath = fs.path.join(fs.knownFolders.documents().path, nameImage);
+                    http.getFile(this.urlImage, filePath).then(function (r) {
+                        //// Argument (r) is File!
+                        this.picture = this.urlImage;
+                        console.log(this.picture);
+                    }, function (e) {
+                        //// Argument (e) is Error!
+                    });
+                    
                     console.log("Se descargo imagen en la url___:" + this.urlImage);
+                    console.log("La imagen quedo almacenada en la ruta___:"+this.picture);
                 }else{
-                    this.showImageLocal(product);
-                    console.log(product.ProductType + "____No tiene imagen___");
+                    const folder = fs.knownFolders.documents();
+                    var path = fs.path.join(folder.path, "IFD1020NTST.jpg");
+                    const img = imageSource.fromFile(path);
+            
+                    this.picture = this.urlImage;
                 }
                 console.log("Termino la descarga");     
     }
+
+    public showImage(product: Product){
+        const folder = fs.knownFolders.documents();
+        const path = fs.path.join(folder.path, product.ItemCode+".jpg");
+        //const img = imageSource.fromFile(path);
+        //this.picture = img;
+        console.log(path+" Muestra de imagenes...");
+    }
+
     
- }
+    public jsongeneration(productList: ObservableArray<Product>){
+        var i=0;
+        var arreglo = [];
+        var miObjeto = Object();
+        productList.slice().map(product => {
+            if(product.ImageFile != null && i<=9){
+                
+                miObjeto.nombre = product.ItemCode;
+                miObjeto.descripcion = product.ItemCodeDesc;
+                arreglo.push(miObjeto);
+                i++;
+            }
+        });
+        /*console.log(arreglo.length);
+        for(i=0;i<arreglo.length;i++){
+            console.log(arreglo[i]+"   "+i);
+        }*/
+
+        var j = JSON.stringify(arreglo);
+        console.log(j);
+    }
+ 
+    public getImagesCache(productList: ObservableArray<Product>){
+        var i= 0;
+        productList.map(product => {
+            if(product.ImageFile != null){
+                i++;
+            }
+        })
+
+        var cache = new imageCacheModule.Cache();
+        cache.placeholder = imageSource.fromFile(fs.path.join(__dirname, "res/no-image.png"));
+        cache.maxRequests = i;
+
+    }
+ 
+    public listImage(productList: ObservableArray<Product>){
+        var i=0, cont= 0, contColl=0;
+        var colletions = 0;
+        var residue = 0;
+        var lenght = 0;
+        var countDown = 0;
+        
+        var urlservice = "https://mss.int-furndirect.com:37080/api/Images.json?ItemCodes=" ;
+        var parameters: string = "";
+        productList.map(product => {
+            if(product.ImageFile != null){        
+                parameters = parameters+product.ItemCode+",";   
+                
+            }
+        });
+        console.log(parameters);
+        this.downloadProgress(urlservice+parameters);
+/*
+        productList.map(product => {
+            if(product.ImageFile != null){ 
+                parameters = parameters+product.ItemCode+",";       
+                if(cont == 100){
+                    console.log(parameters);
+                    countDown = lenght - cont;
+
+                    this._productService.getImages(parameters)
+                    .subscribe(result => {
+                        //console.log(result);
+                    }, (error) => {
+                        alert(error);
+                    }); 
+
+                    parameters="";
+                    cont=0;
+
+                                
+                }
+                cont++;
+                i++;       
+            }
+        });*/
+        
+
+                
+
+        console.log("Numero de imagenes:::"+i);
+        console.log("Numero de colecciones:::"+colletions);
+        console.log("Residuo:::"+residue);
+
+
+        /*console.log(arreglo.length);
+        for(i=0;i<arreglo.length;i++){
+            console.log(arreglo[i]+"   "+i);
+        }*/
+
+        //var j = JSON.stringify(arreglo);
+        //console.log(j);
+    }
+}
