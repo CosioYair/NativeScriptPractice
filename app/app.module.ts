@@ -21,6 +21,7 @@ import { CouchbaseService } from "./services/couchbase.service";
 import { CustomerService } from "./services/customer.service";
 import { ProductService } from "./services/item.service";
 import { ModalProductOrderComponent } from "./components/modal/productOrder/modal-product-order.component";
+import { CustomerInquiryComponent } from "./components/customer/customer-inquiry.component";
 
 @NgModule({
     bootstrap: [
@@ -45,7 +46,8 @@ import { ModalProductOrderComponent } from "./components/modal/productOrder/moda
         SaleOrderComponent,
         ModalDateComponent,
         ItemInquiryComponent,
-        ModalProductOrderComponent
+        ModalProductOrderComponent,
+        CustomerInquiryComponent
     ],
     providers: [
         CouchbaseService,

@@ -7,6 +7,7 @@ import { HomeComponent } from "./components/home/home.component";
 import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.component";
 import { CustomerTransactionComponent } from "./components/customer/customer-transaction.component";
 import { SaleOrderComponent } from "./components/transaction/sale-order.component";
+import { CustomerInquiryComponent } from "./components/customer/customer-inquiry.component";
 
 const routes: Routes = [
     { path: "", redirectTo: "/login", pathMatch: "full" },
@@ -15,7 +16,8 @@ const routes: Routes = [
     { path: "home", component: HomeComponent},
     { path: "itemInquiry", component:ItemInquiryComponent},
     { path: "customerTransaction", component: CustomerTransactionComponent},
-    { path: "saleOrder/:CustomerNo", component: SaleOrderComponent}
+    { path: "saleOrder/:CustomerNo", component: SaleOrderComponent},
+    { path: "customerInquiry", component: CustomerInquiryComponent},
 ];
 
 @NgModule({
