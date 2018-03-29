@@ -1,0 +1,44 @@
+<ActionBar title="Mobile Sales Automation" class="action-bar">
+    <GridLayout columns="*,*" rows="auto, *" >
+        <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
+            <Image src="~/assets/images/logo.png"></Image>
+            <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+        </StackLayout>
+        <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
+            <Button text="&#xf044; Edit" verticalAlignment="center"></Button>
+            <Button text="&#xf05e; Void" verticalAlignment="center" ></Button>
+        </StackLayout>
+    </GridLayout>
+</ActionBar>
+<StackLayout>
+    <DockLayout>
+        <StackLayout width="50%">
+            <SearchBar hint="Search" (textChange)="onTextChanged($event)" textFieldBackgroundColor="white"></SearchBar>
+            <GridLayout class="" columns="*" rows="*" backgroundColor="white">
+                <ListView [items]="customerList" class="list-group">
+                    <ng-template let-item="item">
+                        <StackLayout class="item list-group-item">
+                                <Label [text]="item.CustomerName" class="list-group-item-heading"></Label>
+                                <Label [text]="item.CustomerNo" class="list-group-item-heading"></Label>
+                                <Label [text]="item.City + ' ' + item.State + ' ' + item.ZipCode" class="list-group-item-heading"></Label>
+                        </StackLayout>
+                    </ng-template>
+                </ListView>
+            </GridLayout>
+        </StackLayout>
+        <StackLayout width="50%">
+            <LABEL text="ITEMS" fontSize="30" horizontalAlignment="center"></LABEL>
+            <GridLayout class="" columns="*" rows="*" backgroundColor="white">
+                <ListView [items]="customerList" class="list-group">
+                    <ng-template let-item="item">
+                        <StackLayout class="item list-group-item">
+                                <Label [text]="item.CustomerName" class="list-group-item-heading"></Label>
+                                <Label [text]="item.CustomerNo" class="list-group-item-heading"></Label>
+                                <Label [text]="item.City + ' ' + item.State + ' ' + item.ZipCode" class="list-group-item-heading"></Label>
+                        </StackLayout>
+                    </ng-template>
+                </ListView>
+            </GridLayout>
+        </StackLayout>
+    </DockLayout>
+</StackLayout>
