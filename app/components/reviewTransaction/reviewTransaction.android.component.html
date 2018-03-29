@@ -12,22 +12,31 @@
 </ActionBar>
 <StackLayout>
     <DockLayout>
-        <StackLayout width="50%">
+        <StackLayout padding="20%" width="50%">
             <SearchBar hint="Search" (textChange)="onTextChanged($event)" textFieldBackgroundColor="white"></SearchBar>
             <GridLayout class="" columns="*" rows="*" backgroundColor="white">
                 <ListView [items]="customerList" class="list-group">
                     <ng-template let-item="item">
                         <StackLayout class="item list-group-item">
-                                <Label [text]="item.CustomerName" class="list-group-item-heading"></Label>
-                                <Label [text]="item.CustomerNo" class="list-group-item-heading"></Label>
-                                <Label [text]="item.City + ' ' + item.State + ' ' + item.ZipCode" class="list-group-item-heading"></Label>
+                            <DockLayout>
+                                <StackLayout width="50%">
+                                    <Label text="321 Sleep INC" class="list-group-item-heading"></Label>
+                                    <Label text="" class="list-group-item-heading"></Label>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label text="321 Sleep INC" class="list-group-item-heading"></Label>
+                                    <Label text="item.CustomerNo" class="list-group-item-heading"></Label>
+                                </StackLayout>
+                            </DockLayout>
                         </StackLayout>
                     </ng-template>
                 </ListView>
             </GridLayout>
         </StackLayout>
-        <StackLayout width="50%">
-            <LABEL text="ITEMS" fontSize="30" horizontalAlignment="center"></LABEL>
+        <StackLayout padding="20%" width="50%">
+            <StackLayout backgroundColor="orange">
+                <LABEL text="ITEMS" fontSize="20" horizontalAlignment="center" color="white"></LABEL>
+            </StackLayout>
             <GridLayout class="" columns="*" rows="*" backgroundColor="white">
                 <ListView [items]="customerList" class="list-group">
                     <ng-template let-item="item">
