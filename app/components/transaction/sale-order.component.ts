@@ -177,10 +177,7 @@ export class SaleOrderComponent implements OnInit{
         let searchBar = <SearchBar>args.object;
         searchBar.text = "";
 
-        this.productList = new ObservableArray<Product>();
-        this._products.forEach(item => {
-            this.productList.push(item);
-        });
+        this.filterProductsType();
     }
 
     public cancel(){

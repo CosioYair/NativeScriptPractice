@@ -110,7 +110,7 @@ export class ItemInquiryComponent implements OnInit{
 
     public setSelectedProduct(product:Product){
         this.selectedProduct = product;
-        this.downloadImagesProducts(this.productList);
+        //this.downloadImagesProducts(this.productList);
     }
 
 //descargar imagenes
