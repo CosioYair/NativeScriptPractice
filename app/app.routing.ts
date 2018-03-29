@@ -14,8 +14,8 @@ const routes: Routes = [
     { path: "login", component: LoginComponent },
     { path: "home", component: HomeComponent},
     { path: "itemInquiry", component:ItemInquiryComponent},
-    { path: "customer", component: CustomerTransactionComponent},
-    { path: "saleOrder", component: SaleOrderComponent}
+    { path: "customerTransaction", component: CustomerTransactionComponent},
+    { path: "saleOrder/:CustomerNo", component: SaleOrderComponent}
 ];
 
 @NgModule({

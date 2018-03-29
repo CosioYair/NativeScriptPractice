@@ -12,6 +12,8 @@ import { ProductService } from "../../services/item.service";
 import { BarcodeScanner } from 'nativescript-barcodescanner';
 import { ModalProductOrderComponent } from "../modal/productOrder/modal-product-order.component";
 import { SegmentedBar, SegmentedBarItem } from "ui/segmented-bar";
+import { ActivatedRoute } from "@angular/router";
+import { Customer } from "../../interfaces/customer.interface";
 
 @Component({
     selector: "ns-sale-order",
@@ -42,8 +44,9 @@ export class SaleOrderComponent implements OnInit{
     public tabs: Array<SegmentedBarItem>;
     public selectionTabs:any;
     public selectedIndex = 0;
+    public customer:Customer;
 
-    constructor(private _productService: ProductService, private _couchbaseService: CouchbaseService, private modalService:ModalDialogService, private vcRef:ViewContainerRef, private barcodeScanner: BarcodeScanner){
+    constructor(private _productService: ProductService, private _couchbaseService: CouchbaseService, private modalService:ModalDialogService, private vcRef:ViewContainerRef, private barcodeScanner: BarcodeScanner, private route: ActivatedRoute){
         this.dates = [];
         this.wharehouses = [];
         this.shipVias = [];
@@ -96,19 +99,16 @@ export class SaleOrderComponent implements OnInit{
     }
 
     ngOnInit() {
+        this.getCustomer(this.route.snapshot.params["CustomerNo"]);
+        //this._couchbaseService.deleteDocument(this._docIdProduct);
         this.setDocument();
     }
 
-    public getProducts(){
-        console.log(JSON.stringify("2"));
-        this._productService.getProducts()
-        .subscribe(result => {
-            this.data[this._docIdProduct] = result["Product"];
-            this._couchbaseService.createDocument(this.data, this._docIdProduct);
-            this._products = result["Product"];
-            this.productList = new ObservableArray<Product>(this._products);
-        }, (error) => {
-            alert(error);
+    public getCustomer(CustomerNo:string){
+        let doc = this._couchbaseService.getDocument("customer")["customer"];
+        doc.map(customer => {
+            if (customer.CustomerNo  == CustomerNo)
+                this.customer = customer;
         });
     }
 
@@ -120,6 +120,27 @@ export class SaleOrderComponent implements OnInit{
             this._products = doc[this._docIdProduct];
             this.productList = new ObservableArray<Product>(this._products);
         }
+    }
+
+    public getProducts(){
+        this._productService.getProducts()
+        .subscribe(result => {
+            this.data[this._docIdProduct] = result["Product"];
+            this._couchbaseService.createDocument(this.data, this._docIdProduct);
+            this._products = result["Product"];
+            //this.productList = new ObservableArray<Product>(this._products);
+            this.filterProductsType();
+        }, (error) => {
+            alert(error);
+        });
+    }
+
+    public filterProductsType(){
+        this.productList = new ObservableArray<Product>();
+        this._products.map(product => {
+            if(product.ProductType == "F")
+                this.productList.push(product);
+        });
     }
 
     public showDateModal(input:string) {

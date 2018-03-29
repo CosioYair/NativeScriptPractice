@@ -14,7 +14,7 @@ export class ProductService{
     }
 
     public getProducts(){
-        return this._http.get(`${SERVER.baseUrl}/Product`)
+        return this._http.get(`${SERVER.baseUrl}/Product?InactiveItem=N`)
         .map(res => res);
     }
 

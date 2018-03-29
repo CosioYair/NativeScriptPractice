@@ -16,7 +16,7 @@
             <StackLayout row="0" col="0">
                 <DockLayout>
                     <Label text="Customer No"></Label>
-                    <TextField class="enabled" hint="Customer No" isEnabled="false"></TextField>
+                    <TextField [text]="customer.CustomerNo" class="enabled" hint="Customer No" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Date"></Label>
@@ -36,12 +36,12 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Terms"></Label>
-                    <TextField class="enabled" hint="Terms" isEnabled="false"></TextField>
+                    <TextField [text]="customer.TermsNo" class="enabled" hint="Terms" isEnabled="false"></TextField>
                 </DockLayout>
             </StackLayout>
             <StackLayout row="0" col="1">
                 <DockLayout horizontalAlignment="left">
-                    <TextField class="enabled" hint="371 FURNITURE" isEnabled="false"></TextField>
+                    <TextField [text]="customer.CustomerName" class="enabled" hint="371 FURNITURE" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Customer PO"></Label>
@@ -59,10 +59,6 @@
                     <Label text="Comment"></Label>
                     <TextField></TextField>
                 </DockLayout>
-                <DockLayout>
-                    <Label text="Price Level"></Label>
-                    <TextField class="enabled" isEnabled="false"></TextField>
-                </DockLayout>   
             </StackLayout>
         </GridLayout>
     </StackLayout>
@@ -73,20 +69,16 @@
                     <Label class="h3" text="BILL TO ADDRESS"></Label>
                 </DockLayout>
                 <DockLayout>
-                    <Label text="Bill To"></Label>
-                    <TextField class="enabled" hint="Bill To" isEnabled="false"></TextField>
-                </DockLayout>
-                <DockLayout>
                     <Label text="Name"></Label>
-                    <TextField class="enabled" hint="Name" isEnabled="false"></TextField>
+                    <TextField [text]="customer.CustomerName" class="enabled" hint="Name" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Address"></Label>
-                    <TextField class="enabled" hint="Address" isEnabled="false"></TextField>
+                    <TextField [text]="customer.AddressLine1" class="enabled" hint="Address" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label></Label>
-                    <TextField class="enabled" isEnabled="false"></TextField>
+                    <TextField [text]="customer.AddressLine2" class="enabled" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label></Label>
@@ -97,17 +89,17 @@
                         <StackLayout row="0" col="0">
                             <DockLayout>
                                 <Label text="City"></Label>
-                                <TextField class="enabled" hint="City" isEnabled="false"></TextField>
+                                <TextField [text]="customer.City" class="enabled" hint="City" isEnabled="false"></TextField>
                             </DockLayout>
                             <DockLayout>
                                 <Label text="Zip"></Label>
-                                <TextField class="enabled" hint="Zip" isEnabled="false"></TextField>
+                                <TextField [text]="customer.ZipCode" class="enabled" hint="Zip" isEnabled="false"></TextField>
                             </DockLayout>
                         </StackLayout>
                         <StackLayout row="0" col="1">
                             <DockLayout>
                                 <Label text="State"></Label>
-                                <TextField class="enabled" hint="State" isEnabled="false"></TextField>
+                                <TextField [text]="customer.State" class="enabled" hint="State" isEnabled="false"></TextField>
                             </DockLayout>
                         </StackLayout>
                     </GridLayout>
@@ -231,13 +223,10 @@
                                             </DockLayout>
                                             <DockLayout marginTop="50px">
                                                 <Label text="Price"></Label>
-                                                <TextField [(ngModel)]="selectedProduct.StandardUnitCost" class="enabled" hint="" isEnabled="false"></TextField>
+                                                <TextField [(ngModel)]="selectedProduct.StandardUnitPrice" class="enabled" hint="" isEnabled="false"></TextField>
                                             </DockLayout>
                                         </StackLayout>
                                         <StackLayout row="0" col="1">
-                                            <DockLayout>
-                                                <DropDown [items]="eachs" [(ngModel)]="each"></DropDown>
-                                            </DockLayout>
                                             <DockLayout marginTop="50px">
                                                 <Label text="Disc %"></Label>
                                                 <TextField class="enabled" hint="" isEnabled="false"></TextField>
@@ -247,7 +236,7 @@
                                     <StackLayout marginTop="50px">
                                         <DockLayout>
                                             <Label text="Whse"></Label>
-                                            <DropDown [items]="wharehousesProduct" [(ngModel)]="wharehouseProduct"></DropDown>
+                                            <TextField [text]="wharehouse" class="enabled" hint="" isEnabled="false"></TextField>
                                         </DockLayout>
                                         <TextView backgroundColor="white" style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="300px" marginBottom="60px" marginTop="100px" hint="Comment" class="input input-border"></TextView>
                                     </StackLayout>
