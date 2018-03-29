@@ -1,5 +1,5 @@
 export const CONSTANTS = {
-    wharehouses: [{
+    warehouses: [{
         code: "ATL",
         name: "Atlanta"
     },
@@ -12,7 +12,7 @@ export const CONSTANTS = {
         name: "Direct"
     },
     {
-        code: "HOW",
+        code: "HOU",
         name: "Houston"
     },
     {

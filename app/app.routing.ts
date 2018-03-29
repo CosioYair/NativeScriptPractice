@@ -10,7 +10,7 @@ import { SaleOrderComponent } from "./components/transaction/sale-order.componen
 import { CustomerInquiryComponent } from "./components/customer/customer-inquiry.component";
 
 const routes: Routes = [
-    { path: "", redirectTo: "/login", pathMatch: "full" },
+    { path: "", redirectTo: "/customerTransaction", pathMatch: "full" },
     { path: "app", component: AppComponent },
     { path: "login", component: LoginComponent },
     { path: "home", component: HomeComponent},

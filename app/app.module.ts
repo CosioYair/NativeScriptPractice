@@ -22,6 +22,7 @@ import { CustomerService } from "./services/customer.service";
 import { ProductService } from "./services/item.service";
 import { ModalProductOrderComponent } from "./components/modal/productOrder/modal-product-order.component";
 import { CustomerInquiryComponent } from "./components/customer/customer-inquiry.component";
+import { InventoryService } from "./services/inventory.service";
 
 @NgModule({
     bootstrap: [
@@ -54,7 +55,8 @@ import { CustomerInquiryComponent } from "./components/customer/customer-inquiry
         CustomerService,
         ModalDialogService,
         ProductService,
-        BarcodeScanner
+        BarcodeScanner,
+        InventoryService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

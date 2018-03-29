@@ -14,6 +14,8 @@ import { ModalProductOrderComponent } from "../modal/productOrder/modal-product-
 import { SegmentedBar, SegmentedBarItem } from "ui/segmented-bar";
 import { ActivatedRoute } from "@angular/router";
 import { Customer } from "../../interfaces/customer.interface";
+import { Inventory } from "../../interfaces/inventory.interface";
+import { InventoryService } from "../../services/inventory.service";
 
 @Component({
     selector: "ns-sale-order",
@@ -30,8 +32,8 @@ export class SaleOrderComponent implements OnInit{
     public selectedCartProduct:any = {};
     public data = {};
     public dates:any;
-    public wharehouses:any;
-    public wharehouse:number = 0;
+    public warehouses:any = [];
+    public warehouse:number = 0;
     public shipVias:any;
     public shipVia:number = 0;
     public lineTitle:string = "Item Details";
@@ -45,17 +47,25 @@ export class SaleOrderComponent implements OnInit{
     public selectionTabs:any;
     public selectedIndex = 0;
     public customer:Customer;
+    public _inventoryDoc = {};
+    public _inventories:any;
+    public inventoryList: ObservableArray<Inventory> = new ObservableArray<Inventory>();
 
-    constructor(private _productService: ProductService, private _couchbaseService: CouchbaseService, private modalService:ModalDialogService, private vcRef:ViewContainerRef, private barcodeScanner: BarcodeScanner, private route: ActivatedRoute){
+    constructor(private _productService: ProductService, 
+                private _inventoryService: InventoryService, 
+                private _couchbaseService: CouchbaseService, 
+                private modalService:ModalDialogService, 
+                private vcRef:ViewContainerRef, 
+                private barcodeScanner: BarcodeScanner, 
+                private route: ActivatedRoute){
         this.dates = [];
-        this.wharehouses = [];
         this.shipVias = [];
         this.dates.shipDate = new Date();
         this.dates.date = new Date();
         this.dates.shipDate = `${this.dates.shipDate.getDate() + 1}/${this.dates.shipDate.getMonth() + 1}/${this.dates.shipDate.getFullYear()}`;
         this.dates.date = `${this.dates.date.getDate()}/${this.dates.date.getMonth()}/${this.dates.date.getFullYear()}`;
-        CONSTANTS.wharehouses.map(wharehouse => {
-            this.wharehouses.push(wharehouse.name);
+        CONSTANTS.warehouses.map(warehouse => {
+            this.warehouses.push(warehouse.name);
         });
         CONSTANTS.shipVias.map(shipVia => {
             this.shipVias.push(shipVia.name);
@@ -100,6 +110,8 @@ export class SaleOrderComponent implements OnInit{
 
     ngOnInit() {
         this.getCustomer(this.route.snapshot.params["CustomerNo"]);
+        //this._couchbaseService.deleteDocument("inventory");
+        this.setInventory();
         //this._couchbaseService.deleteDocument(this._docIdProduct);
         this.setDocument();
     }
@@ -112,13 +124,54 @@ export class SaleOrderComponent implements OnInit{
         });
     }
 
+    public setInventory(){
+        let doc = this._couchbaseService.getDocument("inventory");
+        if(doc == null)
+            this.getInventories();
+        else{
+            this._inventoryDoc = doc;
+            this.filterInventoryWarehouse();
+        }
+    }
+
+    public getInventories(){
+        this._inventoryService.getInventories()
+        .subscribe(result => {
+            this.filterInventories(result["Product"]);
+        }, (error) => {
+            alert(error);
+        });
+    }
+
+    public async filterInventories(inventoryDoc:any){
+        this._inventoryDoc["inventory"] = {};
+        await inventoryDoc.map(product => {
+            if(product.WarehouseCode == "ATL" || product.WarehouseCode == "HOU" || product.WarehouseCode == "CHI" || product.WarehouseCode == "PHX" || product.WarehouseCode == "000"){
+                if(this._inventoryDoc["inventory"][product.WarehouseCode] == null)
+                    this._inventoryDoc["inventory"][product.WarehouseCode] = [product];
+                else
+                    this._inventoryDoc["inventory"][product.WarehouseCode].push(product);
+            }
+        });
+        this._couchbaseService.createDocument(this._inventoryDoc, "inventory");
+        this.filterInventoryWarehouse();
+    }
+
+    public filterInventoryWarehouse(){
+        setTimeout(() => {
+            console.log(this.warehouse);
+            this._inventories = this._inventoryDoc["inventory"][CONSTANTS.warehouses[this.warehouse].code];
+            this.inventoryList = new ObservableArray<Inventory>(this._inventories);
+        }, 500);
+    }
+
     public setDocument(){
         let doc = this._couchbaseService.getDocument(this._docIdProduct);
         if(doc == null)
             this.getProducts();
         else {
             this._products = doc[this._docIdProduct];
-            this.productList = new ObservableArray<Product>(this._products);
+            this.filterProductsType();
         }
     }
 
@@ -128,7 +181,6 @@ export class SaleOrderComponent implements OnInit{
             this.data[this._docIdProduct] = result["Product"];
             this._couchbaseService.createDocument(this.data, this._docIdProduct);
             this._products = result["Product"];
-            //this.productList = new ObservableArray<Product>(this._products);
             this.filterProductsType();
         }, (error) => {
             alert(error);
