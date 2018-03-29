@@ -227,7 +227,7 @@
                                             </DockLayout>
                                         </StackLayout>
                                         <StackLayout row="0" col="1">
-                                            <DockLayout marginTop="50px">
+                                            <DockLayout>
                                                 <Label text="Disc %"></Label>
                                                 <TextField class="enabled" hint="" isEnabled="false"></TextField>
                                             </DockLayout>
@@ -236,7 +236,7 @@
                                     <StackLayout marginTop="50px">
                                         <DockLayout>
                                             <Label text="Whse"></Label>
-                                            <TextField [text]="wharehouse" class="enabled" hint="" isEnabled="false"></TextField>
+                                            <DropDown [items]="wharehouses" class="enabled" [(ngModel)]="wharehouse" colSpan="2" isEnabled="false"></DropDown>
                                         </DockLayout>
                                         <TextView backgroundColor="white" style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="300px" marginBottom="60px" marginTop="100px" hint="Comment" class="input input-border"></TextView>
                                     </StackLayout>
