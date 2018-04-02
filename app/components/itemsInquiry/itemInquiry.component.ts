@@ -20,6 +20,8 @@ import { Zip } from "nativescript-zip";
 import * as fsuz from "file-system";
 //Image Cache
 import * as imageCacheModule from "tns-core-modules/ui/image-cache";
+//Open local json
+
 
 
 
@@ -44,6 +46,11 @@ export class ItemInquiryComponent implements OnInit{
     public startGetImage: 0;
     public endGetImage = 80;
     public path: any;
+
+    //ngif
+    public isVisibleData: boolean = false;
+    public isVisibleScanner: boolean =true;
+    
   
     
     
@@ -112,7 +119,7 @@ export class ItemInquiryComponent implements OnInit{
         if(searchValue.length > 0){
             this.productList = new ObservableArray<Product>();
             this._products.map( (product, index) => {
-                if (this._products[index].ItemCodeDesc.toLowerCase().indexOf(searchValue) !== -1)
+                if (this._products[index].ItemCode.toLowerCase().indexOf(searchValue) !== -1)
                     this.productList.push(this._products[index]);
             });
         }
@@ -136,8 +143,31 @@ export class ItemInquiryComponent implements OnInit{
         //this.showImageLocal(product);
         //this.picture = `${SERVER.baseUrl}/Image/${product.ItemCode}`;
         //this.showImage(product);
+        if (this.isVisibleData == false){
+            this.isVisibleData = true;
+            this.isVisibleScanner = false;
+        }
     }
 
+    public cancel(){
+        this.isVisibleData = false;
+        this.isVisibleScanner = true;
+    }
+
+    public description(){
+        var description: string = this.selectedProduct.ExtendedDescriptionText;
+        var dialogs = require("ui/dialogs");
+        dialogs.alert({
+            title: "Description",
+            message: (description),
+            okButtonText: "Accept"
+        }).then(function () {
+            console.log("Dialog closed!");
+        });
+
+    }
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
     public downloadImagesProducts(productList: ObservableArray<Product>){
         var l: any;
         var cont = 0;
@@ -212,12 +242,15 @@ export class ItemInquiryComponent implements OnInit{
 
     //Plugin descarga de archivos grandes...
     public downloadProgress(url: string){
+        var data: string;
+        var filePath = fs.path.join(fs.knownFolders.documents().path, "Images.txt");
         var download = new DownloadProgress();
         download.addProgressCallback((progress)=>{
             console.log('Progress:', progress);
         })
-        download.downloadFile(url).then((f)=>{
+        download.downloadFile(url,filePath).then((f)=>{
             console.log("Success", f.path);
+
         }).catch((e)=>{
             console.log("Error", e);
         })
@@ -329,10 +362,13 @@ export class ItemInquiryComponent implements OnInit{
         productList.map(product => {
             if(product.ImageFile != null){        
                 parameters = parameters+product.ItemCode+",";   
-                //console.log(parameters);
+                
             }
         });
-        this.downloadProgress(urlservice+parameters);
+        console.log(parameters);
+        
+        //this.downloadProgress(urlservice+parameters);
+        this.getJson(urlservice);
 /*
         productList.map(product => {
             if(product.ImageFile != null){ 
@@ -366,4 +402,55 @@ export class ItemInquiryComponent implements OnInit{
         //var j = JSON.stringify(arreglo);
         //console.log(j);
     }
+    /*
+    public openJson(){
+        var documents = fs.knownFolders.currentApp();
+        var jsonFile = documents.getFile('shared/resources/sa.json');
+        var array;
+        var jsonData;
+
+
+        jsonFile.readText()
+        .then(function (content) {
+            try {
+                jsonData = JSON.parse(content);
+                array = new observableArrayModule.ObservableArray(jsonData);
+            } catch (err) {
+                throw new Error('Could not parse JSON file');
+            }
+        }, function (error) {
+            throw new Error('Could not read JSON file');
+        });
+    }*/
+
+
+    public readJson(){
+        var documents = fs.knownFolders.documents();
+        var filePath = fs.path.join(documents.path, "Images.txt");
+        var exists = fs.File.exists(filePath);
+        if(exists){
+            console.log(exists);
+
+            var myFile = documents.getFile("Images.txt");
+            myFile.readText()
+            .then(function (content) {
+                console.log(content);
+            }, function (error) {
+                // Failed to read from the file.
+                console.log("Error...");
+            });
+            console.log(myFile.path);
+        }
+    }
+
+    public getJson(url: string){
+        http.getJSON(url).then(function (r) {
+    //// Argument (r) is JSON!
+            console.log(r);
+        }, function (e) {
+            //// Argument (e) is Error!
+            //console.log(e);
+        });
+    }
 }
+
