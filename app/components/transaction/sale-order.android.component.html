@@ -243,11 +243,11 @@
                                     <GridLayout class="" columns="125, *, *" rows="*">
                                         <StackLayout class="" row="0" col="0" horizontalAlignment="right">
                                             <Label text="QTY ON HAND"></Label>
-                                            <Label text="0"></Label>
+                                            <Label [text]="selectedProduct.quantityOnHand"></Label>
                                         </StackLayout>
                                         <StackLayout row="0" col="1" horizontalAlignment="right">
                                             <Label text="QTY AVAIL"></Label>
-                                            <Label text="0"></Label>
+                                            <Label [text]="selectedProduct.quantityAvail"></Label>
                                         </StackLayout>
                                         <StackLayout row="0" col="2" horizontalAlignment="right">
                                             <Label text="STD PRICE"></Label>

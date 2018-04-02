@@ -47,8 +47,8 @@ export class SaleOrderComponent implements OnInit{
     public selectionTabs:any;
     public selectedIndex = 0;
     public customer:Customer;
-    public _inventoryDoc = {};
-    public _inventories:any;
+    private _inventoryDoc = {};
+    private _inventories:any;
     public inventoryList: ObservableArray<Inventory> = new ObservableArray<Inventory>();
 
     constructor(private _productService: ProductService, 
@@ -159,7 +159,6 @@ export class SaleOrderComponent implements OnInit{
 
     public filterInventoryWarehouse(){
         setTimeout(() => {
-            console.log(this.warehouse);
             this._inventories = this._inventoryDoc["inventory"][CONSTANTS.warehouses[this.warehouse].code];
             this.inventoryList = new ObservableArray<Inventory>(this._inventories);
         }, 500);
@@ -246,6 +245,7 @@ export class SaleOrderComponent implements OnInit{
         this.lineTitle = product.ItemCodeDesc;
         this.lineSubTitle = product.ItemCode;
         this.itemCode = product.ItemCode;
+        this.getInventoryQuantit();
     }
 
     private searchItemCode(code:string, list:any){
@@ -331,5 +331,15 @@ export class SaleOrderComponent implements OnInit{
             };
             return this.modalService.showModal(ModalProductOrderComponent, options);
         }
+    }
+
+    private async getInventoryQuantit(){
+        await this.inventoryList.map(product => {
+            let quantityAvail = product.QuantityOnHand - product.QuantityOnSalesOrder;
+            if(this.selectedProduct.ItemCode == product.ItemCode){
+                this.selectedProduct.quantityOnHand = product.QuantityOnHand;
+                this.selectedProduct.quantityAvail = quantityAvail < 0 ? 0 : quantityAvail;
+            }
+        });
     }
  }
