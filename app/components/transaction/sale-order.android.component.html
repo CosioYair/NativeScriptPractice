@@ -341,16 +341,16 @@
                     <ng-template let-item="item">
                         <GridLayout borderRadius="8" class="" columns="100, *, 120" rows="100" (tap)="setSelectedCartProduct(item)" [class.highlight]="item.ItemCode == selectedCartProduct.ItemCode">
                             <StackLayout col="0" verticalAlignment="center" paddingRight="20%">
-                                <Label [text]="item.quantity" horizontalAlignment="right"></Label>
-                                <Label class="totals-subtitle" text="EACH" horizontalAlignment="right"></Label>
+                                <Label width="100%" class="textRight" [text]="item.quantity" horizontalAlignment="right"></Label>
+                                <Label width="100%" class="totals-subtitle textRight" text="EACH" horizontalAlignment="right"></Label>
                             </StackLayout>
                             <StackLayout col="1" verticalAlignment="center">
                                 <Label [text]="item.ItemCodeDesc" horizontalAlignment="left" paddingRight="20%"></Label>
                                 <Label class="totals-subtitle" [text]="item.ItemCode" horizontalAlignment="left"></Label>
                             </StackLayout>
-                            <StackLayout col="2" verticalAlignment="center">
-                                <Label [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
-                                <Label class="totals-subtitle" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
+                            <StackLayout col="2" verticalAlignment="center" paddingRight="20%">
+                                <Label width="100%" class="textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
+                                <Label width="100%" class="totals-subtitle textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
                             </StackLayout>
                         </GridLayout>
                     </ng-template>
