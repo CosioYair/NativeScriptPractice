@@ -79,12 +79,18 @@ TabView {
     margin-top: 100px;
 }
 
-.product-quantity Label, .product-quantity TextField, .product-quantity Dropdown {
+.product-quantity Label, .product-quantity TextField {
     width: auto;
     padding: 0;
     margin: 0;
     margin-top: 15%;
     margin-bottom: 10%;
+}
+
+.product-quantity Dropdown {
+    width: auto;
+    margin: 0;
+    padding: 5%;
 }
 
 .product-quantity Label, .product-quantity TextField {
