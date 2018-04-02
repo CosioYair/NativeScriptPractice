@@ -64,6 +64,10 @@ export class SaleOrderComponent implements OnInit{
     private _shippingAddressDoc = {};
     private _shippingAddress:ObservableArray<ShippingAddress> = new ObservableArray<ShippingAddress>();
     public shippingAddressList:any= [];
+    /*
+    private _scanForceDoc = {};
+    private _scanForceList:ObservableArray<ScanForce> = new ObservableArray<ScanForce>();
+    */
 
     constructor(private _productService: ProductService, 
                 private _inventoryService: InventoryService, 
@@ -73,18 +77,19 @@ export class SaleOrderComponent implements OnInit{
                 private barcodeScanner: BarcodeScanner, 
                 private route: ActivatedRoute,
                 private _termsCodeService: TermsCodeService,
-                private _shippingAddressService: ShippingAddressService){
+                private _shippingAddressService: ShippingAddressService,
+            ){
         this.dates = [];
         this.shipVias = [];
         this.dates.shipDate = new Date();
         this.dates.date = new Date();
         this.dates.shipDate = `${this.dates.shipDate.getDate() + 1}/${this.dates.shipDate.getMonth() + 1}/${this.dates.shipDate.getFullYear()}`;
         this.dates.date = `${this.dates.date.getDate()}/${this.dates.date.getMonth()}/${this.dates.date.getFullYear()}`;
-        CONSTANTS.warehouses.map(warehouse => {
-            this.warehouses.push(warehouse.name);
-        });
         CONSTANTS.shipVias.map(shipVia => {
             this.shipVias.push(shipVia.name);
+        });
+        CONSTANTS.warehouses.map(warehouse => {
+            this.warehouses.push(warehouse.name);
         });
         this.selectedProduct.ItemCode = "";
         this.selectedProduct.comment = "";
@@ -133,6 +138,7 @@ export class SaleOrderComponent implements OnInit{
         this.setTermsCode();
         this.setShippingAddress();
         //this._couchbaseService.deleteDocument("shippingaddress");
+        //this.setScanForce();
         this.setDocument();
     }
 
@@ -143,6 +149,36 @@ export class SaleOrderComponent implements OnInit{
                 this.customer = customer;
         });
     }
+
+    /*public setScanForce(){
+        let doc = this._couchbaseService.getDocument("scanforce");
+        if(doc == null)
+            this.getScanForce();
+        else{
+            this._scanForceDoc = doc;
+            this._scanForceList = this._scanForceDoc["scanforce"];
+        }
+        this.getUserScanForce();
+    }
+
+    public getScanForce(){
+        this._scanForceService.getScanForce()
+        .subscribe(result => {
+            this._scanForceDoc["scanforce"] = result["Users"];
+            this._couchbaseService.createDocument(this._termsCodeDoc, "scanforce");
+            this._scanForceList = result["Users"];
+        }, (error) => {
+            alert(error);
+        });
+    }
+
+    public getUserScanForce(){
+        let scanForceUser = {};
+        this._scanForceList.map(user =>{
+            if(user.UserCode == userCode)
+                scanForceUser = user;
+        });
+    }*/
 
     public setShippingAddress(){
         let doc = this._couchbaseService.getDocument("shippingaddress");
@@ -413,7 +449,7 @@ export class SaleOrderComponent implements OnInit{
         );
     }
 
-    public showProductOrderModal() {
+    public showProductOrderModal(){
         if(this.selectedCartProduct.quantity != undefined){
             let oldProductQuantity = parseInt(this.selectedCartProduct.quantity);
             this.createModelViewProductEdit().then(result => {

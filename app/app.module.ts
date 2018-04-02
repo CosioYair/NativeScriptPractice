@@ -25,6 +25,7 @@ import { CustomerInquiryComponent } from "./components/customer/customer-inquiry
 import { InventoryService } from "./services/inventory.service";
 import { TermsCodeService } from "./services/terms.service";
 import { ShippingAddressService } from "./services/shippingAddress.service";
+import { ScanForceService } from "./services/scanForce.service";
 
 @NgModule({
     bootstrap: [
@@ -60,7 +61,8 @@ import { ShippingAddressService } from "./services/shippingAddress.service";
         BarcodeScanner,
         InventoryService,
         TermsCodeService,
-        ShippingAddressService
+        ShippingAddressService,
+        ScanForceService
     ],
     schemas: [
         NO_ERRORS_SCHEMA
