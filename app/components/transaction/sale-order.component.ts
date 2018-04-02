@@ -74,6 +74,7 @@ export class SaleOrderComponent implements OnInit{
             this.shipVias.push(shipVia.name);
         });
         this.selectedProduct.ItemCode = "";
+        this.selectedProduct.comment = "";
         this.selectedCartProduct.ItemCode = "";
         this.orientation.setOrientation("landscaperight");  
         this.tabs = [];

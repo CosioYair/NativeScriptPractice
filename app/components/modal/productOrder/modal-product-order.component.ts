@@ -9,9 +9,11 @@ import { EventData } from "data/observable";
 })
 export class ModalProductOrderComponent {
     public selectedCartProduct:any;
+    public warehouse:string;
 
     public constructor(private params: ModalDialogParams) {
         this.selectedCartProduct = this.params.context.selectedCartProduct;
+        this.warehouse = this.params.context.warehouse;
     }
 
     public close() {

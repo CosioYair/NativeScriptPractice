@@ -4,33 +4,30 @@
             <GridLayout class="product-sections" columns="*" rows="*">
                 <StackLayout class="" row="0" col="0">
                     <DockLayout>
-                        <Label text="Qty"></Label>
+                        <Label text="Qty" verticalAlignment="center" paddingRight="5%"></Label>
                         <TextField [(ngModel)]="selectedCartProduct.quantity" keyboardType="number" hint=""></TextField>
                     </DockLayout>
-                    <DockLoyout>
-                        <DropDown [items]="eachs" [(ngModel)]="each"></DropDown>
-                    </DockLoyout>
                     <DockLayout marginTop="50px">
-                        <Label text="Price"></Label>
-                        <TextField [(ngModel)]="selectedCartProduct.StandardUnitCost" hint="" isEnabled="false"></TextField>
+                        <Label text="Price" verticalAlignment="center" paddingRight="5%"></Label>
+                        <TextField [(ngModel)]="selectedCartProduct.StandardUnitPrice" hint="" isEnabled="false"></TextField>
                     </DockLayout>
                 </StackLayout>
             </GridLayout>
             <StackLayout marginTop="50px">
                 <DockLayout>
-                    <Label text="Whse"></Label>
-                    <DropDown [items]="wharehousesProduct" [(ngModel)]="wharehouseProduct"></DropDown>
+                    <Label text="Warehouse" verticalAlignment="center" paddingRight="5%"></Label>
+                    <TextField [text]="warehouse" class="enabled" isEnabled="false"></TextField>
                 </DockLayout>
-                <TextView backgroundColor="white" style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="300px" marginBottom="60px" marginTop="100px" hint="Comment" class="input input-border"></TextView>
+                <TextView backgroundColor="white" style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="300px" marginBottom="60px" marginTop="100px" hint="Comment" [(ngModel)]="selectedCartProduct.comment" class="input input-border"></TextView>
             </StackLayout>
             <GridLayout class="" columns="125, *, *" rows="*">
                 <StackLayout class="" row="0" col="0" horizontalAlignment="right">
                     <Label text="QTY ON HAND"></Label>
-                    <Label text="0"></Label>
+                    <Label [text]="selectedCartProduct.quantityOnHand"></Label>
                 </StackLayout>
                 <StackLayout row="0" col="1" horizontalAlignment="right">
                     <Label text="QTY AVAIL"></Label>
-                    <Label text="0"></Label>
+                    <Label [text]="selectedCartProduct.quantityAvail"></Label>
                 </StackLayout>
                 <StackLayout row="0" col="2" horizontalAlignment="right">
                     <Label text="STD PRICE"></Label>
