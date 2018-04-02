@@ -213,8 +213,8 @@ export class SaleOrderComponent implements OnInit{
         this._shippingAddress = this._shippingAddressDoc["shippingaddress"][this.customer.CustomerNo];
     }
 
-    public getCustomerShippingAddress(){
-        this._shippingAddress.map(shipping => {
+    public async getCustomerShippingAddress(){
+        await this._shippingAddress.map(shipping => {
             this.shippingAddressList.push(shipping.ShipToCode);
         });
     }
@@ -380,25 +380,27 @@ export class SaleOrderComponent implements OnInit{
     }
 
     private searchItemCode(code:string, list:any){
-        let notFound = true;
+        let item = false;
         list.map( (product, index) => {
             if(list[index].ItemCode.toLowerCase() == code.toLowerCase()){
-                notFound = false;
+                item = product;
                 this.selectedProduct = this._products[index]; 
             }
         });
-        return notFound;
+        return item;
     }
 
     public validateProductList(){
-        if(this.searchItemCode(this.itemCode, this._products))
+        if(this.searchItemCode(this.itemCode, this._products) == false)
             alert(`Invalid item code. ${this.itemCode} does not exist.`);
         else
             this.viewProduct(this.selectedProduct);
     }
 
     public addProduct(){
-        if(this.searchItemCode(this.itemCode, this.cart)){
+        let product = this.searchItemCode(this.itemCode, this.cart);
+        console.log(JSON.stringify(product));
+        if(product == false){
             this.selectedProduct.quantity = this.productQuantity;
             this.selectedProduct.quantityPrice = this.selectedProduct.quantity * parseFloat(this.selectedProduct.StandardUnitPrice);
             this.cart.push(this.selectedProduct);
@@ -406,8 +408,10 @@ export class SaleOrderComponent implements OnInit{
             this.cartQuantity = this.cartQuantity + parseInt(this.selectedProduct.quantity);
             alert(`Item ${this.itemCode} added to cart.`);
         }
-        else
-            alert(`Item ${this.itemCode} is already in the cart.`);
+        else{
+            this.selectedCartProduct = product;
+            this.showProductOrderModal();
+        }
         this.cancel();
     }
 
