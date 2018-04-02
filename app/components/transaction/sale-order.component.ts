@@ -19,6 +19,9 @@ import { InventoryService } from "../../services/inventory.service";
 import { DecimalPipe } from '@angular/common';
 import { TermsCodeService } from "../../services/terms.service";
 import { TermsCode } from "../../interfaces/termsCode.interface";
+import { ShippingAddress } from "../../interfaces/shippingAddress.interface";
+import { ShippingAddressService } from "../../services/shippingAddress.service";
+import { SelectedIndexChangedEventData } from "tns-core-modules/ui/tab-view/tab-view";
 
 @Component({
     selector: "ns-sale-order",
@@ -58,6 +61,9 @@ export class SaleOrderComponent implements OnInit{
     private _termsCodeDoc = {};
     private _termsCode:any;
     public userTermsCode:string;
+    private _shippingAddressDoc = {};
+    private _shippingAddress:ObservableArray<ShippingAddress> = new ObservableArray<ShippingAddress>();
+    public shippingAddressList:any= [];
 
     constructor(private _productService: ProductService, 
                 private _inventoryService: InventoryService, 
@@ -66,7 +72,8 @@ export class SaleOrderComponent implements OnInit{
                 private vcRef:ViewContainerRef, 
                 private barcodeScanner: BarcodeScanner, 
                 private route: ActivatedRoute,
-                private _termsCodeService: TermsCodeService){
+                private _termsCodeService: TermsCodeService,
+                private _shippingAddressService: ShippingAddressService){
         this.dates = [];
         this.shipVias = [];
         this.dates.shipDate = new Date();
@@ -124,6 +131,8 @@ export class SaleOrderComponent implements OnInit{
         this.setInventory();
         //this._couchbaseService.deleteDocument(this._docIdProduct);
         this.setTermsCode();
+        this.setShippingAddress();
+        //this._couchbaseService.deleteDocument("shippingaddress");
         this.setDocument();
     }
 
@@ -133,6 +142,51 @@ export class SaleOrderComponent implements OnInit{
             if (customer.CustomerNo  == CustomerNo)
                 this.customer = customer;
         });
+    }
+
+    public setShippingAddress(){
+        let doc = this._couchbaseService.getDocument("shippingaddress");
+        if(doc == null)
+            this.getShippingAddress();
+        else{
+            this._shippingAddressDoc = doc["shippingaddress"];
+            this._shippingAddress = this._shippingAddressDoc[this.customer.CustomerNo];
+        }
+        this.getCustomerShippingAddress();
+        this.customer["shippingAddress"] = this._shippingAddress[0];
+    }
+
+    public getShippingAddress(){
+        this._shippingAddressService.getShippingAddress()
+        .subscribe(result => {
+            this.filterCustomerShippingAddress(result);
+        }, (error) => {
+            alert(error);
+        });
+    }
+
+    public async filterCustomerShippingAddress(shippingsAddress){
+        this._shippingAddressDoc["shippingaddress"] = {};
+        await shippingsAddress.map(shipping =>{
+            if(this._shippingAddressDoc["shippingaddress"][shipping.CustomerNo] == null)
+                this._shippingAddressDoc["shippingaddress"][shipping.CustomerNo] = [shipping];
+            else
+                this._shippingAddressDoc["shippingaddress"][shipping.CustomerNo].push(shipping);
+        });
+        this._couchbaseService.createDocument(this._shippingAddressDoc, "shippingaddress");
+        this._shippingAddress = this._shippingAddressDoc["shippingaddress"][this.customer.CustomerNo];
+    }
+
+    public getCustomerShippingAddress(){
+        this._shippingAddress.map(shipping => {
+            this.shippingAddressList.push(shipping.ShipToCode);
+        });
+    }
+
+    public setCustomerShippingAddress(args:SelectedIndexChangedEventData){
+        setTimeout(() => {
+            this.customer["shippingAddress"] = this._shippingAddress[args.newIndex];
+        }, 500);
     }
 
     public setTermsCode(){

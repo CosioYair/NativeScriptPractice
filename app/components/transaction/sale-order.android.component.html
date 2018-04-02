@@ -10,7 +10,7 @@
         </StackLayout>
     </GridLayout>
 </ActionBar>
-<TabView selectedIndex="3" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton>
+<TabView selectedIndex="1" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton>
     <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
         <GridLayout class="tab-content" columns="*, *" rows="*">
             <StackLayout row="0" col="0">
@@ -29,10 +29,6 @@
                 <DockLayout>
                     <Label text="Warehouse"></Label>
                     <DropDown [items]="warehouses" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2"></DropDown>    
-                </DockLayout>
-                <DockLayout>
-                    <Label text="Ship Via"></Label>
-                    <DropDown [items]="shipVias" [(ngModel)]="shipVia"></DropDown>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Terms"></Label>
@@ -111,40 +107,40 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Ship To"></Label>
-                    <DropDown [items]="shipsTo" [(ngModel)]="shipTo" colSpan="2"></DropDown> 
+                    <DropDown [items]="shippingAddressList" selectedIndex="0" (selectedIndexChanged)="setCustomerShippingAddress($event)" colSpan="2"></DropDown> 
                 </DockLayout>
                 <DockLayout>
                     <Label text="Name"></Label>
-                    <TextField class="enabled" hint="Name" isEnabled="false"></TextField>
+                    <TextField class="enabled" [text]="customer.shippingAddress.ShipToName" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Address"></Label>
-                    <TextField class="enabled" hint="Address" isEnabled="false"></TextField>
+                    <TextField class="enabled" [text]="customer.shippingAddress.ShipToAddress1" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label></Label>
-                    <TextField class="enabled" isEnabled="false"></TextField>
+                    <TextField class="enabled" [text]="customer.shippingAddress.ShipToAddress2" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label></Label>
-                    <TextField class="enabled" isEnabled="false"></TextField>
+                    <TextField class="enabled" [text]="customer.shippingAddress.ShipToAddress3" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <GridLayout class="tab-subContent" columns="*, *" rows="*">
                         <StackLayout row="0" col="0">
                             <DockLayout>
                                 <Label text="City"></Label>
-                                <TextField class="enabled" hint="City" isEnabled="false"></TextField>
+                                <TextField class="enabled" [text]="customer.shippingAddress.ShipToCity" isEnabled="false"></TextField>
                             </DockLayout>
                             <DockLayout>
                                 <Label text="Zip"></Label>
-                                <TextField class="enabled" hint="Zip" isEnabled="false"></TextField>
+                                <TextField class="enabled" [text]="customer.shippingAddress.ShipToZipCode" isEnabled="false"></TextField>
                             </DockLayout>
                         </StackLayout>
                         <StackLayout row="0" col="1">
                             <DockLayout>
                                 <Label text="State"></Label>
-                                <TextField class="enabled" hint="State" isEnabled="false"></TextField>
+                                <TextField class="enabled" [text]="customer.shippingAddress.ShipToState" isEnabled="false"></TextField>
                             </DockLayout>
                         </StackLayout>
                     </GridLayout>
