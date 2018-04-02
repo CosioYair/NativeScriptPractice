@@ -5,7 +5,7 @@ export interface Product{
     Category4: string,
     DateCreated: string,
     DateUpdate: string,
-    ExtendedDescriptionDate: string,
+    ExtendedDescriptionText: string,
     ImageFile: string,
     InactiveItem: string,
     ItemCode: string,

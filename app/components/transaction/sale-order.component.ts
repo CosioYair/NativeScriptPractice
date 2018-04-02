@@ -344,4 +344,11 @@ export class SaleOrderComponent implements OnInit{
             }
         });
     }
+
+    public showDescription(){
+        if(this.selectedProduct.ExtendedDescriptionText != undefined)
+            alert(this.selectedProduct.ExtendedDescriptionText);
+        else
+            alert("Description not available");
+    }
  }

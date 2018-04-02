@@ -178,10 +178,15 @@
             <StackLayout class="product-detail" row="0" col="1">
                 <GridLayout borderRadius="8" class="" columns="*" rows="100, *">
                     <Border margin="3%" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
-                        <StackLayout class="product-detail-title">
-                            <Label [text]="lineTitle" class="h1"></Label>
-                            <Label [text]="lineSubTitle" class="list-group-item-heading"></Label>
-                        </StackLayout>
+                        <GridLayout borderRadius="8" class="" columns="*, 30" rows="*">
+                            <StackLayout col="0" class="product-detail-title">
+                                <Label [text]="lineTitle" class="h1"></Label>
+                                <Label [text]="lineSubTitle" class="list-group-item-heading"></Label>
+                            </StackLayout>
+                            <StackLayout *ngIf="showingProduct" col="1">
+                                <Label text="&#xf129;" (tap)="showDescription()"></Label>
+                            </StackLayout>
+                        </GridLayout>
                     </Border>
                     <StackLayout class="product-description" margin="3%" col="0" row="1">
                         <StackLayout *ngIf="!showingProduct">
