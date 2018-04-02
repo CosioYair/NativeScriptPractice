@@ -31,6 +31,10 @@
                     <DropDown [items]="warehouses" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2"></DropDown>    
                 </DockLayout>
                 <DockLayout>
+                    <Label text="Ship Via"></Label>
+                    <DropDown [items]="shipVias" [(ngModel)]="shipVia"></DropDown>
+                </DockLayout>
+                <DockLayout>
                     <Label text="Terms"></Label>
                     <TextField [text]="customer.TermsCode + ': ' + userTermsCode" class="enabled" hint="Terms" isEnabled="false"></TextField>
                 </DockLayout>
