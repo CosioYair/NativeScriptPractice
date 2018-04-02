@@ -275,11 +275,15 @@
     <StackLayout *tabItem="{title: '&#xf2b5; TOTALS'}" >
         <GridLayout class="tab-content" columns="300, *, auto" rows="*">
             <StackLayout class="tab-list" row="0" col="0">
-                <GridLayout borderRadius="8" class="" columns="*" rows="50, *">
-                    <Border  verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
-                        <DockLayout class="totals">
-                            <Label text="Total Qty" class=""></Label>
-                            <Label text="3" class="h1" horizontalAlignment="right"></Label>
+                <GridLayout borderRadius="8" class="totals" columns="*" rows="80, *">
+                    <Border verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
+                        <DockLayout paddingTop="30%" class="">
+                            <StackLayout width="55%">
+                                <Label text="Total Qty" class="" paddingRight="25%"></Label>
+                            </StackLayout>
+                            <StackLayout width="45%">
+                                <Label borderBottomWidth="0" width="100%" class="textRight h1" isEnabled="false" [text]="cartQuantity"></Label>
+                            </StackLayout>
                         </DockLayout>
                     </Border>
                     <StackLayout class="product-description" margin="3%" col="0" row="1">

@@ -52,6 +52,7 @@ export class SaleOrderComponent implements OnInit{
     private _inventories:any;
     public inventoryList: ObservableArray<Inventory> = new ObservableArray<Inventory>();
     public totalCartAmount:number = 0;
+    public cartQuantity:number = 0;
 
     constructor(private _productService: ProductService, 
                 private _inventoryService: InventoryService, 
@@ -272,9 +273,10 @@ export class SaleOrderComponent implements OnInit{
     public addProduct(){
         if(this.searchItemCode(this.itemCode, this.cart)){
             this.selectedProduct.quantity = this.productQuantity;
-            this.selectedProduct.quantityPrice = this.selectedProduct.quantity * parseFloat(this.selectedProduct.StandardUnitCost);
+            this.selectedProduct.quantityPrice = this.selectedProduct.quantity * parseFloat(this.selectedProduct.StandardUnitPrice);
             this.cart.push(this.selectedProduct);
             this.totalCartAmount += this.selectedProduct.quantityPrice;
+            this.cartQuantity = this.cartQuantity + parseInt(this.selectedProduct.quantity);
             alert(`Item ${this.itemCode} added to cart.`);
         }
         else
@@ -293,7 +295,8 @@ export class SaleOrderComponent implements OnInit{
     public deleteCartProduct(){
         this.cart.map( (product, index) => {
             if(this.cart[index].ItemCode == this.selectedCartProduct.ItemCode){
-                this.totalCartAmount -= this.selectedProduct.quantityPrice;
+                this.totalCartAmount = this.totalCartAmount - parseFloat(this.selectedCartProduct.quantityPrice);
+                this.cartQuantity = this.cartQuantity - this.selectedCartProduct.quantity;
                 this.cart.splice(index, 1);
             }
         });
@@ -320,9 +323,15 @@ export class SaleOrderComponent implements OnInit{
     }
 
     public showProductOrderModal() {
-        this.createModelViewProductEdit().then(result => {
-            console.log(result.quantity);
-        }).catch(error => alert(error));
+        if(this.selectedCartProduct.quantity != undefined){
+            this.cartQuantity = this.cartQuantity - parseInt(this.selectedCartProduct.quantity);
+            this.totalCartAmount = this.totalCartAmount - this.selectedCartProduct.quantityPrice;
+            this.createModelViewProductEdit().then(result => {
+                this.cartQuantity = this.cartQuantity + parseInt(this.selectedCartProduct.quantity);
+                this.selectedCartProduct.quantityPrice = this.selectedCartProduct.quantity * parseFloat(this.selectedCartProduct.StandardUnitPrice);
+                this.totalCartAmount = this.totalCartAmount + this.selectedCartProduct.quantityPrice;
+            }).catch(error => alert(error));
+        }
     }
     
     private createModelViewProductEdit(): Promise<any> {
