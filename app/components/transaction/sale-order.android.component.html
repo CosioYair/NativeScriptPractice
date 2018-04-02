@@ -36,7 +36,7 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Terms"></Label>
-                    <TextField [text]="customer.TermsCode" class="enabled" hint="Terms" isEnabled="false"></TextField>
+                    <TextField [text]="customer.TermsCode + ': ' + userTermsCode" class="enabled" hint="Terms" isEnabled="false"></TextField>
                 </DockLayout>
             </StackLayout>
             <StackLayout row="0" col="1">

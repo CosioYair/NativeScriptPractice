@@ -17,6 +17,8 @@ import { Customer } from "../../interfaces/customer.interface";
 import { Inventory } from "../../interfaces/inventory.interface";
 import { InventoryService } from "../../services/inventory.service";
 import { DecimalPipe } from '@angular/common';
+import { TermsCodeService } from "../../services/terms.service";
+import { TermsCode } from "../../interfaces/termsCode.interface";
 
 @Component({
     selector: "ns-sale-order",
@@ -53,6 +55,9 @@ export class SaleOrderComponent implements OnInit{
     public inventoryList: ObservableArray<Inventory> = new ObservableArray<Inventory>();
     public totalCartAmount:number = 0;
     public cartQuantity:number = 0;
+    private _termsCodeDoc = {};
+    private _termsCode:any;
+    public userTermsCode:string;
 
     constructor(private _productService: ProductService, 
                 private _inventoryService: InventoryService, 
@@ -60,7 +65,8 @@ export class SaleOrderComponent implements OnInit{
                 private modalService:ModalDialogService, 
                 private vcRef:ViewContainerRef, 
                 private barcodeScanner: BarcodeScanner, 
-                private route: ActivatedRoute){
+                private route: ActivatedRoute,
+                private _termsCodeService: TermsCodeService){
         this.dates = [];
         this.shipVias = [];
         this.dates.shipDate = new Date();
@@ -117,6 +123,7 @@ export class SaleOrderComponent implements OnInit{
         //this._couchbaseService.deleteDocument("inventory");
         this.setInventory();
         //this._couchbaseService.deleteDocument(this._docIdProduct);
+        this.setTermsCode();
         this.setDocument();
     }
 
@@ -125,6 +132,35 @@ export class SaleOrderComponent implements OnInit{
         doc.map(customer => {
             if (customer.CustomerNo  == CustomerNo)
                 this.customer = customer;
+        });
+    }
+
+    public setTermsCode(){
+        let doc = this._couchbaseService.getDocument("termscode");
+        if(doc == null)
+            this.getTermsCode();
+        else{
+            this._termsCodeDoc = doc;
+            this._termsCode = this._termsCodeDoc["termscode"];
+        }
+        this.getUserTermsCode();
+    }
+
+    public getTermsCode(){
+        this._termsCodeService.getTermsCode()
+        .subscribe(result => {
+            this._termsCodeDoc["termscode"] = result["TermsCode"];
+            this._couchbaseService.createDocument(this._termsCodeDoc, "termscode");
+            this._termsCode = result["TermsCode"];
+        }, (error) => {
+            alert(error);
+        });
+    }
+
+    public getUserTermsCode(){
+        this._termsCode.map(term =>{
+            if(term.TermsCode == this.customer.TermsCode)
+                this.userTermsCode = term.Description;
         });
     }
 
