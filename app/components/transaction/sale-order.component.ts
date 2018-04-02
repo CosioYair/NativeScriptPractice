@@ -197,7 +197,8 @@ export class SaleOrderComponent implements OnInit{
 
     public showDateModal(input:string) {
         this.createModelView().then(result => {
-            this.dates[input] = result;
+            if(result != null)
+                this.dates[input] = result;
         }).catch(error => alert(error));
     }
     
