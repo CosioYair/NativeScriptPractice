@@ -219,7 +219,7 @@ export class SaleOrderComponent implements OnInit{
         if(searchValue.length > 0){
             this.productList = new ObservableArray<Product>();
             this._products.map( (product, index) => {
-                if (this._products[index].ItemCodeDesc.toLowerCase().indexOf(searchValue) !== -1)
+                if (this._products[index].ItemCode.toLowerCase().indexOf(searchValue) !== -1)
                     this.productList.push(this._products[index]);
             });
         }
