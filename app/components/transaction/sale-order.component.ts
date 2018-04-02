@@ -324,12 +324,17 @@ export class SaleOrderComponent implements OnInit{
 
     public showProductOrderModal() {
         if(this.selectedCartProduct.quantity != undefined){
-            this.cartQuantity = this.cartQuantity - parseInt(this.selectedCartProduct.quantity);
-            this.totalCartAmount = this.totalCartAmount - this.selectedCartProduct.quantityPrice;
+            let oldProductQuantity = parseInt(this.selectedCartProduct.quantity);
             this.createModelViewProductEdit().then(result => {
-                this.cartQuantity = this.cartQuantity + parseInt(this.selectedCartProduct.quantity);
-                this.selectedCartProduct.quantityPrice = this.selectedCartProduct.quantity * parseFloat(this.selectedCartProduct.StandardUnitPrice);
-                this.totalCartAmount = this.totalCartAmount + this.selectedCartProduct.quantityPrice;
+                if(result != null && result.quantity > 0){
+                    this.cartQuantity = this.cartQuantity - oldProductQuantity;
+                    this.totalCartAmount = this.totalCartAmount - this.selectedCartProduct.quantityPrice;
+                    this.cartQuantity = this.cartQuantity + parseInt(result.quantity);
+                    this.selectedCartProduct.quantityPrice = result.quantity * parseFloat(this.selectedCartProduct.StandardUnitPrice);
+                    this.totalCartAmount = this.totalCartAmount + this.selectedCartProduct.quantityPrice;
+                }
+                else
+                    this.selectedCartProduct.quantity = oldProductQuantity;
             }).catch(error => alert(error));
         }
     }
@@ -337,7 +342,8 @@ export class SaleOrderComponent implements OnInit{
     private createModelViewProductEdit(): Promise<any> {
         if(this.selectedCartProduct.quantity != null){
             const productDetails = {
-                selectedCartProduct: this.selectedCartProduct
+                selectedCartProduct: this.selectedCartProduct,
+                warehouse: CONSTANTS.warehouses[this.warehouse].name
             };
             const options: ModalDialogOptions = {
                 viewContainerRef: this.vcRef,
