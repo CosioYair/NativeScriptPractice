@@ -223,7 +223,7 @@
                                             </DockLayout>
                                             <DockLayout marginTop="50px">
                                                 <Label text="Price"></Label>
-                                                <TextField [(ngModel)]="selectedProduct.StandardUnitPrice" class="enabled" hint="" isEnabled="false"></TextField>
+                                                <TextField [text]="selectedProduct.StandardUnitPrice | number:'1.2-5'" class="enabled" hint="" isEnabled="false"></TextField>
                                             </DockLayout>
                                         </StackLayout>
                                         <StackLayout row="0" col="1">
@@ -251,7 +251,7 @@
                                         </StackLayout>
                                         <StackLayout row="0" col="2" horizontalAlignment="right">
                                             <Label text="STD PRICE"></Label>
-                                            <Label [text]="selectedProduct.StandardUnitPrice"></Label>
+                                            <Label [text]="selectedProduct.StandardUnitPrice | number:'1.2-5'"></Label>
                                         </StackLayout>
                                     </GridLayout>
                                 </StackLayout>

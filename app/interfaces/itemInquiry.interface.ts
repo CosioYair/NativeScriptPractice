@@ -16,8 +16,8 @@ export interface Product{
     ProductLine: string,
     ProductType: string,
     ShipWeight: string,
-    StandardUnitCost: string,
-    StandardUnitPrice: string,
+    StandardUnitCost: number,
+    StandardUnitPrice: number,
     TimeCreated: string,
     TimeUpdated: string,
     Volume:string

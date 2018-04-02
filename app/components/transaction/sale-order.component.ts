@@ -16,6 +16,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Customer } from "../../interfaces/customer.interface";
 import { Inventory } from "../../interfaces/inventory.interface";
 import { InventoryService } from "../../services/inventory.service";
+import { DecimalPipe } from '@angular/common';
 
 @Component({
     selector: "ns-sale-order",
