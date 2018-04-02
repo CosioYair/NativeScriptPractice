@@ -10,7 +10,7 @@
         </StackLayout>
     </GridLayout>
 </ActionBar>
-<TabView selectedIndex="0" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton>
+<TabView selectedIndex="3" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton>
     <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
         <GridLayout class="tab-content" columns="*, *" rows="*">
             <StackLayout row="0" col="0">
@@ -273,7 +273,7 @@
         </GridLayout>
     </StackLayout>
     <StackLayout *tabItem="{title: '&#xf2b5; TOTALS'}" >
-        <GridLayout class="tab-content" columns="auto, *, auto" rows="*">
+        <GridLayout class="tab-content" columns="300, *, auto" rows="*">
             <StackLayout class="tab-list" row="0" col="0">
                 <GridLayout borderRadius="8" class="" columns="*" rows="50, *">
                     <Border  verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
@@ -284,10 +284,15 @@
                     </Border>
                     <StackLayout class="product-description" margin="3%" col="0" row="1">
                         <StackLayout class="totals">
-                            <DockLayout>
-                                <Label text="NET AMOUNT"></Label>
-                                <Label text="669.00" horizontalAlignment="right"></Label>
+                            <DockLayout paddingTop="30%" class="totals">
+                                <StackLayout width="55%">
+                                    <Label text="NET AMOUNT" class="" paddingRight="25%"></Label>
+                                </StackLayout>
+                                <StackLayout width="45%">
+                                    <Label width="100%" [text]="totalCartAmount | number:'1.2-5'" class="textRight"></Label>
+                                </StackLayout>
                             </DockLayout>
+                            <!--
                             <DockLayout>
                                 <Label text="DISC AMOUNT"></Label>
                                 <Label text="0.00" horizontalAlignment="right"></Label>
@@ -300,10 +305,15 @@
                                 <Label text="FREIGHT"></Label>
                                 <Label text="0.00" horizontalAlignment="right"></Label>
                             </DockLayout>
+                            -->
                             <Border verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
                                 <DockLayout paddingTop="30%" class="totals">
-                                    <Label text="Total Amount" class="" paddingRight="25%"></Label>
-                                    <Label text="$669.00" class="h1" horizontalAlignment="right"></Label>
+                                    <StackLayout width="55%">
+                                        <Label text="Total Amount" class="" paddingRight="25%"></Label>
+                                    </StackLayout>
+                                    <StackLayout width="45%">
+                                        <Label width="100%" [text]="totalCartAmount | number:'1.2-5'" class="h1 textRight" horizontalAlignment="right"></Label>
+                                    </StackLayout>
                                 </DockLayout>
                             </Border>
                         </StackLayout>
@@ -335,8 +345,8 @@
                                 <Label class="totals-subtitle" [text]="item.ItemCode" horizontalAlignment="left"></Label>
                             </StackLayout>
                             <StackLayout col="2" verticalAlignment="center">
-                                <Label [text]="item.StandardUnitCost" horizontalAlignment="center"></Label>
-                                <Label class="totals-subtitle" [text]="item.StandardUnitPrice" horizontalAlignment="center"></Label>
+                                <Label [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
+                                <Label class="totals-subtitle" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
                             </StackLayout>
                         </GridLayout>
                     </ng-template>

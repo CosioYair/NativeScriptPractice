@@ -125,3 +125,7 @@ TabView {
     min-width: 20%;
     min-height: 120px;
 }
+
+.textRight {
+    text-align: right;
+}

@@ -51,6 +51,7 @@ export class SaleOrderComponent implements OnInit{
     private _inventoryDoc = {};
     private _inventories:any;
     public inventoryList: ObservableArray<Inventory> = new ObservableArray<Inventory>();
+    public totalCartAmount:number = 0;
 
     constructor(private _productService: ProductService, 
                 private _inventoryService: InventoryService, 
@@ -273,6 +274,7 @@ export class SaleOrderComponent implements OnInit{
             this.selectedProduct.quantity = this.productQuantity;
             this.selectedProduct.quantityPrice = this.selectedProduct.quantity * parseFloat(this.selectedProduct.StandardUnitCost);
             this.cart.push(this.selectedProduct);
+            this.totalCartAmount += this.selectedProduct.quantityPrice;
             alert(`Item ${this.itemCode} added to cart.`);
         }
         else
@@ -290,8 +292,10 @@ export class SaleOrderComponent implements OnInit{
 
     public deleteCartProduct(){
         this.cart.map( (product, index) => {
-            if(this.cart[index].ItemCode == this.selectedCartProduct.ItemCode)
+            if(this.cart[index].ItemCode == this.selectedCartProduct.ItemCode){
+                this.totalCartAmount -= this.selectedProduct.quantityPrice;
                 this.cart.splice(index, 1);
+            }
         });
     }
 
