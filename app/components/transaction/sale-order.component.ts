@@ -57,9 +57,8 @@ export class SaleOrderComponent implements OnInit{
     public totalCartAmount:number = 0;
     public cartQuantity:number = 0;
     public userTermsCode:string;
-    private _shippingAddressDoc = {};
-    private _shippingAddress:ObservableArray<ShippingAddress> = new ObservableArray<ShippingAddress>();
-    public shippingAddressList:any= [];
+    public shippingAddressList:any = [];
+    private _customerShippingAddress: any;
     /*
     private _scanForceDoc = {};
     private _scanForceList:ObservableArray<ScanForce> = new ObservableArray<ScanForce>();
@@ -158,8 +157,15 @@ export class SaleOrderComponent implements OnInit{
     public setTermsCode(){
         if(this._couchbaseService.getDocument("termscode") == null)
             this._termsCodeService.setTermsCodeDoc();
-        else
-            this.userTermsCode = this._termsCodeService.getUserTermsCode(this.customer);
+        this.userTermsCode = this._termsCodeService.getUserTermsCode(this.customer);
+    }
+
+    public async setShippingAddress(){
+        if(this._couchbaseService.getDocument("shippingaddress") == null)
+            this._shippingAddressService.setShippingAddressDoc();
+        this.shippingAddressList = await this._shippingAddressService.getCustomerShippingAddressList(this.customer);
+        this._customerShippingAddress = await this._shippingAddressService.getCustomerShippingAddress(this.customer);
+        this.customer["shippingAddress"] = this._customerShippingAddress[0];
     }
 
     /*public setScanForce(){
@@ -192,48 +198,9 @@ export class SaleOrderComponent implements OnInit{
         });
     }*/
 
-    public setShippingAddress(){
-        let doc = this._couchbaseService.getDocument("shippingaddress");
-        if(doc == null)
-            this.getShippingAddress();
-        else{
-            this._shippingAddressDoc = doc["shippingaddress"];
-            this._shippingAddress = this._shippingAddressDoc[this.customer.CustomerNo];
-        }
-        this.getCustomerShippingAddress();
-        this.customer["shippingAddress"] = this._shippingAddress[0];
-    }
-
-    public getShippingAddress(){
-        this._shippingAddressService.getShippingAddress()
-        .subscribe(result => {
-            this.filterCustomerShippingAddress(result);
-        }, (error) => {
-            alert(error);
-        });
-    }
-
-    public async filterCustomerShippingAddress(shippingsAddress){
-        this._shippingAddressDoc["shippingaddress"] = {};
-        await shippingsAddress.map(shipping =>{
-            if(this._shippingAddressDoc["shippingaddress"][shipping.CustomerNo] == null)
-                this._shippingAddressDoc["shippingaddress"][shipping.CustomerNo] = [shipping];
-            else
-                this._shippingAddressDoc["shippingaddress"][shipping.CustomerNo].push(shipping);
-        });
-        this._couchbaseService.createDocument(this._shippingAddressDoc, "shippingaddress");
-        this._shippingAddress = this._shippingAddressDoc["shippingaddress"][this.customer.CustomerNo];
-    }
-
-    public async getCustomerShippingAddress(){
-        await this._shippingAddress.map(shipping => {
-            this.shippingAddressList.push(shipping.ShipToCode);
-        });
-    }
-
     public setCustomerShippingAddress(args:SelectedIndexChangedEventData){
         setTimeout(() => {
-            this.customer["shippingAddress"] = this._shippingAddress[args.newIndex];
+            this.customer["shippingAddress"] = this._customerShippingAddress[args.newIndex];
         }, 500);
     }
 
