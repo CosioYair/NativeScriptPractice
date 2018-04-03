@@ -56,8 +56,6 @@ export class SaleOrderComponent implements OnInit{
     public inventoryList: ObservableArray<Inventory> = new ObservableArray<Inventory>();
     public totalCartAmount:number = 0;
     public cartQuantity:number = 0;
-    private _termsCodeDoc = {};
-    private _termsCode:any;
     public userTermsCode:string;
     private _shippingAddressDoc = {};
     private _shippingAddress:ObservableArray<ShippingAddress> = new ObservableArray<ShippingAddress>();
@@ -141,12 +139,27 @@ export class SaleOrderComponent implements OnInit{
         //this._couchbaseService.deleteDocument("product");
     }
 
+    public async setDocument(){
+        if(this._couchbaseService.getDocument("product") == null)
+            this._productService.setProductDocument();
+
+        this._products = await this._productService.getProductDocument();
+        this.productList = new ObservableArray<Product>(this._products);
+    }
+
     public getCustomer(CustomerNo:string){
         let doc = this._couchbaseService.getDocument("customer")["customer"];
         doc.map(customer => {
             if (customer.CustomerNo  == CustomerNo)
                 this.customer = customer;
         });
+    }
+
+    public setTermsCode(){
+        if(this._couchbaseService.getDocument("termscode") == null)
+            this._termsCodeService.setTermsCodeDoc();
+        else
+            this.userTermsCode = this._termsCodeService.getUserTermsCode(this.customer);
     }
 
     /*public setScanForce(){
@@ -224,35 +237,6 @@ export class SaleOrderComponent implements OnInit{
         }, 500);
     }
 
-    public setTermsCode(){
-        let doc = this._couchbaseService.getDocument("termscode");
-        if(doc == null)
-            this.getTermsCode();
-        else{
-            this._termsCodeDoc = doc;
-            this._termsCode = this._termsCodeDoc["termscode"];
-        }
-        this.getUserTermsCode();
-    }
-
-    public getTermsCode(){
-        this._termsCodeService.getTermsCode()
-        .subscribe(result => {
-            this._termsCodeDoc["termscode"] = result["TermsCode"];
-            this._couchbaseService.createDocument(this._termsCodeDoc, "termscode");
-            this._termsCode = result["TermsCode"];
-        }, (error) => {
-            alert(error);
-        });
-    }
-
-    public getUserTermsCode(){
-        this._termsCode.map(term =>{
-            if(term.TermsCode == this.customer.TermsCode)
-                this.userTermsCode = term.Description;
-        });
-    }
-
     public setInventory(){
         let doc = this._couchbaseService.getDocument("inventory");
         if(doc == null)
@@ -293,13 +277,7 @@ export class SaleOrderComponent implements OnInit{
         }, 500);
     }
 
-    public async setDocument(){
-        if(this._couchbaseService.getDocument("product") == null)
-            this._productService.setProductDocument();
-
-        this._products = await this._productService.getProductDocument();
-        this.productList = new ObservableArray<Product>(this._products);
-    }
+    
 
     public showDateModal(input:string) {
         this.createModelView().then(result => {
