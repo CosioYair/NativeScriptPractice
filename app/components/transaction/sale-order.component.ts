@@ -51,8 +51,6 @@ export class SaleOrderComponent implements OnInit{
     public selectionTabs:any;
     public selectedIndex = 0;
     public customer:Customer;
-    private _inventoryDoc = {};
-    private _inventories:any;
     public inventoryList: ObservableArray<Inventory> = new ObservableArray<Inventory>();
     public totalCartAmount:number = 0;
     public cartQuantity:number = 0;
@@ -67,8 +65,8 @@ export class SaleOrderComponent implements OnInit{
     constructor(private _productService: ProductService, 
                 private _inventoryService: InventoryService, 
                 private _couchbaseService: CouchbaseService, 
-                private modalService:ModalDialogService, 
-                private vcRef:ViewContainerRef, 
+                private modalService: ModalDialogService, 
+                private vcRef: ViewContainerRef, 
                 private barcodeScanner: BarcodeScanner, 
                 private route: ActivatedRoute,
                 private _termsCodeService: TermsCodeService,
@@ -168,6 +166,13 @@ export class SaleOrderComponent implements OnInit{
         this.customer["shippingAddress"] = this._customerShippingAddress[0];
     }
 
+    public setInventory(){
+        if(this._couchbaseService.getDocument("inventory") == null)
+            this._inventoryService.setInventoriesDoc();
+
+        this.inventoryList = this._inventoryService.getInventoryWarehouse(this.warehouse);
+    }
+
     /*public setScanForce(){
         let doc = this._couchbaseService.getDocument("scanforce");
         if(doc == null)
@@ -204,47 +209,12 @@ export class SaleOrderComponent implements OnInit{
         }, 500);
     }
 
-    public setInventory(){
-        let doc = this._couchbaseService.getDocument("inventory");
-        if(doc == null)
-            this.getInventories();
-        else{
-            this._inventoryDoc = doc;
-            this.filterInventoryWarehouse();
-        }
-    }
-
-    public getInventories(){
-        this._inventoryService.getInventories()
-        .subscribe(result => {
-            this.filterInventories(result["Product"]);
-        }, (error) => {
-            alert(error);
-        });
-    }
-
-    public async filterInventories(inventoryDoc:any){
-        this._inventoryDoc["inventory"] = {};
-        await inventoryDoc.map(product => {
-            if(product.WarehouseCode == "ATL" || product.WarehouseCode == "HOU" || product.WarehouseCode == "CHI" || product.WarehouseCode == "PHX" || product.WarehouseCode == "000"){
-                if(this._inventoryDoc["inventory"][product.WarehouseCode] == null)
-                    this._inventoryDoc["inventory"][product.WarehouseCode] = [product];
-                else
-                    this._inventoryDoc["inventory"][product.WarehouseCode].push(product);
-            }
-        });
-        this._couchbaseService.createDocument(this._inventoryDoc, "inventory");
-        this.filterInventoryWarehouse();
-    }
-
     public filterInventoryWarehouse(){
         setTimeout(() => {
-            this._inventories = this._inventoryDoc["inventory"][CONSTANTS.warehouses[this.warehouse].code];
-            this.inventoryList = new ObservableArray<Inventory>(this._inventories);
+            this.cancel();
+            this.inventoryList = this._inventoryService.getInventoryWarehouse(this.warehouse);
         }, 500);
     }
-
-    
 
     public showDateModal(input:string) {
         this.createModelView().then(result => {
