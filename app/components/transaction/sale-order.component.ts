@@ -57,6 +57,7 @@ export class SaleOrderComponent implements OnInit{
     public userTermsCode:string;
     public shippingAddressList:any = [];
     private _customerShippingAddress: any;
+    public totalCubes:number = 0;
     /*
     private _scanForceDoc = {};
     private _scanForceList:ObservableArray<ScanForce> = new ObservableArray<ScanForce>();
@@ -291,13 +292,13 @@ export class SaleOrderComponent implements OnInit{
 
     public addProduct(){
         let product = this.searchItemCode(this.itemCode, this.cart);
-        console.log(JSON.stringify(product));
         if(product == false){
             this.selectedProduct.quantity = this.productQuantity;
             this.selectedProduct.quantityPrice = this.selectedProduct.quantity * parseFloat(this.selectedProduct.StandardUnitPrice);
             this.cart.push(this.selectedProduct);
             this.totalCartAmount += this.selectedProduct.quantityPrice;
             this.cartQuantity = this.cartQuantity + parseInt(this.selectedProduct.quantity);
+            this.totalCubes += this.selectedProduct.Category4 * this.selectedProduct.quantity;
             alert(`Item ${this.itemCode} added to cart.`);
         }
         else{
@@ -320,6 +321,7 @@ export class SaleOrderComponent implements OnInit{
             if(this.cart[index].ItemCode == this.selectedCartProduct.ItemCode){
                 this.totalCartAmount = this.totalCartAmount - parseFloat(this.selectedCartProduct.quantityPrice);
                 this.cartQuantity = this.cartQuantity - this.selectedCartProduct.quantity;
+                this.totalCubes -= this.selectedCartProduct.Category4 * this.selectedCartProduct.quantity;
                 this.cart.splice(index, 1);
             }
         });
@@ -352,9 +354,11 @@ export class SaleOrderComponent implements OnInit{
                 if(result != null && result.quantity > 0){
                     this.cartQuantity = this.cartQuantity - oldProductQuantity;
                     this.totalCartAmount = this.totalCartAmount - this.selectedCartProduct.quantityPrice;
+                    this.totalCubes -= this.selectedCartProduct.Category4 * oldProductQuantity;
                     this.cartQuantity = this.cartQuantity + parseInt(result.quantity);
                     this.selectedCartProduct.quantityPrice = result.quantity * parseFloat(this.selectedCartProduct.StandardUnitPrice);
                     this.totalCartAmount = this.totalCartAmount + this.selectedCartProduct.quantityPrice;
+                    this.totalCubes += this.selectedCartProduct.Category4 * this.selectedCartProduct.quantity;
                 }
                 else
                     this.selectedCartProduct.quantity = oldProductQuantity;

@@ -2,7 +2,7 @@ export interface Product{
     Category1: string,
     Category2: string,
     Category3: string,
-    Category4: string,
+    Category4: number,
     DateCreated: string,
     DateUpdate: string,
     ExtendedDescriptionText: string,
