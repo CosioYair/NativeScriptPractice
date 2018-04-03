@@ -31,12 +31,10 @@ import { SelectedIndexChangedEventData } from "tns-core-modules/ui/tab-view/tab-
 })
 
 export class SaleOrderComponent implements OnInit{
+    public productList:any;
     private _products:any;
-    private _docIdProduct:string = "product";
-    public productList: ObservableArray<Product> = new ObservableArray<Product>();
     public selectedProduct:any = {};
     public selectedCartProduct:any = {};
-    public data = {};
     public dates:any;
     public warehouses:any = [];
     public warehouse:number = 0;
@@ -294,34 +292,13 @@ export class SaleOrderComponent implements OnInit{
         }, 500);
     }
 
-    public setDocument(){
-        let doc = this._couchbaseService.getDocument(this._docIdProduct);
+    public async setDocument(){
+        let doc = this._couchbaseService.getDocument("product");
         if(doc == null)
-            this.getProducts();
-        else {
-            this._products = doc[this._docIdProduct];
-            this.filterProductsType();
-        }
-    }
-
-    public getProducts(){
-        this._productService.getProducts()
-        .subscribe(result => {
-            this.data[this._docIdProduct] = result["Product"];
-            this._couchbaseService.createDocument(this.data, this._docIdProduct);
-            this._products = result["Product"];
-            this.filterProductsType();
-        }, (error) => {
-            alert(error);
-        });
-    }
-
-    public filterProductsType(){
-        this.productList = new ObservableArray<Product>();
-        this._products.map(product => {
-            if(product.ProductType == "F")
-                this.productList.push(product);
-        });
+            this._products = this._productService.setProductDocument();
+        else
+            this._products = await this._productService.getProductDocument(doc["product"]);
+        this.productList = new ObservableArray<Product>(this._products);
     }
 
     public showDateModal(input:string) {
@@ -359,7 +336,7 @@ export class SaleOrderComponent implements OnInit{
         let searchBar = <SearchBar>args.object;
         searchBar.text = "";
 
-        this.filterProductsType();
+        this.productList = new ObservableArray<Product>(this._products);
     }
 
     public cancel(){
