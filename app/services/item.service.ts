@@ -27,8 +27,8 @@ export class ProductService{
         return this._http.get(`${SERVER.baseUrl}/Image/${id}`);
     }
 
-    public async setProductDocument(){
-        await this.getProducts()
+    public setProductDocument(){
+        this.getProducts()
         .subscribe(result => {
             this._doc[this._docId] = result["Product"];
             this._couchbaseService.createDocument(this._doc, this._docId);
@@ -36,12 +36,11 @@ export class ProductService{
         }, (error) => {
             alert(error);
         });
-
-        return this.getProductDocument(this._products);
     }
 
-    public async getProductDocument(doc){
+    public async getProductDocument(){
         let productList = [];
+        let doc = this._couchbaseService.getDocument("product")["product"];
         await doc.map(product => {
             if(product.ProductType == "F")
                 productList.push(product);

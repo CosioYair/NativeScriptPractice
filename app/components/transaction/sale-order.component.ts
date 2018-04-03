@@ -138,6 +138,7 @@ export class SaleOrderComponent implements OnInit{
         //this._couchbaseService.deleteDocument("shippingaddress");
         //this.setScanForce();
         this.setDocument();
+        //this._couchbaseService.deleteDocument("product");
     }
 
     public getCustomer(CustomerNo:string){
@@ -293,11 +294,10 @@ export class SaleOrderComponent implements OnInit{
     }
 
     public async setDocument(){
-        let doc = this._couchbaseService.getDocument("product");
-        if(doc == null)
-            this._products = this._productService.setProductDocument();
-        else
-            this._products = await this._productService.getProductDocument(doc["product"]);
+        if(this._couchbaseService.getDocument("product") == null)
+            this._productService.setProductDocument();
+
+        this._products = await this._productService.getProductDocument();
         this.productList = new ObservableArray<Product>(this._products);
     }
 
