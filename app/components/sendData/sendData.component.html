@@ -1,0 +1,64 @@
+<StackLayout>
+        <ActionBar title="Mobile Sales Automation" class="action-bar">
+                <GridLayout columns="*,*" rows="auto, *" >
+                    <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
+                        <Image src="~/assets/images/logo.png"></Image>
+                        <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+                    </StackLayout>
+                    <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
+                        <Button text="&#xf093; Send" verticalAlignment="center" (tap)="refresh()"></Button>
+                    </StackLayout>
+                </GridLayout>
+            </ActionBar>
+            <DockLayout>
+                <StackLayout width="30%" padding="10%">
+                    <StackLayout backgroundColor="gray" height="5%">
+                        <DockLayout>
+                            <Label class="listViewBarFont" text="Transaction Type" width="75%"></Label>
+                            <Label class="listViewBarFont" text="Count" width="25%"></Label>       
+                        </DockLayout>
+                    </StackLayout>
+                    <GridLayout rows="*">
+                            <ListView [items]="options" class="list-group" >
+                                <ng-template let-item="item" let-i="index">
+                                    <StackLayout>
+                                        <DockLayout>
+                                            <Label width="75%" [text]="item.name" class="list-group-item-heading" fontSize="20"></Label>
+                                            <Label width="25%" [text]="item.status" class="list-group-item-heading" fontSize="20"></Label>
+                                        </DockLayout>
+                                    </StackLayout>
+                                </ng-template>
+                            </ListView>
+                        </GridLayout>
+                </StackLayout>
+                <StackLayout padding="10%">
+                    <StackLayout>
+                        <StackLayout backgroundColor="gray" height="5%">
+                            <DockLayout>
+                                <Label width="10%" text="" class="listViewBarFont"></Label>
+                                <Label width="20%" text="Type" class="listViewBarFont"></Label>
+                                <Label width="40%" text="Trans" class="listViewBarFont"></Label>
+                                <Label width="30%" text="Customer" class="listViewBarFont"></Label>
+                            </DockLayout>
+                        </StackLayout>
+                        
+                        <GridLayout rows="*">
+                                <ListView [items]="options" class="list-group" >
+                                    <ng-template let-item="item" let-i="index">
+                                        <StackLayout >
+                                            <DockLayout>
+                                                <Switch width="10%" checked="true" color=""></Switch>
+                                                <Label width="20%" [text]="item.id" class="list-group-item-heading" fontSize="20"></Label>
+                                                <Label width="40%" [text]="item.name" class="list-group-item-heading" fontSize="20"></Label>
+                                                <Label width="30%" [text]="item.status" class="list-group-item-heading" fontSize="20"></Label>
+                                            </DockLayout>
+                                        </StackLayout>
+                                    </ng-template>
+                                </ListView>
+                            </GridLayout>
+                    </StackLayout>
+                    <label text="fsdfsdf"></label>
+                        
+                </StackLayout>
+            </DockLayout>
+</StackLayout>

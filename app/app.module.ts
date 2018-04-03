@@ -13,6 +13,7 @@ import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.comp
 import { CouchbaseService } from "./services/couchbase.service";
 import { ProductService } from "./services/item.service";
 import { SyncComponent } from "./components/Sync/sync.component";
+import { SendDataComponent } from "./components/sendData/sendData.component";
 
 
 
@@ -35,7 +36,8 @@ import { SyncComponent } from "./components/Sync/sync.component";
         LoginComponent,
         HomeComponent,
         ItemInquiryComponent,
-        SyncComponent
+        SyncComponent,
+        SendDataComponent
     ],
     providers: [
         CouchbaseService,
