@@ -12,6 +12,7 @@ import { HomeComponent } from "./components/home/home.component";
 import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.component";
 import { CouchbaseService } from "./services/couchbase.service";
 import { ProductService } from "./services/item.service";
+import { SyncComponent } from "./components/Sync/sync.component";
 
 
 
@@ -33,7 +34,8 @@ import { ProductService } from "./services/item.service";
         AppComponent,
         LoginComponent,
         HomeComponent,
-        ItemInquiryComponent
+        ItemInquiryComponent,
+        SyncComponent
     ],
     providers: [
         CouchbaseService,
