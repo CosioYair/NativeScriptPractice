@@ -1,6 +1,5 @@
-
 <ActionBar title="" class="action-bar">
-    <ActionItem ion.position="left">
+    <ActionItem ios.position="left">
         <Image src="~/assets/images/logo.png"></Image>
     </ActionItem>
     <ActionItem position="left">
@@ -21,7 +20,7 @@
             <StackLayout row="0" col="0">
                 <DockLayout>
                     <Label text="Customer No"></Label>
-                    <TextField class="enabled" hint="Customer No" isEnabled="false"></TextField>
+                    <TextField [text]="customer.CustomerNo" class="enabled" hint="Customer No" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Date"></Label>
@@ -32,8 +31,8 @@
                     <TextField hint="Ship Date" [(ngModel)]="dates.shipDate" (tap)="showDateModal('shipDate')"></TextField>
                 </DockLayout>
                 <DockLayout>
-                    <Label text="Wharehouse"></Label>
-                    <DropDown [items]="wharehouses" [(ngModel)]="wharehouse" colSpan="2"></DropDown>    
+                    <Label text="Warehouse"></Label>
+                    <DropDown [items]="warehouses" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2"></DropDown>    
                 </DockLayout>
                 <DockLayout>
                     <Label text="Ship Via"></Label>
@@ -41,12 +40,12 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Terms"></Label>
-                    <TextField class="enabled" hint="Terms" isEnabled="false"></TextField>
+                    <TextField [text]="customer.TermsCode + ': ' + userTermsCode" class="enabled" hint="Terms" isEnabled="false"></TextField>
                 </DockLayout>
             </StackLayout>
             <StackLayout row="0" col="1">
                 <DockLayout horizontalAlignment="left">
-                    <TextField class="enabled" hint="371 FURNITURE" isEnabled="false"></TextField>
+                    <TextField [text]="customer.CustomerName" class="enabled" hint="371 FURNITURE" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Customer PO"></Label>
@@ -64,107 +63,12 @@
                     <Label text="Comment"></Label>
                     <TextField></TextField>
                 </DockLayout>
-                <DockLayout>
-                    <Label text="Price Level"></Label>
-                    <TextField class="enabled" isEnabled="false"></TextField>
-                </DockLayout>   
             </StackLayout>
         </GridLayout>
     </GridLayout>
 
     <GridLayout rows="*" visibility="{{ selectionTabs[1].visibility ? 'visible' : 'collapsed' }}">
-        <GridLayout class="tab-content" columns="*, *" rows="*">
-            <StackLayout row="0" col="0">
-                <DockLayout>
-                    <Label class="h3" text="BILL TO ADDRESS"></Label>
-                </DockLayout>
-                <DockLayout>
-                    <Label text="Bill To"></Label>
-                    <TextField class="enabled" hint="Bill To" isEnabled="false"></TextField>
-                </DockLayout>
-                <DockLayout>
-                    <Label text="Name"></Label>
-                    <TextField class="enabled" hint="Name" isEnabled="false"></TextField>
-                </DockLayout>
-                <DockLayout>
-                    <Label text="Address"></Label>
-                    <TextField class="enabled" hint="Address" isEnabled="false"></TextField>
-                </DockLayout>
-                <DockLayout>
-                    <Label></Label>
-                    <TextField class="enabled" isEnabled="false"></TextField>
-                </DockLayout>
-                <DockLayout>
-                    <Label></Label>
-                    <TextField class="enabled" isEnabled="false"></TextField>
-                </DockLayout>
-                <DockLayout>
-                    <GridLayout class="tab-subContent" columns="*, *" rows="*">
-                        <StackLayout row="0" col="0">
-                            <DockLayout>
-                                <Label text="City"></Label>
-                                <TextField class="enabled" hint="City" isEnabled="false"></TextField>
-                            </DockLayout>
-                            <DockLayout>
-                                <Label text="Zip"></Label>
-                                <TextField class="enabled" hint="Zip" isEnabled="false"></TextField>
-                            </DockLayout>
-                        </StackLayout>
-                        <StackLayout row="0" col="1">
-                            <DockLayout>
-                                <Label text="State"></Label>
-                                <TextField class="enabled" hint="State" isEnabled="false"></TextField>
-                            </DockLayout>
-                        </StackLayout>
-                    </GridLayout>
-                </DockLayout>
-            </StackLayout>
-            <StackLayout row="0" col="1">
-                <DockLayout>
-                    <Label class="h3" text="SHIP TO ADDRESS"></Label>
-                </DockLayout>
-                <DockLayout>
-                    <Label text="Ship To"></Label>
-                    <DropDown [items]="shipsTo" [(ngModel)]="shipTo" colSpan="2"></DropDown> 
-                </DockLayout>
-                <DockLayout>
-                    <Label text="Name"></Label>
-                    <TextField class="enabled" hint="Name" isEnabled="false"></TextField>
-                </DockLayout>
-                <DockLayout>
-                    <Label text="Address"></Label>
-                    <TextField class="enabled" hint="Address" isEnabled="false"></TextField>
-                </DockLayout>
-                <DockLayout>
-                    <Label></Label>
-                    <TextField class="enabled" isEnabled="false"></TextField>
-                </DockLayout>
-                <DockLayout>
-                    <Label></Label>
-                    <TextField class="enabled" isEnabled="false"></TextField>
-                </DockLayout>
-                <DockLayout>
-                    <GridLayout class="tab-subContent" columns="*, *" rows="*">
-                        <StackLayout row="0" col="0">
-                            <DockLayout>
-                                <Label text="City"></Label>
-                                <TextField class="enabled" hint="City" isEnabled="false"></TextField>
-                            </DockLayout>
-                            <DockLayout>
-                                <Label text="Zip"></Label>
-                                <TextField class="enabled" hint="Zip" isEnabled="false"></TextField>
-                            </DockLayout>
-                        </StackLayout>
-                        <StackLayout row="0" col="1">
-                            <DockLayout>
-                                <Label text="State"></Label>
-                                <TextField class="enabled" hint="State" isEnabled="false"></TextField>
-                            </DockLayout>
-                        </StackLayout>
-                    </GridLayout>
-                </DockLayout>   
-            </StackLayout>
-        </GridLayout>
+        
     </GridLayout>
 
     <GridLayout rows="*" visibility="{{ selectionTabs[2].visibility ? 'visible' : 'collapsed' }}">
@@ -178,9 +82,9 @@
                                 <ng-template let-item="item">
                                     <GridLayout borderRadius="8" class="" columns="*" rows="100" (tap)="viewProduct(item)" [class.highlight]="item.ItemCode == selectedProduct.ItemCode">
                                         <StackLayout col="0" verticalAlignment="center" paddingLeft="20%">
-                                            <Label [text]="item.ItemCodeDesc" class="list-group-item-heading" fontSize="24ID"></Label>
+                                            <Label [text]="item.ItemCode" class="list-group-item-heading" fontSize="24ID"></Label>
                                             <StackLayout marginLeft="5%">
-                                                <Label [text]="item.ItemCode" class="list-group-item-heading"></Label>
+                                                <Label [text]="item.ItemCodeDesc" class="list-group-item-heading"></Label>
                                             </StackLayout>
                                         </StackLayout>
                                     </GridLayout>
@@ -193,10 +97,15 @@
             <StackLayout class="product-detail" row="0" col="1">
                 <GridLayout borderRadius="8" class="" columns="*" rows="100, *">
                     <Border margin="3%" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
-                        <StackLayout class="product-detail-title">
-                            <Label [text]="lineTitle" class="h1"></Label>
-                            <Label [text]="lineSubTitle" class="list-group-item-heading"></Label>
-                        </StackLayout>
+                        <GridLayout borderRadius="8" class="" columns="*, 30" rows="*">
+                            <StackLayout col="0" class="product-detail-title">
+                                <Label [text]="lineTitle" class="h1"></Label>
+                                <Label [text]="lineSubTitle" class="list-group-item-heading"></Label>
+                            </StackLayout>
+                            <StackLayout *ngIf="showingProduct" col="1">
+                                <Label text="&#xf129;" (tap)="showDescription()"></Label>
+                            </StackLayout>
+                        </GridLayout>
                     </Border>
                     <StackLayout class="product-description" margin="3%" col="0" row="1">
                         <StackLayout *ngIf="!showingProduct">
@@ -238,44 +147,41 @@
                                             </DockLayout>
                                             <DockLayout marginTop="50px">
                                                 <Label text="Price"></Label>
-                                                <TextField [(ngModel)]="selectedProduct.StandardUnitCost" class="enabled" hint="" isEnabled="false"></TextField>
+                                                <TextField [text]="selectedProduct.StandardUnitPrice | number:'1.2-5'" class="enabled" hint="" isEnabled="false"></TextField>
                                             </DockLayout>
                                         </StackLayout>
                                         <StackLayout row="0" col="1">
                                             <DockLayout>
-                                                <DropDown [items]="eachs" [(ngModel)]="each"></DropDown>
-                                            </DockLayout>
-                                            <DockLayout marginTop="50px">
                                                 <Label text="Disc %"></Label>
                                                 <TextField class="enabled" hint="" isEnabled="false"></TextField>
                                             </DockLayout>
                                         </StackLayout>
                                     </GridLayout>
-                                    <StackLayout marginTop="50px">
+                                    <StackLayout marginTop="20px">
                                         <DockLayout>
                                             <Label text="Whse"></Label>
-                                            <DropDown [items]="wharehousesProduct" [(ngModel)]="wharehouseProduct"></DropDown>
+                                            <DropDown [items]="warehouses" class="enabled" [(ngModel)]="warehouse" colSpan="2" isEnabled="false"></DropDown>
                                         </DockLayout>
-                                        <TextView backgroundColor="white" style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="300px" marginBottom="60px" marginTop="100px" hint="Comment" class="input input-border"></TextView>
+                                        <TextView backgroundColor="white" style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="150px" marginBottom="60px" marginTop="100px" [(ngModel)]="selectedProduct.comment" class="input input-border"></TextView>
                                     </StackLayout>
-                                    <GridLayout class="" columns="125, *, *" rows="*">
+                                    <GridLayout class="" columns="125, *, *" rows="auto">
                                         <StackLayout class="" row="0" col="0" horizontalAlignment="right">
                                             <Label text="QTY ON HAND"></Label>
-                                            <Label text="0"></Label>
+                                            <Label [text]="selectedProduct.quantityOnHand"></Label>
                                         </StackLayout>
                                         <StackLayout row="0" col="1" horizontalAlignment="right">
                                             <Label text="QTY AVAIL"></Label>
-                                            <Label text="0"></Label>
+                                            <Label [text]="selectedProduct.quantityAvail"></Label>
                                         </StackLayout>
                                         <StackLayout row="0" col="2" horizontalAlignment="right">
                                             <Label text="STD PRICE"></Label>
-                                            <Label [text]="selectedProduct.StandardUnitPrice"></Label>
+                                            <Label [text]="selectedProduct.StandardUnitPrice | number:'1.2-5'"></Label>
                                         </StackLayout>
                                     </GridLayout>
                                 </StackLayout>
                                 <StackLayout class="" row="0" col="1">
-                                    <Button class="option-button" text="Add" verticalAlignment="center" (tap)="addProduct()"></Button>
-                                    <Button class="option-button" text="Cancel" verticalAlignment="center" (tap)="cancel()"></Button>
+                                    <Button class="option-button" height="50px" text="Add" verticalAlignment="center" (tap)="addProduct()"></Button>
+                                    <Button class="option-button" height="50px" marginTop="20px" text="Cancel" verticalAlignment="center" (tap)="cancel()"></Button>
                                     <Image class="productImage" src="~/assets/images/barCode.png" (tap)="showCart()"></Image>
                                 </StackLayout>
                             </GridLayout>
@@ -287,21 +193,38 @@
     </GridLayout>
 
     <GridLayout rows="*" visibility="{{ selectionTabs[3].visibility ? 'visible' : 'collapsed' }}">
-        <GridLayout class="tab-content" columns="auto, *, auto" rows="*">
+        <GridLayout class="tab-content" columns="300, *, auto" rows="*">
             <StackLayout class="tab-list" row="0" col="0">
-                <GridLayout borderRadius="8" class="" columns="*" rows="50, *">
-                    <Border  verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
-                        <DockLayout class="totals">
-                            <Label text="Total Qty" class=""></Label>
-                            <Label text="3" class="h1" horizontalAlignment="right"></Label>
+                <GridLayout borderRadius="8" class="totals" columns="*" rows="80, *">
+                    <Border verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
+                        <DockLayout paddingTop="30%" class="">
+                            <StackLayout width="55%">
+                                <Label text="Total Qty" class="" paddingRight="25%"></Label>
+                            </StackLayout>
+                            <StackLayout width="45%">
+                                <Label borderBottomWidth="0" width="100%" class="textRight h1" isEnabled="false" [text]="cartQuantity"></Label>
+                            </StackLayout>
                         </DockLayout>
                     </Border>
                     <StackLayout class="product-description" margin="3%" col="0" row="1">
                         <StackLayout class="totals">
-                            <DockLayout>
-                                <Label text="NET AMOUNT"></Label>
-                                <Label text="669.00" horizontalAlignment="right"></Label>
+                            <DockLayout paddingTop="30%" class="totals">
+                                <StackLayout width="55%">
+                                    <Label text="NET AMOUNT" class="" paddingRight="25%"></Label>
+                                </StackLayout>
+                                <StackLayout width="45%">
+                                    <Label width="100%" [text]="totalCartAmount | number:'1.2-5'" class="textRight"></Label>
+                                </StackLayout>
                             </DockLayout>
+                            <DockLayout paddingTop="30%" class="totals">
+                                <StackLayout width="55%">
+                                    <Label text="TOTAL CUBES" class="" paddingRight="25%"></Label>
+                                </StackLayout>
+                                <StackLayout width="45%">
+                                    <Label width="100%" [text]="totalCubes | number:'1.2-5'" class="textRight"></Label>
+                                </StackLayout>
+                            </DockLayout>
+                            <!--
                             <DockLayout>
                                 <Label text="DISC AMOUNT"></Label>
                                 <Label text="0.00" horizontalAlignment="right"></Label>
@@ -314,10 +237,15 @@
                                 <Label text="FREIGHT"></Label>
                                 <Label text="0.00" horizontalAlignment="right"></Label>
                             </DockLayout>
+                            -->
                             <Border verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
                                 <DockLayout paddingTop="30%" class="totals">
-                                    <Label text="Total Amount" class="" paddingRight="25%"></Label>
-                                    <Label text="$669.00" class="h1" horizontalAlignment="right"></Label>
+                                    <StackLayout width="55%">
+                                        <Label text="Total Amount" class="" paddingRight="25%"></Label>
+                                    </StackLayout>
+                                    <StackLayout width="45%">
+                                        <Label width="100%" [text]="totalCartAmount | number:'1.2-5'" class="h1 textRight" horizontalAlignment="right"></Label>
+                                    </StackLayout>
                                 </DockLayout>
                             </Border>
                         </StackLayout>
@@ -341,16 +269,16 @@
                     <ng-template let-item="item">
                         <GridLayout borderRadius="8" class="" columns="100, *, 120" rows="100" (tap)="setSelectedCartProduct(item)" [class.highlight]="item.ItemCode == selectedCartProduct.ItemCode">
                             <StackLayout col="0" verticalAlignment="center" paddingRight="20%">
-                                <Label [text]="item.quantity" horizontalAlignment="right"></Label>
-                                <Label class="totals-subtitle" text="EACH" horizontalAlignment="right"></Label>
+                                <Label width="100%" class="textRight" [text]="item.quantity" horizontalAlignment="right"></Label>
+                                <Label width="100%" class="totals-subtitle textRight" text="EACH" horizontalAlignment="right"></Label>
                             </StackLayout>
                             <StackLayout col="1" verticalAlignment="center">
                                 <Label [text]="item.ItemCodeDesc" horizontalAlignment="left" paddingRight="20%"></Label>
                                 <Label class="totals-subtitle" [text]="item.ItemCode" horizontalAlignment="left"></Label>
                             </StackLayout>
-                            <StackLayout col="2" verticalAlignment="center">
-                                <Label [text]="item.StandardUnitCost" horizontalAlignment="center"></Label>
-                                <Label class="totals-subtitle" [text]="item.StandardUnitPrice" horizontalAlignment="center"></Label>
+                            <StackLayout col="2" verticalAlignment="center" paddingRight="20%">
+                                <Label width="100%" class="textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
+                                <Label width="100%" class="totals-subtitle textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
                             </StackLayout>
                         </GridLayout>
                     </ng-template>

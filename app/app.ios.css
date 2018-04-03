@@ -39,8 +39,8 @@ Page {
     background-color: #DE6427;
     color: white;
     font-size: 20%;
-    min-width: 300px;
-    min-height: 120px;
+    min-width: 120%;
+    margin: 5%;
 }
 
 .highlight {

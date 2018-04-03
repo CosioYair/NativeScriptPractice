@@ -88,7 +88,7 @@ export class SaleOrderComponent implements OnInit{
         this.selectedProduct.ItemCode = "";
         this.selectedProduct.comment = "";
         this.selectedCartProduct.ItemCode = "";
-        this.orientation.setOrientation("landscaperight");  
+        //this.orientation.setOrientation("landscaperight");  
         this.tabs = [];
         this.selectionTabs = [{
             title: "HEADER",
@@ -129,7 +129,7 @@ export class SaleOrderComponent implements OnInit{
         //this._couchbaseService.deleteDocument("inventory");
         this.setInventory();
         //this._couchbaseService.deleteDocument(this._docIdProduct);
-        this.setTermsCode();
+        //this.setTermsCode();
         this.setShippingAddress();
         //this._couchbaseService.deleteDocument("shippingaddress");
         //this.setScanForce();
