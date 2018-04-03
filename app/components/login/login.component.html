@@ -21,10 +21,10 @@
                 <Label class="h2" text="User Login" verticalAlignment="center"></Label>
             </Border>
             <StackLayout class="form fields" horizontalAlignment="stretch">
-                <TextField hint="User ID"></TextField>
-                <TextField type="password" hint="Password" secure="true"></TextField>
+                <TextField [(ngModel)]="userId" hint="User ID"></TextField>
+                <TextField [(ngModel)]="userPassword" type="password" hint="Password" secure="true"></TextField>
             </StackLayout>
-            <Button text="Login" [nsRouterLink]="['/home']"></Button>
+            <Button text="Login" (tap)="login()"></Button>
         </StackLayout>
     </Border>
     <StackLayout col="2" orientation="horizontal" horizontalAlignment="left">

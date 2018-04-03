@@ -1,4 +1,4 @@
-export interface ScanForce {
+export interface User {
     UserCode: string,
     UserName: string,
     UserPassword: string,
