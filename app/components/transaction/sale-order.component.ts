@@ -358,4 +358,8 @@ export class SaleOrderComponent implements OnInit{
         else
             alert("Description not available");
     }
+
+    public save(){
+        
+    }
  }

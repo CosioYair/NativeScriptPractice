@@ -5,12 +5,12 @@
             <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
         </StackLayout>
         <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
-            <Button text="&#xf0b0; Filter" verticalAlignment="center"></Button>
+            <Button text="&#xf187; SAVE" verticalAlignment="center" (tap)="save()"></Button>
             <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
         </StackLayout>
     </GridLayout>
 </ActionBar>
-<TabView selectedIndex="1" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton>
+<TabView selectedIndex="0" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton>
     <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
         <GridLayout class="tab-content" columns="*, *" rows="*">
             <StackLayout row="0" col="0">
