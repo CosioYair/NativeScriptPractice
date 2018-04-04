@@ -8,7 +8,7 @@ import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.comp
 import { SyncComponent } from "./components/Sync/sync.component";
 import { SendDataComponent } from "./components/sendData/sendData.component";
 const routes: Routes = [
-    { path: "", redirectTo: "/itemInquiry", pathMatch: "full" },
+    { path: "", redirectTo: "/home", pathMatch: "full" },
     { path: "app", component: AppComponent },
     { path: "login", component: LoginComponent },
     { path: "home", component:HomeComponent},
