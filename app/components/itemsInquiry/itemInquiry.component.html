@@ -26,7 +26,7 @@
                 </GridLayout>
         </StackLayout>    
             
-        <StackLayout *ngIf="isVisibleData" class="itemInquiry-layout">
+        <StackLayout *ngIf="isVisibleData" class="itemInquiry-layout" padding="10%">
             <DockLayout>
                 <StackLayout width="70%">
                     <label class="itemInquiry-itemNameLabel" [text]="selectedProduct.ItemCodeDesc"></label>
@@ -87,13 +87,13 @@
                 </DockLayout>
         </StackLayout>
         
-        <StackLayout *ngIf="isVisibleScanner">
+        <StackLayout *ngIf="isVisibleScanner" padding="10%">
             <Label class="itemInquiry-itemNameLabel" text="Item Details"></Label>
             <Label text="Enter or select an item to view details"></Label>
             <DockLayout paddingTop="50%">
                 <Label text="Item Code"></Label>
                 <TextField width="70%"></TextField>
-                <Button text=""></Button>
+                <Button text="&#xf02a;" fontSize="28"></Button>
             </DockLayout>
         </StackLayout>
     </DockLayout>
