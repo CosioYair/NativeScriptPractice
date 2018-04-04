@@ -9,10 +9,14 @@ import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
 import { CustomerComponent } from "./components/customer/customer.component";
+import { SyncComponent } from "./components/Sync/sync.component";
+import { SendDataComponent } from "./components/sendData/sendData.component";
+import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.component";
 
 //Services
 import { CouchbaseService } from "./services/couchbase.service";
 import { CustomerService } from "./services/customer.service";
+import { ProductService } from "./services/item.service";
 
 @NgModule({
     bootstrap: [
@@ -28,11 +32,15 @@ import { CustomerService } from "./services/customer.service";
         AppComponent,
         LoginComponent,
         HomeComponent,
-        CustomerComponent
+        CustomerComponent,
+        ItemInquiryComponent,
+        SyncComponent,
+        SendDataComponent
     ],
     providers: [
         CouchbaseService,
-        CustomerService
+        CustomerService,
+        ProductService
     ],
     schemas: [
         NO_ERRORS_SCHEMA
