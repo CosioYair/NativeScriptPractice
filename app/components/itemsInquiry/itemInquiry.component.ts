@@ -11,7 +11,7 @@ import { DropDownModule } from "nativescript-drop-down/angular";
 import { CONSTANTS } from "../../config/constants.config";
 
 //import para descarga de imagenes http
-
+/*
 import * as imageSource from "tns-core-modules/image-source";
 import * as fs from "tns-core-modules/file-system";
 import * as http from "http";
@@ -23,9 +23,10 @@ import { Zip } from "nativescript-zip";
 import * as fsuz from "file-system";
 //Image Cache
 import * as imageCacheModule from "tns-core-modules/ui/image-cache";
+import { InventoryService } from "../../services/inventory.service";
 //Open local json
 
-
+*/
 
 
 
@@ -45,6 +46,7 @@ export class ItemInquiryComponent implements OnInit{
     public selectedProduct:any = {};
     public itemCode:string = "";
     public warehouses:any = [];
+    public warehouse:number = 0;
     public stdUnitPrice:number=0;
     public stdUnitCost:number=0;
     
@@ -63,7 +65,9 @@ export class ItemInquiryComponent implements OnInit{
     
     
 
-    constructor(private _couchbaseService: CouchbaseService, private _productService: ProductService, private barcodeScanner: BarcodeScanner, ){
+    constructor(private _couchbaseService: CouchbaseService, 
+        private _productService: ProductService, 
+        private barcodeScanner: BarcodeScanner){
         this.selectedProduct = {
             ItemCode: "",
             ItemCodeDesc: "",
@@ -203,6 +207,13 @@ export class ItemInquiryComponent implements OnInit{
     }
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
+
+    public setInventory(){
+        if(this._couchbaseService.getDocument("inventory") == null)
+            this._inventoryService.setInventoriesDoc();
+
+        this.inventoryList = this._inventoryService.getInventoryWarehouse(this.warehouse);
+    }
     
 }
 
