@@ -17,6 +17,7 @@ import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.comp
 import { CouchbaseService } from "./services/couchbase.service";
 import { CustomerService } from "./services/customer.service";
 import { ProductService } from "./services/item.service";
+import { ReviewTransactionComponent } from "./components/reviewTransaction/reviewTransaction.component";
 
 @NgModule({
     bootstrap: [
@@ -35,7 +36,8 @@ import { ProductService } from "./services/item.service";
         CustomerComponent,
         ItemInquiryComponent,
         SyncComponent,
-        SendDataComponent
+        SendDataComponent,
+        ReviewTransactionComponent
     ],
     providers: [
         CouchbaseService,

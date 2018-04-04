@@ -8,6 +8,7 @@ import { CustomerComponent } from "./components/customer/customer.component";
 import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.component";
 import { SyncComponent } from "./components/Sync/sync.component";
 import { SendDataComponent } from "./components/sendData/sendData.component";
+import { ReviewTransactionComponent } from "./components/reviewTransaction/reviewTransaction.component";
 
 const routes: Routes = [
     { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -18,6 +19,7 @@ const routes: Routes = [
     { path: "sync", component:SyncComponent},
     { path: "sendData", component:SendDataComponent},
     { path: "customer", component: CustomerComponent},
+    { path: "reviewTransaction", component:ReviewTransactionComponent},
 ];
 
 @NgModule({
