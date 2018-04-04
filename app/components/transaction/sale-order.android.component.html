@@ -32,7 +32,7 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Ship Via"></Label>
-                    <DropDown [items]="shipVias" [(ngModel)]="shipVia"></DropDown>
+                    <DropDown [items]="shipVias" (selectedIndexChanged)="setCustomerShipVia($event)" [(ngModel)]="shipVia"></DropDown>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Terms"></Label>
@@ -45,19 +45,19 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Customer PO"></Label>
-                    <TextField text=""></TextField>
+                    <TextField [(ngModel)]="CustomerPONo"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Confirm To"></Label>
-                    <TextField></TextField>
+                    <TextField [(ngModel)]="CustomerConfirmTo"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="FOB"></Label>
-                    <TextField></TextField>
+                    <TextField [(ngModel)]="CustomerFBO"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Comment"></Label>
-                    <TextField></TextField>
+                    <TextField [(ngModel)]="Comment"></TextField>
                 </DockLayout>
             </StackLayout>
         </GridLayout>
@@ -82,7 +82,7 @@
                 </DockLayout>
                 <DockLayout>
                     <Label></Label>
-                    <TextField class="enabled" isEnabled="false"></TextField>
+                    <TextField [text]="customer.AddressLine3" class="enabled" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <GridLayout class="tab-subContent" columns="*, *" rows="*">
@@ -127,7 +127,7 @@
                 </DockLayout>
                 <DockLayout>
                     <Label></Label>
-                    <TextField class="enabled" [text]="customer.shippingAddress.ShipToAddress3" isEnabled="false"></TextField>
+                    <TextField class="enabled" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <GridLayout class="tab-subContent" columns="*, *" rows="*">

@@ -22,6 +22,10 @@ import { TermsCode } from "../../interfaces/termsCode.interface";
 import { ShippingAddress } from "../../interfaces/shippingAddress.interface";
 import { ShippingAddressService } from "../../services/shippingAddress.service";
 import { SelectedIndexChangedEventData } from "tns-core-modules/ui/tab-view/tab-view";
+import { SaleOrderService } from "../../services/saleOrder.service";
+import { SaleOrder } from "../../interfaces/saleOrder.interface";
+import { SERVER } from "../../config/server.config";
+import * as platformModule from "tns-core-modules/platform";
 
 @Component({
     selector: "ns-sale-order",
@@ -58,6 +62,11 @@ export class SaleOrderComponent implements OnInit{
     public shippingAddressList:any = [];
     private _customerShippingAddress: any;
     public totalCubes:number = 0;
+    private _saleOrder:SaleOrder;
+    public CustomerPONo:string;
+    public CustomerConfirmTo:string;
+    public CustomerFBO:string;
+    public Comment:string;
 
     constructor(private _productService: ProductService, 
                 private _inventoryService: InventoryService, 
@@ -68,6 +77,7 @@ export class SaleOrderComponent implements OnInit{
                 private route: ActivatedRoute,
                 private _termsCodeService: TermsCodeService,
                 private _shippingAddressService: ShippingAddressService,
+                private _saleOrderService: SaleOrderService
             ){
         this.dates = [];
         this.shipVias = [];
@@ -120,12 +130,13 @@ export class SaleOrderComponent implements OnInit{
         });
     }
 
-    ngOnInit() {
-        this.getCustomer(this.route.snapshot.params["CustomerNo"]);
-        this.setShippingAddress();
-        this.setInventory();
-        this.setTermsCode();
-        this.setDocument();
+    async ngOnInit() {
+        await this.getCustomer(this.route.snapshot.params["CustomerNo"]);
+        await this.setShippingAddress();
+        await this.setInventory();
+        await this.setTermsCode();
+        await this.setDocument();
+        await this.refreshSaleOrder();
     }
 
     public async setDocument(){
@@ -168,6 +179,14 @@ export class SaleOrderComponent implements OnInit{
     public setCustomerShippingAddress(args:SelectedIndexChangedEventData){
         setTimeout(() => {
             this.customer["shippingAddress"] = this._customerShippingAddress[args.newIndex];
+            this.refreshSaleOrder();
+        }, 500);
+    }
+
+    public setCustomerShipVia(args:SelectedIndexChangedEventData){
+        setTimeout(() => {
+            this.shipVia = args.newIndex;
+            this.refreshSaleOrder();
         }, 500);
     }
 
@@ -175,13 +194,16 @@ export class SaleOrderComponent implements OnInit{
         setTimeout(() => {
             this.cancel();
             this.inventoryList = this._inventoryService.getInventoryWarehouse(this.warehouse);
+            this.refreshSaleOrder();
         }, 500);
     }
 
     public showDateModal(input:string) {
         this.createModelView().then(result => {
-            if(result != null)
+            if(result != null){
                 this.dates[input] = result;
+                this.refreshSaleOrder();
+            }
         }).catch(error => alert(error));
     }
     
@@ -323,6 +345,7 @@ export class SaleOrderComponent implements OnInit{
                 }
                 else
                     this.selectedCartProduct.quantity = oldProductQuantity;
+                this.refreshSaleOrder();
             }).catch(error => alert(error));
         }
     }
@@ -360,6 +383,56 @@ export class SaleOrderComponent implements OnInit{
     }
 
     public save(){
-        
+        if(this._couchbaseService.getDocument("saleorder") == null)
+            this._saleOrderService.updateSaleOrderDoc();
+        else{
+            let length = this._saleOrderService.getUserSaleOrder() == null ? 0 : this._saleOrderService.getUserSaleOrder().length;
+            let folioNumber = `${length + 1}`;
+            this._saleOrder.SalesOrderNO = `${platformModule.device.uuid}-${this.padLeft(folioNumber, '0', 6)}`;
+        }
+        console.log(JSON.stringify(this._saleOrder));
+    }
+
+    private padLeft(text:string, padChar:string, size:number): string {
+        return (String(padChar).repeat(size) + text).substr( (size * -1), size);
+    }
+
+    private refreshSaleOrder(){
+        if(this.customer.AddressLine2 == null)
+            this.customer.AddressLine2 = "";
+        this._saleOrder = {
+            CustomerNo: this.customer.CustomerNo,
+            CustomerPONo: this.CustomerPONo,
+            CustomerConfirmTo: this.CustomerConfirmTo,
+            CustomerFBO: this.CustomerFBO,
+            SalesOrderNO: "",
+            BillToName: this.customer.CustomerName,
+            BillToAddress1: this.customer.AddressLine1,
+            BillToAddress2: this.customer.AddressLine2,
+            BillToCountryCode: this.customer.CountryCode,
+            BillToCity: this.customer.City,
+            BillToState: this.customer.State,
+            BillToZipCode: this.customer.ZipCode,
+            ShipVia: this.shipVias[this.shipVia],
+            WarehouseCode: CONSTANTS.warehouses[this.warehouse].name,
+            ShipToCity: this.customer["shippingAddress"].ShipToCity,
+            ShipToState: this.customer["shippingAddress"].ShipToState,
+            ShipToZipCode: this.customer["shippingAddress"].ShipToZipCode,
+            DiscountAmt: 0,
+            ShipToName: this.customer["shippingAddress"].ShipToName,
+            ShipToAddress1: this.customer["shippingAddress"].ShipToAddress1,
+            ShipToAddress2: this.customer["shippingAddress"].ShipToAddress2,
+            ShipToAddress3: this.customer["shippingAddress"].ShipToAddress3,
+            ShipToCountryCode: this.customer["shippingAddress"].ShipToCountryCode,
+            OrderDate: this.dates.date,
+            ShipDate: this.dates.shipDate,
+            DateCreated: new Date(),
+            DateUpdated: new Date(),
+            VendorNo: SERVER.user["UserCode"],
+            SalespersonNo: SERVER.user["DefaultSalespersonID"],
+            TermsCode: this.customer.TermsCode,
+            Comment: this.Comment,
+            Detail: this.cart
+        };
     }
  }

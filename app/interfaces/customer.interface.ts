@@ -2,6 +2,7 @@ export interface Customer {
     CustomerNo: string,
     AddressLine1: string,
     AddressLine2: string,
+    AddressLine3: string,
     City: string,
     Comment: string,
     CountryCode: string,

@@ -14,9 +14,9 @@ export class SaleOrderService {
 
     }
 
-    public updateSaleOrderDoc(saleOrder){
+    public updateSaleOrderDoc(saleOrder?){
         let doc = this._couchbaseService.getDocument("saleorder");
-        if(null == null){
+        if(doc == null){
             this._saleOrderDoc["saleorder"] = {};
             this._couchbaseService.createDocument(this._saleOrderDoc, "saleorder");
         }
