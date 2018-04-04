@@ -7,6 +7,7 @@ import { CustomerService } from "../../services/customer.service";
 import { CouchbaseService } from "../../services/couchbase.service";
 import { SERVER } from "../../config/server.config";
 import * as dialogs from "ui/dialogs";
+import { SaleOrderService } from "../../services/saleOrder.service";
 
 @Component({
     selector: "ns-customer-transaction",
@@ -22,7 +23,7 @@ export class CustomerTransactionComponent implements OnInit{
     public data = {};
     public selectedCustomer:any = {};
 
-    constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService){
+    constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService, private _saleOrderService: SaleOrderService){
         this.selectedCustomer = {
             CustomerNo: "Select a customer to view details",
             AddressLine1: "",
@@ -45,6 +46,7 @@ export class CustomerTransactionComponent implements OnInit{
 
     ngOnInit() {
         this.setDocument();
+        console.log(JSON.stringify(this._saleOrderService.getUserSaleOrder()));
     }
 
     public getCustomers(){

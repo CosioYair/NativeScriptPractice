@@ -8,16 +8,16 @@ export const CONSTANTS = {
         name: "Chicago"
     },
     {
-        code: "000",
-        name: "Direct"
-    },
-    {
         code: "HOU",
         name: "Houston"
     },
     {
         code: "PHX",
         name: "Phoenix"
+    },
+    {
+        code: "000",
+        name: "Direct"
     }],
     shipVias: [{
         code: "0",

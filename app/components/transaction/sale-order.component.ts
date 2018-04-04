@@ -26,6 +26,7 @@ import { SaleOrderService } from "../../services/saleOrder.service";
 import { SaleOrder } from "../../interfaces/saleOrder.interface";
 import { SERVER } from "../../config/server.config";
 import * as platformModule from "tns-core-modules/platform";
+import { RouterExtensions } from "nativescript-angular/router";
 
 @Component({
     selector: "ns-sale-order",
@@ -77,7 +78,8 @@ export class SaleOrderComponent implements OnInit{
                 private route: ActivatedRoute,
                 private _termsCodeService: TermsCodeService,
                 private _shippingAddressService: ShippingAddressService,
-                private _saleOrderService: SaleOrderService
+                private _saleOrderService: SaleOrderService,
+                private _router: RouterExtensions
             ){
         this.dates = [];
         this.shipVias = [];
@@ -87,9 +89,6 @@ export class SaleOrderComponent implements OnInit{
         this.dates.date = `${this.dates.date.getDate()}/${this.dates.date.getMonth()}/${this.dates.date.getFullYear()}`;
         CONSTANTS.shipVias.map(shipVia => {
             this.shipVias.push(shipVia.name);
-        });
-        CONSTANTS.warehouses.map(warehouse => {
-            this.warehouses.push(warehouse.name);
         });
         this.selectedProduct.ItemCode = "";
         this.selectedProduct.comment = "";
@@ -137,6 +136,21 @@ export class SaleOrderComponent implements OnInit{
         await this.setTermsCode();
         await this.setDocument();
         await this.refreshSaleOrder();
+        this.getWarehouses();
+    }
+
+    public getWarehouses(){
+        if(SERVER.user["SupervisorRights"] == "Y"){
+            CONSTANTS.warehouses.map(warehouse => {
+                this.warehouses.push(warehouse.name);
+            });
+        }
+        else{
+            CONSTANTS.warehouses.map(warehouse => {
+                if(warehouse.code == SERVER.user["SalesDefaultOrderWhse"] || warehouse.code == "000")
+                    this.warehouses.push(warehouse.name);
+            });
+        }
     }
 
     public async setDocument(){
@@ -382,15 +396,15 @@ export class SaleOrderComponent implements OnInit{
             alert("Description not available");
     }
 
-    public save(){
+    public async save(){
         if(this._couchbaseService.getDocument("saleorder") == null)
             this._saleOrderService.updateSaleOrderDoc();
-        else{
-            let length = this._saleOrderService.getUserSaleOrder() == null ? 0 : this._saleOrderService.getUserSaleOrder().length;
-            let folioNumber = `${length + 1}`;
-            this._saleOrder.SalesOrderNO = `${platformModule.device.uuid.slice(0,6)}-${this.padLeft(folioNumber, '0', 6)}`;
-        }
-        console.log(JSON.stringify(this._saleOrder));
+
+        let length = this._saleOrderService.getUserSaleOrder() == null ? 0 : this._saleOrderService.getUserSaleOrder().length;
+        let folioNumber = `${length + 1}`;
+        this._saleOrder.SalesOrderNO = `${platformModule.device.uuid.slice(0,6)}-${this.padLeft(folioNumber, '0', 6)}`;
+        await this._saleOrderService.updateSaleOrderDoc(this._saleOrder);
+        this._router.back();
     }
 
     private padLeft(text:string, padChar:string, size:number): string {
