@@ -44,7 +44,7 @@
                     <Label class="itemInquiry-labelBold" text="STD PRICE"></Label>       
                     <DockLayout>
                         <Label class="itemInquiry-numberLabel" text="$"></Label>
-                        <Label class="itemInquiry-numberLabel" [text]="selectedProduct.StandardUnitPrice"></Label>
+                        <Label class="itemInquiry-numberLabel" [text]="stdUnitPrice"></Label>
                     </DockLayout>
                     <Label class="itemInquiry-labelBold" text="STYLES"></Label>
                     <Label class="itemInquiry-label" [text]="selectedProduct.Category1"></Label>
@@ -54,16 +54,24 @@
                 <StackLayout width="33%">
                     <Label class="itemInquiry-labelBold" text="STD UNIT COST"></Label>
                     <DockLayout>
-                            <Label class="itemInquiry-numberLabel" text="$"></Label>
-                            <Label class="itemInquiry-numberLabel" [text]="selectedProduct.StandardUnitCost"></Label>
+                        <Label class="itemInquiry-numberLabel" text="$"></Label>
+                        <Label class="itemInquiry-numberLabel" [text]="stdUnitCost"></Label>
                     </DockLayout>
-                    <label  class="itemInquiry-labelBold" text="STOCK STATUS" paddingTop="75%"></label>
-                    <label class="itemInquiry-labelBold" text="CUBES"></label>
-                    <label [text]="selectedProduct.Category4"></label>
-                    
+                    <label  class="itemInquiry-labelBold" text="STOCK STATUS" paddingTop="75%"></label>   
                 </StackLayout>
                 <StackLayout width="33%">
-                    <Image src="{{ picture }}"></Image>    
+                    <Image src="{{ picture }}"></Image>
+                </StackLayout>
+            </DockLayout>
+            <DockLayout>
+                <StackLayout width="30%">
+                        <label class="itemInquiry-labelBold" text="CUBES"></label>
+                        <label [text]="selectedProduct.Category4"></label>
+                </StackLayout>
+                
+                <StackLayout width="30%">
+                    <Label text="WAREHOUSE:" class="itemInquiry-labelBold"></Label>
+                    <DropDown [items]="warehouses" class="enabled" [(ngModel)]="warehouse" colSpan="2" isEnabled="true" hint="Select..."></DropDown>
                 </StackLayout>
             </DockLayout>
             <DockLayout padding="10%">
@@ -93,7 +101,7 @@
             <DockLayout paddingTop="50%">
                 <Label text="Item Code"></Label>
                 <TextField width="70%"></TextField>
-                <Button text="&#xf02a;" fontSize="28"></Button>
+                <Button text="&#xf02a;" fontSize="28" (tap)="onScan()"></Button>
             </DockLayout>
         </StackLayout>
     </DockLayout>
