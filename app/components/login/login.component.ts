@@ -34,6 +34,8 @@ export class LoginComponent implements OnInit {
             if(this._user != null){
                 if(this._user.UserPassword == this.userPassword){
                     this._router.navigate(["/home"]);
+                    this.userId = "";
+                    this.userPassword = "";
                     SERVER.user = this._user;
                 }
                 else

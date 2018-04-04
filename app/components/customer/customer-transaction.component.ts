@@ -46,7 +46,6 @@ export class CustomerTransactionComponent implements OnInit{
 
     ngOnInit() {
         this.setDocument();
-        console.log(JSON.stringify(this._saleOrderService.getUserSaleOrder()));
     }
 
     public getCustomers(){
