@@ -4,12 +4,14 @@ import { UserService } from "../../services/user.service";
 import { CouchbaseService } from "../../services/couchbase.service";
 import { User } from "../../interfaces/user.interface";
 import { DeviceService } from "../../services/device.service";
+import { Router } from "@angular/router";
+import { SERVER } from "../../config/server.config";
 
 @Component({
     selector: "ns-login",
     moduleId: module.id,
     templateUrl: "./login.component.html",
-    styleUrls: ["./login.css"]
+    styleUrls: ["./login.css"],
 })
 
 export class LoginComponent implements OnInit { 
@@ -17,7 +19,7 @@ export class LoginComponent implements OnInit {
     public userPassword:string;
     private _user:User;
 
-    constructor(private _userService: UserService, private _couchbaseService: CouchbaseService, private _deviceService: DeviceService){
+    constructor(private _userService: UserService, private _couchbaseService: CouchbaseService, private _deviceService: DeviceService, private _router: Router){
 
     }
 
@@ -30,8 +32,10 @@ export class LoginComponent implements OnInit {
         if(this.checkDocument()){
             this._user = this._userService.getUser(this.userId);
             if(this._user != null){
-                if(this._user.UserPassword == this.userPassword)
-                    alert("Login");
+                if(this._user.UserPassword == this.userPassword){
+                    this._router.navigate(["/home"]);
+                    SERVER.userCode = this._user.UserCode;
+                }
                 else
                     alert("Invalid user or password");
             }
