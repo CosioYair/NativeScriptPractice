@@ -58,10 +58,6 @@ export class SaleOrderComponent implements OnInit{
     public shippingAddressList:any = [];
     private _customerShippingAddress: any;
     public totalCubes:number = 0;
-    /*
-    private _scanForceDoc = {};
-    private _scanForceList:ObservableArray<ScanForce> = new ObservableArray<ScanForce>();
-    */
 
     constructor(private _productService: ProductService, 
                 private _inventoryService: InventoryService, 
@@ -126,15 +122,10 @@ export class SaleOrderComponent implements OnInit{
 
     ngOnInit() {
         this.getCustomer(this.route.snapshot.params["CustomerNo"]);
-        //this._couchbaseService.deleteDocument("inventory");
-        this.setInventory();
-        //this._couchbaseService.deleteDocument(this._docIdProduct);
-        //this.setTermsCode();
         this.setShippingAddress();
-        //this._couchbaseService.deleteDocument("shippingaddress");
-        //this.setScanForce();
+        this.setInventory();
+        this.setTermsCode();
         this.setDocument();
-        //this._couchbaseService.deleteDocument("product");
     }
 
     public async setDocument(){
@@ -173,36 +164,6 @@ export class SaleOrderComponent implements OnInit{
 
         this.inventoryList = this._inventoryService.getInventoryWarehouse(this.warehouse);
     }
-
-    /*public setScanForce(){
-        let doc = this._couchbaseService.getDocument("scanforce");
-        if(doc == null)
-            this.getScanForce();
-        else{
-            this._scanForceDoc = doc;
-            this._scanForceList = this._scanForceDoc["scanforce"];
-        }
-        this.getUserScanForce();
-    }
-
-    public getScanForce(){
-        this._scanForceService.getScanForce()
-        .subscribe(result => {
-            this._scanForceDoc["scanforce"] = result["Users"];
-            this._couchbaseService.createDocument(this._termsCodeDoc, "scanforce");
-            this._scanForceList = result["Users"];
-        }, (error) => {
-            alert(error);
-        });
-    }
-
-    public getUserScanForce(){
-        let scanForceUser = {};
-        this._scanForceList.map(user =>{
-            if(user.UserCode == userCode)
-                scanForceUser = user;
-        });
-    }*/
 
     public setCustomerShippingAddress(args:SelectedIndexChangedEventData){
         setTimeout(() => {
