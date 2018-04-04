@@ -12,6 +12,6 @@ import { SERVER } from "../../config/server.config";
 export class HomeComponent{
 
     constructor(){
-        
+        console.log(JSON.stringify(SERVER.user));
     }
 }

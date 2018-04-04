@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
             if(this._user != null){
                 if(this._user.UserPassword == this.userPassword){
                     this._router.navigate(["/home"]);
-                    SERVER.userCode = this._user.UserCode;
+                    SERVER.user = this._user;
                 }
                 else
                     alert("Invalid user or password");
