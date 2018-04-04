@@ -51,7 +51,7 @@
                     <Label [text]="selectedCustomer.TelephoneNo" class="list-group-item-heading"></Label>
 
                     <Label text="TERMS" class="h2"></Label>
-                    <Label [text]="" class="list-group-item-heading"></Label>
+                    <Label [text]="selectedCustomer.TermsCode" class="list-group-item-heading"></Label>
 
                     <Label text="BALANCE" class="h2"></Label>
                     <Label [text]="" class="list-group-item-heading"></Label>
@@ -75,8 +75,6 @@
                     -->
                 </StackLayout>
                 <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%" row="2" colSpan="2" orientation="horizontal" horizontalAlignment="center">
-                    <Button class="option-button" text="Quote"></Button>
-                    <Button class="option-button" text="Sales Order"></Button>
                 </StackLayout>
             </GridLayout>
         </Border>

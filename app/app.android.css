@@ -12,7 +12,7 @@ refer to http://docs.nativescript.org/ui/theme.
 @import '~nativescript-theme-core/css/core.light.css';
 
 Page {
-    font-family: "fontawesome-webfont";
+    font-family: FontAwesome, fontawesome-webfont;
     background-color: #EBEBEB;
 }
 
@@ -27,15 +27,20 @@ Page {
     margin-right: 2%;
 }
 
+.productImage {
+    height: 80%;
+    width: 80%;
+}
+
 .action-bar Label {
     font-size: 18%;
 }
 
 .action-bar Button {
     background-color: transparent;
-    width: 40%;
-    font-size: 20%;
-    height: 150px;
+    width: 35%;
+    font-size: 17%;
+    height: 130px;
 }
 
 .action-bar .options {
@@ -57,4 +62,12 @@ Page {
 
 .highlight Label {
     color: white;
+}
+
+TextField, Dropdown {
+    background-color:white;
+}
+
+.enabled {
+    background-color: #D7D7D7;
 }

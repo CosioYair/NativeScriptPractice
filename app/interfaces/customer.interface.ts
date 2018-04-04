@@ -14,5 +14,6 @@ export interface Customer {
     DateUpdated: string,
     State: string,
     TelephoneNo: string,
-    ZipCode: string
+    ZipCode: string,
+    TermsCode: string
 }

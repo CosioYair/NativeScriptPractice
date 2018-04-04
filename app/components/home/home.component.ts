@@ -1,4 +1,6 @@
 import { Component } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { SERVER } from "../../config/server.config";
 
 @Component({
     selector: "ns-home",
@@ -9,4 +11,7 @@ import { Component } from "@angular/core";
 
 export class HomeComponent{
 
+    constructor(){
+
+    }
 }

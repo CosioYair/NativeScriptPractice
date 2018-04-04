@@ -21,8 +21,8 @@
                 <Label class="h2" text="User Login" verticalAlignment="center"></Label>
             </Border>
             <StackLayout class="form fields" horizontalAlignment="stretch">
-                <TextField hint="User ID" [(ngModel)]="user.id"></TextField>
-                <TextField type="password" hint="Password" [(ngModel)]="user.password" secure="true"></TextField>
+                <TextField [(ngModel)]="userId" hint="User ID"></TextField>
+                <TextField [(ngModel)]="userPassword" type="password" hint="Password" secure="true"></TextField>
             </StackLayout>
             <Button text="Login" (tap)="login()"></Button>
         </StackLayout>

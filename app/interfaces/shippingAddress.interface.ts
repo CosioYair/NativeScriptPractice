@@ -1,0 +1,22 @@
+export interface ShippingAddress {
+    ARDivisionNo: string,
+    CustomerNo: string,
+    ShipToCode: string,
+    ShipToName: string,
+    ShipToAddress1: string,
+    ShipToAddress2: string,
+    ShipToAddress3: string,
+    ShipToCity: string,
+    ShipToState: string,
+    ShipToZipCode: string,
+    ShipToCountryCode: string,
+    TelephoneNo: string,
+    TelephoneExt: string,
+    EmailAddress: string,
+    ContactCode: string,
+    WarehouseCode: string,
+    ResidentialAddress: string,
+    DateCreated: string,
+    DateUpdated: string,
+    ShipVia: string
+}

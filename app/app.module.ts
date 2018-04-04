@@ -4,20 +4,32 @@ import { AppRoutingModule } from "./app.routing";
 import { AppComponent } from "./app.component";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
+import { ModalDialogService } from "nativescript-angular/modal-dialog";
+import { DropDownModule } from "nativescript-drop-down/angular";
+import { BarcodeScanner } from 'nativescript-barcodescanner';
 
 //Components
 import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
-import { CustomerComponent } from "./components/customer/customer.component";
 import { SyncComponent } from "./components/Sync/sync.component";
 import { SendDataComponent } from "./components/sendData/sendData.component";
+import { CustomerTransactionComponent } from "./components/customer/customer-transaction.component";
+import { SaleOrderComponent } from "./components/transaction/sale-order.component";
+import { ModalDateComponent } from "./components/modal/datepicker/modal-date.component";
+import { ModalProductOrderComponent } from "./components/modal/productOrder/modal-product-order.component";
+import { CustomerInquiryComponent } from "./components/customer/customer-inquiry.component";
 import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.component";
+import { ReviewTransactionComponent } from "./components/reviewTransaction/reviewTransaction.component";
 
 //Services
 import { CouchbaseService } from "./services/couchbase.service";
 import { CustomerService } from "./services/customer.service";
 import { ProductService } from "./services/item.service";
-import { ReviewTransactionComponent } from "./components/reviewTransaction/reviewTransaction.component";
+import { InventoryService } from "./services/inventory.service";
+import { TermsCodeService } from "./services/terms.service";
+import { UserService } from "./services/user.service";
+import { DeviceService } from "./services/device.service";
+import { ShippingAddressService } from "./services/shippingAddress.service";
 
 @NgModule({
     bootstrap: [
@@ -27,22 +39,38 @@ import { ReviewTransactionComponent } from "./components/reviewTransaction/revie
         NativeScriptModule,
         NativeScriptFormsModule,
         NativeScriptHttpClientModule,
-        AppRoutingModule
+        AppRoutingModule,
+        DropDownModule
+    ],
+    entryComponents: [
+        ModalDateComponent,
+        ModalProductOrderComponent
     ],
     declarations: [
         AppComponent,
         LoginComponent,
         HomeComponent,
-        CustomerComponent,
         ItemInquiryComponent,
         SyncComponent,
         SendDataComponent,
-        ReviewTransactionComponent
+        ReviewTransactionComponent,
+        CustomerTransactionComponent,
+        SaleOrderComponent,
+        ModalDateComponent,
+        ModalProductOrderComponent,
+        CustomerInquiryComponent
     ],
     providers: [
         CouchbaseService,
         CustomerService,
-        ProductService
+        ModalDialogService,
+        ProductService,
+        BarcodeScanner,
+        InventoryService,
+        TermsCodeService,
+        ShippingAddressService,
+        UserService,
+        DeviceService
     ],
     schemas: [
         NO_ERRORS_SCHEMA
