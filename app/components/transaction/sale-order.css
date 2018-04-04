@@ -3,7 +3,8 @@ TabView {
 }
 
 .tab-content {
-    margin: 7%;
+    margin: 2%;
+    margin-left: 4%;
     font-size: 20%;
 }
 
@@ -21,7 +22,8 @@ TabView {
 }
 
 .tab-content TextField, .tab-content Dropdown {
-    width: 50%;
+    width: 60%;
+    margin-right: 10%;
 }
 
 .tab-content Dropdown {

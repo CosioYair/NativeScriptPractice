@@ -31,10 +31,6 @@
                     <DropDown [items]="warehouses" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2"></DropDown>    
                 </DockLayout>
                 <DockLayout>
-                    <Label text="Ship Via"></Label>
-                    <DropDown [items]="shipVias" (selectedIndexChanged)="setCustomerShipVia($event)" [(ngModel)]="shipVia"></DropDown>
-                </DockLayout>
-                <DockLayout>
                     <Label text="Terms"></Label>
                     <TextField [text]="customer.TermsCode + ': ' + userTermsCode" class="enabled" hint="Terms" isEnabled="false"></TextField>
                 </DockLayout>
@@ -85,24 +81,8 @@
                     <TextField [text]="customer.AddressLine3" class="enabled" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
-                    <GridLayout class="tab-subContent" columns="*, *" rows="*">
-                        <StackLayout row="0" col="0">
-                            <DockLayout>
-                                <Label text="City"></Label>
-                                <TextField [text]="customer.City" class="enabled" hint="City" isEnabled="false"></TextField>
-                            </DockLayout>
-                            <DockLayout>
-                                <Label text="Zip"></Label>
-                                <TextField [text]="customer.ZipCode" class="enabled" hint="Zip" isEnabled="false"></TextField>
-                            </DockLayout>
-                        </StackLayout>
-                        <StackLayout row="0" col="1">
-                            <DockLayout>
-                                <Label text="State"></Label>
-                                <TextField [text]="customer.State" class="enabled" hint="State" isEnabled="false"></TextField>
-                            </DockLayout>
-                        </StackLayout>
-                    </GridLayout>
+                    <Label></Label>
+                    <TextField [text]="customer.City + ', ' + customer.State + ' ' + customer.ZipCode" class="enabled" hint="City" isEnabled="false"></TextField>
                 </DockLayout>
             </StackLayout>
             <StackLayout row="0" col="1">
@@ -130,25 +110,13 @@
                     <TextField class="enabled" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
-                    <GridLayout class="tab-subContent" columns="*, *" rows="*">
-                        <StackLayout row="0" col="0">
-                            <DockLayout>
-                                <Label text="City"></Label>
-                                <TextField class="enabled" [text]="customer.shippingAddress.ShipToCity" isEnabled="false"></TextField>
-                            </DockLayout>
-                            <DockLayout>
-                                <Label text="Zip"></Label>
-                                <TextField class="enabled" [text]="customer.shippingAddress.ShipToZipCode" isEnabled="false"></TextField>
-                            </DockLayout>
-                        </StackLayout>
-                        <StackLayout row="0" col="1">
-                            <DockLayout>
-                                <Label text="State"></Label>
-                                <TextField class="enabled" [text]="customer.shippingAddress.ShipToState" isEnabled="false"></TextField>
-                            </DockLayout>
-                        </StackLayout>
-                    </GridLayout>
+                    <Label></Label>
+                    <TextField [text]="customer.shippingAddress.ShipToCity + ', ' + customer.shippingAddress.ShipToState + ' ' + customer.shippingAddress.ShipToZipCode" class="enabled" hint="City" isEnabled="false"></TextField>
                 </DockLayout>   
+                <DockLayout>
+                    <Label text="Ship Via"></Label>
+                    <DropDown [items]="shipVias" (selectedIndexChanged)="setCustomerShipVia($event)" [(ngModel)]="shipVia"></DropDown>
+                </DockLayout>
             </StackLayout>
         </GridLayout>
     </StackLayout>
