@@ -388,7 +388,7 @@ export class SaleOrderComponent implements OnInit{
         else{
             let length = this._saleOrderService.getUserSaleOrder() == null ? 0 : this._saleOrderService.getUserSaleOrder().length;
             let folioNumber = `${length + 1}`;
-            this._saleOrder.SalesOrderNO = `${platformModule.device.uuid}-${this.padLeft(folioNumber, '0', 6)}`;
+            this._saleOrder.SalesOrderNO = `${platformModule.device.uuid.slice(0,6)}-${this.padLeft(folioNumber, '0', 6)}`;
         }
         console.log(JSON.stringify(this._saleOrder));
     }
@@ -414,7 +414,7 @@ export class SaleOrderComponent implements OnInit{
             BillToState: this.customer.State,
             BillToZipCode: this.customer.ZipCode,
             ShipVia: this.shipVias[this.shipVia],
-            WarehouseCode: CONSTANTS.warehouses[this.warehouse].name,
+            WarehouseCode: CONSTANTS.warehouses[this.warehouse].code,
             ShipToCity: this.customer["shippingAddress"].ShipToCity,
             ShipToState: this.customer["shippingAddress"].ShipToState,
             ShipToZipCode: this.customer["shippingAddress"].ShipToZipCode,
