@@ -28,6 +28,7 @@ import { SERVER } from "../../config/server.config";
 import * as platformModule from "tns-core-modules/platform";
 import { RouterExtensions } from "nativescript-angular/router";
 import { GLOBALFUNCTIONS } from "../../config/globalFunctions.config";
+import { FoliosTransactionService } from "../../services/foliosTransaction.service";
 
 @Component({
     selector: "ns-sale-order",
@@ -81,7 +82,8 @@ export class SaleOrderComponent implements OnInit{
                 private _termsCodeService: TermsCodeService,
                 private _shippingAddressService: ShippingAddressService,
                 private _saleOrderService: SaleOrderService,
-                private _router: RouterExtensions
+                private _router: RouterExtensions,
+                private _foliosTransactionsService: FoliosTransactionService
             ){
         this.dates = [];
         this.shipVias = [];
@@ -416,15 +418,25 @@ export class SaleOrderComponent implements OnInit{
             alert("Description not available");
     }
 
+    private saveFoliosTransaction(){
+        let folioNumber = SERVER.isQuote ? this._foliosTransactionsService.getQuoteTransactions().length + 1 : this._foliosTransactionsService.getSaleTransactions().length + 1;
+        let folioSerie = `${this.padLeft(folioNumber.toString(), '0', 6)}`;
+        let doc = SERVER.isQuote ? "Quote" : "Sale";
+        let docSerie = SERVER.isQuote ? "Q" : "S";
+        let serie = `${platformModule.device.uuid.slice(0,6)}${docSerie}-${folioSerie}`;
+        let folio = {
+            Folio: folioSerie,
+            Document: doc,
+            Serie: serie
+        };
+        this._foliosTransactionsService.updateFoliosTransactionDoc(folio);
+        return serie;
+    }
+
     public async save(){
         let messages = this.validations();
         if(messages == "OK"){
-            if(this._couchbaseService.getDocument("saleorder") == null)
-                await this._saleOrderService.updateSaleOrderDoc();
-
-            let length = this._saleOrderService.getUserTransactions() == null ? 0 : this._saleOrderService.getUserTransactions().length;
-            let folioNumber = `${length + 1}`;
-            this._saleOrder.SalesOrderNO = `${platformModule.device.uuid.slice(0,6)}-${this.padLeft(folioNumber, '0', 6)}`;
+            this._saleOrder.SalesOrderNO = await this.saveFoliosTransaction();
             await this._saleOrderService.updateSaleOrderDoc(this._saleOrder);
             this._router.back();
         }
@@ -447,6 +459,7 @@ export class SaleOrderComponent implements OnInit{
             CustomerConfirmTo: this.CustomerConfirmTo,
             CustomerFBO: this.CustomerFBO,
             SalesOrderNO: "",
+            DeviceUid: platformModule.device.uuid,
             BillToName: this.customer.CustomerName,
             BillToAddress1: this.customer.AddressLine1,
             BillToAddress2: this.customer.AddressLine2,
@@ -469,7 +482,7 @@ export class SaleOrderComponent implements OnInit{
             ShipDate: this.dates.shipDate,
             DateCreated: new Date(),
             DateUpdated: new Date(),
-            VendorNo: SERVER.user["UserCode"],
+            UserCode: SERVER.user["UserCode"],
             SalespersonNo: SERVER.user["DefaultSalespersonID"],
             TermsCode: this.customer.TermsCode,
             Comment: this.Comment,

@@ -20,10 +20,12 @@ export class SaleOrderService {
             this._saleOrderDoc["saleorder"] = {};
             this._couchbaseService.createDocument(this._saleOrderDoc, "saleorder");
         }
-        else{
+        else
             this._saleOrderDoc = doc;
+            
+        if(saleOrder != null){
             if(this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]] == null)
-                this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]] = [saleOrder];
+            this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]] = [saleOrder];
             else
                 this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]].push(saleOrder);
             this._couchbaseService.updateDocument("saleorder", this._saleOrderDoc);

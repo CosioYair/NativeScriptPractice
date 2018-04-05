@@ -31,6 +31,7 @@ import { UserService } from "./services/user.service";
 import { DeviceService } from "./services/device.service";
 import { ShippingAddressService } from "./services/shippingAddress.service";
 import { SaleOrderService } from "./services/saleOrder.service";
+import { FoliosTransactionService } from "./services/foliosTransaction.service";
 
 @NgModule({
     bootstrap: [
@@ -72,7 +73,8 @@ import { SaleOrderService } from "./services/saleOrder.service";
         ShippingAddressService,
         UserService,
         DeviceService,
-        SaleOrderService
+        SaleOrderService,
+        FoliosTransactionService
     ],
     schemas: [
         NO_ERRORS_SCHEMA
