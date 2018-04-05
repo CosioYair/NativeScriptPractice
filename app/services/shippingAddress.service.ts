@@ -45,6 +45,8 @@ export class ShippingAddressService {
     public async getCustomerShippingAddressList(customer){
         let shippingAddressList = [];
         let doc = this._couchbaseService.getDocument("shippingaddress")["shippingaddress"][customer.CustomerNo];
+        if(doc == undefined)
+            return null;
         await doc.map(shipping => {
             shippingAddressList.push(shipping.ShipToCode);
         });

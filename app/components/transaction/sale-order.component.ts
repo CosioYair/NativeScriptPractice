@@ -136,7 +136,7 @@ export class SaleOrderComponent implements OnInit{
         await this.setTermsCode();
         await this.setDocument();
         await this.refreshSaleOrder();
-        this.getWarehouses();
+        await this.getWarehouses();
     }
 
     public getWarehouses(){
@@ -151,6 +151,17 @@ export class SaleOrderComponent implements OnInit{
                     this.warehouses.push(warehouse.name);
             });
         }
+    }
+
+    private validateShippingAddress(){
+        this.customer["shippingAddress"] = {};
+        this.shippingAddressList = [];
+        this.customer["shippingAddress"]["ShipToName"] = "";
+        this.customer["shippingAddress"]["AddressLine1"] = "";
+        this.customer["shippingAddress"]["AddressLine2"] = "";
+        this.customer["shippingAddress"]["ShipToCity"] = "";
+        this.customer["shippingAddress"]["ShipToState"] = "";
+        this.customer["shippingAddress"]["ShipToZipCode"] = "";   
     }
 
     public async setDocument(){
@@ -178,9 +189,13 @@ export class SaleOrderComponent implements OnInit{
     public async setShippingAddress(){
         if(this._couchbaseService.getDocument("shippingaddress") == null)
             this._shippingAddressService.setShippingAddressDoc();
-        this.shippingAddressList = await this._shippingAddressService.getCustomerShippingAddressList(this.customer);
         this._customerShippingAddress = await this._shippingAddressService.getCustomerShippingAddress(this.customer);
-        this.customer["shippingAddress"] = this._customerShippingAddress[0];
+        if(this._customerShippingAddress == null)
+            await this.validateShippingAddress();
+        else{
+            this.shippingAddressList = await this._shippingAddressService.getCustomerShippingAddressList(this.customer);
+            this.customer["shippingAddress"] = this._customerShippingAddress[0];
+        }
     }
 
     public setInventory(){
@@ -397,14 +412,19 @@ export class SaleOrderComponent implements OnInit{
     }
 
     public async save(){
-        if(this._couchbaseService.getDocument("saleorder") == null)
-            this._saleOrderService.updateSaleOrderDoc();
+        let messages = this.validations();
+        if(messages == "OK"){
+            if(this._couchbaseService.getDocument("saleorder") == null)
+                this._saleOrderService.updateSaleOrderDoc();
 
-        let length = this._saleOrderService.getUserSaleOrder() == null ? 0 : this._saleOrderService.getUserSaleOrder().length;
-        let folioNumber = `${length + 1}`;
-        this._saleOrder.SalesOrderNO = `${platformModule.device.uuid.slice(0,6)}-${this.padLeft(folioNumber, '0', 6)}`;
-        await this._saleOrderService.updateSaleOrderDoc(this._saleOrder);
-        this._router.back();
+            let length = this._saleOrderService.getUserSaleOrder() == null ? 0 : this._saleOrderService.getUserSaleOrder().length;
+            let folioNumber = `${length + 1}`;
+            this._saleOrder.SalesOrderNO = `${platformModule.device.uuid.slice(0,6)}-${this.padLeft(folioNumber, '0', 6)}`;
+            await this._saleOrderService.updateSaleOrderDoc(this._saleOrder);
+            this._router.back();
+        }
+        else    
+            alert(messages);
     }
 
     private padLeft(text:string, padChar:string, size:number): string {
@@ -448,5 +468,24 @@ export class SaleOrderComponent implements OnInit{
             Comment: this.Comment,
             Detail: this.cart
         };
+    }
+
+    private validations(){
+        let messages = "";
+        messages += this.validateProducts();
+        messages += this.validateAddress();
+        
+        return messages == "" ? "OK" : messages;
+    }    
+
+    private validateProducts(){
+        return this.cart.length > 0 ? "" : "You need include products in cart \n";
+    }
+
+    private validateAddress(){
+        if(this._saleOrder.ShipToAddress1 == "" || this._saleOrder.ShipToCity == "" || this._saleOrder.ShipToState == "" || this._saleOrder.ShipToZipCode == "")
+            return "Your Shipping Address must to have at least(First Address line, city, state and zipcode) \n";
+        else
+            return "";
     }
  }
