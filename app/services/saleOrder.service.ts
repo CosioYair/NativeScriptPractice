@@ -35,28 +35,31 @@ export class SaleOrderService {
         return userSaleOrder == undefined ? [] : userSaleOrder;
     }
 
-    public getUserSaleOrder(){
-        let userSaleOrder = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
-        if(userSaleOrder == null)
+    public getItems(itemSearch, itemBool, savedBool){
+        let itemDoc = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
+        if(itemDoc == null)
             return [];
-        let salesOrder = [];
-        console.log(userSaleOrder[0].IsQuote);
-        userSaleOrder.map(saleOrder => {
-            if(!saleOrder.IsQuote)
-                salesOrder.push(saleOrder);
+        let items = [];
+        itemDoc.map(item => {
+            if(item[itemSearch] == itemBool && item.Saved == savedBool)
+                items.push(item);
         });
-        return userSaleOrder == undefined ? [] : salesOrder;
+        return itemDoc == undefined ? [] : items;
     }
 
-    public getUserQuote(){
-        let userQuote = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
-        if(userQuote == null)
-            return [];
-        let quotes = [];
-        userQuote.map(quote => {
-            if(quote.IsQuote)
-                quotes.push(quote);
-        });
-        return userQuote == undefined ? [] : quotes;
+    public getUserSaleOrderSaved(){
+        return this.getItems("IsQuote", false, true);
+    }
+
+    public getUserSaleOrderUnsaved(){
+        return this.getItems("IsQuote", false, false);
+    }
+
+    public getUserQuoteSaved(){
+        return this.getItems("IsQuote", true, true);
+    }
+
+    public getUserQuoteUnsaved(){
+        return this.getItems("IsQuote", true, false);
     }
 }
