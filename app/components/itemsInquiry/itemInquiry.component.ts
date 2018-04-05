@@ -208,12 +208,6 @@ export class ItemInquiryComponent implements OnInit{
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
 
-    public setInventory(){
-        if(this._couchbaseService.getDocument("inventory") == null)
-            this._inventoryService.setInventoriesDoc();
-
-        this.inventoryList = this._inventoryService.getInventoryWarehouse(this.warehouse);
-    }
     
 }
 

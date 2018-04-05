@@ -1,6 +1,14 @@
 import { Component } from "@angular/core";
 import * as switchModule from "tns-core-modules/ui/switch";
+
+//Services
 import { ProductService } from "../../services/item.service";
+import { CustomerService } from "../../services/customer.service";
+import { DeviceService } from "../../services/device.service";
+import { InventoryService } from "../../services/inventory.service";
+import { ShippingAddressService } from "../../services/shippingAddress.service";
+import { TermsCodeService } from "../../services/terms.service";
+import { UserService } from "../../services/user.service";
 
 @Component({
     selector: "ns-sync",
@@ -24,7 +32,14 @@ export class SyncComponent{
     public json : any;
     public options:any;
     public dateUpdated:any;
-    constructor(private _productService: ProductService){
+    constructor(
+        private _productService: ProductService,
+        private _customerService: CustomerService,
+        private _deviceService: DeviceService,
+        private _inventoryService: InventoryService,
+        private _shippingAddressService: ShippingAddressService,
+        private _termsCodeService: TermsCodeService,
+    ){
         this.options = [
                 {   id: 0,
                     name: "Address",
