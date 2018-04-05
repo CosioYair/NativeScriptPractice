@@ -517,6 +517,7 @@ export class SaleOrderComponent implements OnInit{
     private setLineProduct(){
         this.cart.map((product, index) => {
             product.lineProduct = index + 1;
+            product.quantity = parseInt(product.quantity);
         });
         this.refreshSaleOrder();
     }
