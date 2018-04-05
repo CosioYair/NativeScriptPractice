@@ -27,6 +27,7 @@ import { SaleOrder } from "../../interfaces/saleOrder.interface";
 import { SERVER } from "../../config/server.config";
 import * as platformModule from "tns-core-modules/platform";
 import { RouterExtensions } from "nativescript-angular/router";
+import { GLOBALFUNCTIONS } from "../../config/globalFunctions.config";
 
 @Component({
     selector: "ns-sale-order",
@@ -137,21 +138,7 @@ export class SaleOrderComponent implements OnInit{
         await this.setTermsCode();
         await this.setDocument();
         await this.refreshSaleOrder();
-        await this.getWarehouses();
-    }
-
-    public getWarehouses(){
-        if(SERVER.user["SupervisorRights"] == "Y"){
-            CONSTANTS.warehouses.map(warehouse => {
-                this.warehouses.push(warehouse.name);
-            });
-        }
-        else{
-            CONSTANTS.warehouses.map(warehouse => {
-                if(warehouse.code == SERVER.user["SalesDefaultOrderWhse"] || warehouse.code == "000")
-                    this.warehouses.push(warehouse.name);
-            });
-        }
+        this.warehouses = await GLOBALFUNCTIONS.getWarehouses();
     }
 
     private validateShippingAddress(){
