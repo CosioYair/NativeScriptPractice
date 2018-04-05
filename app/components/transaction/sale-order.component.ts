@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef } from "@angular/core";
+import { Component, OnInit, ViewContainerRef, ElementRef } from "@angular/core";
 import { Border } from "tns-core-modules/ui/border";
 import { CouchbaseService } from "../../services/couchbase.service";
 import { ModalDialogOptions, ModalDialogService } from "nativescript-angular/modal-dialog";
@@ -68,6 +68,7 @@ export class SaleOrderComponent implements OnInit{
     public CustomerConfirmTo:string;
     public CustomerFBO:string;
     public Comment:string;
+    public Qty:ElementRef;
 
     constructor(private _productService: ProductService, 
                 private _inventoryService: InventoryService, 
@@ -302,22 +303,34 @@ export class SaleOrderComponent implements OnInit{
             this.viewProduct(this.selectedProduct);
     }
 
+    public validateIntegerNumber(number){
+        if(number != parseInt(number, 10) || number < 1)
+            return false;
+        return true;
+    }   
+
     public addProduct(){
         let product = this.searchItemCode(this.itemCode, this.cart);
-        if(product == false){
-            this.selectedProduct.quantity = this.productQuantity;
-            this.selectedProduct.quantityPrice = this.selectedProduct.quantity * parseFloat(this.selectedProduct.StandardUnitPrice);
-            this.cart.push(this.selectedProduct);
-            this.totalCartAmount += this.selectedProduct.quantityPrice;
-            this.cartQuantity = this.cartQuantity + parseInt(this.selectedProduct.quantity);
-            this.totalCubes += this.selectedProduct.Category4 * this.selectedProduct.quantity;
-            alert(`Item ${this.itemCode} added to cart.`);
+        if(this.validateIntegerNumber(this.productQuantity)){
+            if(product == false){
+                this.selectedProduct.quantity = this.productQuantity;
+                this.selectedProduct.quantityPrice = this.selectedProduct.quantity * parseFloat(this.selectedProduct.StandardUnitPrice);
+                this.cart.push(this.selectedProduct);
+                this.totalCartAmount += this.selectedProduct.quantityPrice;
+                this.cartQuantity = this.cartQuantity + parseInt(this.selectedProduct.quantity);
+                this.totalCubes += this.selectedProduct.Category4 * this.selectedProduct.quantity;
+                alert(`Item ${this.itemCode} added to cart.`);
+            }
+            else{
+                this.selectedCartProduct = product;
+                this.showProductOrderModal();
+            }
+            this.cancel();
         }
         else{
-            this.selectedCartProduct = product;
-            this.showProductOrderModal();
-        }
-        this.cancel();
+            alert("Invalid format to quantity");
+            this.Qty.nativeElement.focus();
+        }            
     }
 
     public showCart(){
