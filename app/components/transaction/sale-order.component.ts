@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, ElementRef } from "@angular/core";
+import { Component, OnInit, ViewContainerRef, ElementRef, ViewChild } from "@angular/core";
 import { Border } from "tns-core-modules/ui/border";
 import { CouchbaseService } from "../../services/couchbase.service";
 import { ModalDialogOptions, ModalDialogService } from "nativescript-angular/modal-dialog";
@@ -68,7 +68,7 @@ export class SaleOrderComponent implements OnInit{
     public CustomerConfirmTo:string;
     public CustomerFBO:string;
     public Comment:string;
-    public Qty:ElementRef;
+    @ViewChild('Qty') Qty: ElementRef;
 
     constructor(private _productService: ProductService, 
                 private _inventoryService: InventoryService, 
@@ -328,8 +328,12 @@ export class SaleOrderComponent implements OnInit{
             this.cancel();
         }
         else{
-            alert("Invalid format to quantity");
+            alert("Invalid quantity");
             this.Qty.nativeElement.focus();
+            setTimeout(() =>{
+                this.Qty.nativeElement.android.selectAll();
+            },500);
+            this.Qty.nativeElement.ios.textRangeFromPositionToPosition(this.Qty.nativeElement.ios.beginningOfDocument, this.Qty.nativeElement.ios.endOfDocument);
         }            
     }
 
@@ -418,7 +422,7 @@ export class SaleOrderComponent implements OnInit{
     }
 
     public showDescription(){
-        if(this.selectedProduct.ExtendedDescriptionText != undefined)
+        if(this.selectedProduct.ExtendedDescriptionText != undefined || this.selectedProduct.ExtendedDescriptionText != "")
             alert(this.selectedProduct.ExtendedDescriptionText);
         else
             alert("Description not available");
@@ -492,12 +496,12 @@ export class SaleOrderComponent implements OnInit{
     }    
 
     private validateProducts(){
-        return this.cart.length > 0 ? "" : "You need include products in cart \n";
+        return this.cart.length > 0 ? "" : "You need to add products to cart \n";
     }
 
     private validateAddress(){
         if(this._saleOrder.ShipToAddress1 == "" || this._saleOrder.ShipToCity == "" || this._saleOrder.ShipToState == "" || this._saleOrder.ShipToZipCode == "")
-            return "Your Shipping Address must to have at least(First Address line, city, state and zipcode) \n";
+            return "Your Shipping Address must have (First Address line, City, State and Zip code) \n";
         else
             return "";
     }

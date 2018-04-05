@@ -1,4 +1,4 @@
-import { Component, ElementRef } from "@angular/core";
+import { Component, ElementRef, ViewChild } from "@angular/core";
 import { ModalDialogParams } from "nativescript-angular/directives/dialogs";
 import { DatePicker } from "ui/date-picker";
 import { EventData } from "data/observable";
@@ -10,7 +10,7 @@ import { EventData } from "data/observable";
 export class ModalProductOrderComponent {
     public selectedCartProduct:any;
     public warehouse:string;
-    public Qty:ElementRef;
+    @ViewChild('Qty') Qty: ElementRef;
 
     public constructor(private params: ModalDialogParams) {
         this.selectedCartProduct = this.params.context.selectedCartProduct;
@@ -21,8 +21,12 @@ export class ModalProductOrderComponent {
         if(this.validateIntegerNumber(this.selectedCartProduct.quantity))
             this.params.closeCallback(this.selectedCartProduct);
         else{
-            alert("Invalid format to quantity");
+            alert("Invalid quantity");
             this.Qty.nativeElement.focus();
+            setTimeout(() =>{
+                this.Qty.nativeElement.android.selectAll();
+            },500);
+            this.Qty.nativeElement.ios.textRangeFromPositionToPosition(this.Qty.nativeElement.ios.beginningOfDocument, this.Qty.nativeElement.ios.endOfDocument);
         }
     }
 
