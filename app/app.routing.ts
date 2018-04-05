@@ -22,7 +22,7 @@ const routes: Routes = [
     { path: "sendData", component:SendDataComponent},
     { path: "reviewTransaction", component:ReviewTransactionComponent},
     { path: "customerTransaction", component: CustomerTransactionComponent},
-    { path: "saleOrder/:CustomerNo", component: SaleOrderComponent},
+    { path: "saleOrder/:CustomerNo/:IsQuote", component: SaleOrderComponent},
     { path: "customerInquiry", component: CustomerInquiryComponent},
 ];
 

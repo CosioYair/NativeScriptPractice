@@ -132,6 +132,7 @@ export class SaleOrderComponent implements OnInit{
     }
 
     async ngOnInit() {
+        SERVER.isQuote = JSON.parse(this.route.snapshot.params["IsQuote"]);
         await this.getCustomer(this.route.snapshot.params["CustomerNo"]);
         await this.setShippingAddress();
         await this.setInventory();
@@ -139,6 +140,10 @@ export class SaleOrderComponent implements OnInit{
         await this.setDocument();
         await this.refreshSaleOrder();
         this.warehouses = await GLOBALFUNCTIONS.getWarehouses();
+        if(!SERVER.isQuote)
+            console.log(JSON.stringify(this._saleOrderService.getUserSaleOrder()));
+        else
+            console.log(JSON.stringify(this._saleOrderService.getUserQuote()));
     }
 
     private validateShippingAddress(){
@@ -419,9 +424,9 @@ export class SaleOrderComponent implements OnInit{
         let messages = this.validations();
         if(messages == "OK"){
             if(this._couchbaseService.getDocument("saleorder") == null)
-                this._saleOrderService.updateSaleOrderDoc();
+                await this._saleOrderService.updateSaleOrderDoc();
 
-            let length = this._saleOrderService.getUserSaleOrder() == null ? 0 : this._saleOrderService.getUserSaleOrder().length;
+            let length = this._saleOrderService.getUserSaleOrder() == null ? 0 : this._saleOrderService.getUserTransactions().length;
             let folioNumber = `${length + 1}`;
             this._saleOrder.SalesOrderNO = `${platformModule.device.uuid.slice(0,6)}-${this.padLeft(folioNumber, '0', 6)}`;
             await this._saleOrderService.updateSaleOrderDoc(this._saleOrder);
@@ -439,6 +444,7 @@ export class SaleOrderComponent implements OnInit{
         if(this.customer.AddressLine2 == null)
             this.customer.AddressLine2 = "";
         this._saleOrder = {
+            IsQuote: SERVER.isQuote,
             CustomerNo: this.customer.CustomerNo,
             CustomerPONo: this.CustomerPONo,
             CustomerConfirmTo: this.CustomerConfirmTo,

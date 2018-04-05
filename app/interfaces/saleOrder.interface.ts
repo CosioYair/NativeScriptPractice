@@ -1,4 +1,5 @@
 export interface SaleOrder {
+    IsQuote: boolean,
     CustomerNo: string,
     CustomerPONo: string,
     CustomerConfirmTo:string,

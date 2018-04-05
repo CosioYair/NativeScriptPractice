@@ -30,8 +30,33 @@ export class SaleOrderService {
         }
     }
 
-    public getUserSaleOrder(){
+    public getUserTransactions(){
         let userSaleOrder = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
         return userSaleOrder == undefined ? [] : userSaleOrder;
+    }
+
+    public getUserSaleOrder(){
+        let userSaleOrder = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
+        if(userSaleOrder == null)
+            return [];
+        let salesOrder = [];
+        console.log(userSaleOrder[0].IsQuote);
+        userSaleOrder.map(saleOrder => {
+            if(!saleOrder.IsQuote)
+                salesOrder.push(saleOrder);
+        });
+        return userSaleOrder == undefined ? [] : salesOrder;
+    }
+
+    public getUserQuote(){
+        let userQuote = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
+        if(userQuote == null)
+            return [];
+        let quotes = [];
+        userQuote.map(quote => {
+            if(quote.IsQuote)
+                quotes.push(quote);
+        });
+        return userQuote == undefined ? [] : quotes;
     }
 }
