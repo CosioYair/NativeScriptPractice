@@ -142,6 +142,10 @@ export class SaleOrderComponent implements OnInit{
         await this.setDocument();
         await this.refreshSaleOrder();
         this.warehouses = await GLOBALFUNCTIONS.getWarehouses();
+        if(!SERVER.isQuote)
+            console.log(JSON.stringify(this._saleOrderService.getUserSaleOrderUnsaved()));
+        else
+            console.log(JSON.stringify(this._saleOrderService.getUserQuoteUnsaved()));
     }
 
     private validateShippingAddress(){
@@ -436,6 +440,7 @@ export class SaleOrderComponent implements OnInit{
     public async save(){
         let messages = this.validations();
         if(messages == "OK"){
+            await this.setLineProduct();
             this._saleOrder.SalesOrderNO = await this.saveFoliosTransaction();
             await this._saleOrderService.updateSaleOrderDoc(this._saleOrder);
             this._router.back();
@@ -507,5 +512,12 @@ export class SaleOrderComponent implements OnInit{
             return "Your Shipping Address must have (First Address line, City, State and Zip code) \n";
         else
             return "";
+    }
+
+    private setLineProduct(){
+        this.cart.map((product, index) => {
+            product.lineProduct = index + 1;
+        });
+        this.refreshSaleOrder();
     }
  }
