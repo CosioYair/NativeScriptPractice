@@ -5,7 +5,7 @@
                 <StackLayout class="" row="0" col="0">
                     <DockLayout>
                         <Label text="Qty" verticalAlignment="center" paddingRight="5%"></Label>
-                        <TextField [(ngModel)]="selectedCartProduct.quantity" keyboardType="number" hint=""></TextField>
+                        <TextField #Qty [(ngModel)]="selectedCartProduct.quantity" keyboardType="number" hint=""></TextField>
                     </DockLayout>
                     <DockLayout marginTop="50px">
                         <Label text="Price" verticalAlignment="center" paddingRight="5%"></Label>
