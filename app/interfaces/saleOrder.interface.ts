@@ -11,6 +11,7 @@ export interface SaleOrder {
     BillToName: string,
     BillToAddress1: string,
     BillToAddress2: string,
+    BillToAddress3: string,
     BillToCountryCode: string,
     BillToCity: string,
     BillToState: string,
