@@ -8,6 +8,7 @@ import { CouchbaseService } from "../../services/couchbase.service";
 import { SERVER } from "../../config/server.config";
 import * as dialogs from "ui/dialogs";
 import { SaleOrderService } from "../../services/saleOrder.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "ns-customer-transaction",
@@ -23,7 +24,7 @@ export class CustomerTransactionComponent implements OnInit{
     public data = {};
     public selectedCustomer:any = {};
 
-    constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService, private _saleOrderService: SaleOrderService){
+    constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService, private _saleOrderService: SaleOrderService, private _router: Router){
         this.selectedCustomer = {
             CustomerNo: "Select a customer to view details",
             AddressLine1: "",
@@ -46,6 +47,7 @@ export class CustomerTransactionComponent implements OnInit{
 
     ngOnInit() {
         this.setDocument();
+        SERVER.editTransaction.edit = false;
     }
 
     public getCustomers(){
@@ -92,5 +94,11 @@ export class CustomerTransactionComponent implements OnInit{
         dialogs.alert("Your message").then(result => {
             console.log("Dialog result: " + result);
         });
+    }
+
+    public editTransaction(){
+        this._router.navigate(['/saleOrder', this.selectedCustomer.CustomerNo, true]);
+        SERVER.editTransaction.edit = true;
+        SERVER.editTransaction.transactionNo = "e362c6S-000003";
     }
  }

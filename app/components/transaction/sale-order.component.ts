@@ -114,16 +114,38 @@ export class SaleOrderComponent implements OnInit {
     }
 
     async ngOnInit() {
+        if (SERVER.editTransaction)
+            alert("edit");
         SERVER.isQuote = JSON.parse(this.route.snapshot.params["IsQuote"]);
         await this.getCustomer(this.route.snapshot.params["CustomerNo"]);
         await this.setShippingAddress();
         await this.setInventory();
         await this.setTermsCode();
         await this.setDocument();
-        await this.refreshSaleOrder();
         this.warehouses = await GLOBALFUNCTIONS.getWarehouses();
-        this._saleOrder.ShipDate = `${this._saleOrder.ShipDate.getDate() + 1}/${this._saleOrder.ShipDate.getMonth() + 1}/${this._saleOrder.ShipDate.getFullYear()}`;
-        this._saleOrder.OrderDate = `${this._saleOrder.OrderDate.getDate()}/${this._saleOrder.OrderDate.getMonth()}/${this._saleOrder.OrderDate.getFullYear()}`;
+        if (SERVER.editTransaction) {
+            await this.refreshSaleOrder();
+            this._saleOrder.ShipDate = `${this._saleOrder.ShipDate.getDate() + 1}/${this._saleOrder.ShipDate.getMonth() + 1}/${this._saleOrder.ShipDate.getFullYear()}`;
+            this._saleOrder.OrderDate = `${this._saleOrder.OrderDate.getDate()}/${this._saleOrder.OrderDate.getMonth()}/${this._saleOrder.OrderDate.getFullYear()}`;
+        }
+        else {
+            this.getTransaction();
+        }
+    }
+
+    public getTransaction(){
+        if(SERVER.isQuote){
+            this._saleOrderService.getUserQuoteUnsaved().map(quote => {
+                if(quote.SalesOrderNO = SERVER.editTransaction.transactionNo)
+                    this._saleOrder = quote;
+            });   
+        }
+        else {
+            this._saleOrderService.getUserSaleOrderUnsaved().map(sale => {
+                if(sale.SalesOrderNO = SERVER.editTransaction.transactionNo)
+                    this._saleOrder = sale;
+            });  
+        }
     }
 
     public onSelectedIndexChange(args) {
@@ -423,7 +445,8 @@ export class SaleOrderComponent implements OnInit {
             await this.setLineProduct();
             this._saleOrder.SalesOrderNO = await this.saveFoliosTransaction();
             await this._saleOrderService.updateSaleOrderDoc(this._saleOrder);
-            console.log(JSON.stringify(this._saleOrder.Detail));
+            console.log(JSON.stringify(this._saleOrder));
+            SERVER.editTransaction.edit = false;
             this._router.back();
         }
         else
@@ -454,7 +477,7 @@ export class SaleOrderComponent implements OnInit {
             BillToState: this.customer.State,
             BillToZipCode: this.customer.ZipCode,
             ShipVia: "",
-            WarehouseCode: CONSTANTS.warehouses[this.warehouse].code,
+            WarehouseCode: this.warehouses[this.warehouse].code,
             ShipToCity: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToCity,
             ShipToState: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToState,
             ShipToZipCode: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToZipCode,
