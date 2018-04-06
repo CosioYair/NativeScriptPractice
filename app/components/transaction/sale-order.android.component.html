@@ -16,15 +16,15 @@
             <StackLayout row="0" col="0">
                 <DockLayout>
                     <Label text="Customer No"></Label>
-                    <TextField [text]="customer.CustomerNo" class="enabled" hint="Customer No" isEnabled="false"></TextField>
+                    <TextField [text]="_saleOrder.CustomerNo" class="enabled" hint="Customer No" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Date"></Label>
-                    <TextField hint="Date" [(ngModel)]="dates.date" (tap)="showDateModal('date')"></TextField>
+                    <TextField hint="Date" [(ngModel)]="_saleOrder.OrderDate" (tap)="showDateModal('OrderDate')"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Ship Date"></Label>
-                    <TextField hint="Ship Date" [(ngModel)]="dates.shipDate" (tap)="showDateModal('shipDate')"></TextField>
+                    <TextField hint="Ship Date" [(ngModel)]="_saleOrder.ShipDate" (tap)="showDateModal('ShipDate')"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Ship Method"></Label>
@@ -36,28 +36,28 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Terms"></Label>
-                    <TextField [text]="customer.TermsCode + ': ' + userTermsCode" class="enabled" hint="Terms" isEnabled="false"></TextField>
+                    <TextField [text]="_saleOrder.TermsCode + ': ' + userTermsCode" class="enabled" hint="Terms" isEnabled="false"></TextField>
                 </DockLayout>
             </StackLayout>
             <StackLayout row="0" col="1">
                 <DockLayout horizontalAlignment="left">
-                    <TextField [text]="customer.CustomerName" class="enabled" hint="371 FURNITURE" isEnabled="false"></TextField>
+                    <TextField [text]="_saleOrder.CustomerName" class="enabled" hint="371 FURNITURE" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Customer PO"></Label>
-                    <TextField [(ngModel)]="CustomerPONo"></TextField>
+                    <TextField [(ngModel)]="_saleOrder.CustomerPONo"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Confirm To"></Label>
-                    <TextField [(ngModel)]="CustomerConfirmTo"></TextField>
+                    <TextField [(ngModel)]="_saleOrder.CustomerConfirmTo"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="FOB"></Label>
-                    <TextField [(ngModel)]="CustomerFBO"></TextField>
+                    <TextField [(ngModel)]="_saleOrder.CustomerFBO"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Comment"></Label>
-                    <TextField [(ngModel)]="Comment"></TextField>
+                    <TextField [(ngModel)]="_saleOrder.Comment"></TextField>
                 </DockLayout>
             </StackLayout>
         </GridLayout>
@@ -70,23 +70,23 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Name"></Label>
-                    <TextField [text]="customer.CustomerName" class="enabled" hint="Name" isEnabled="false"></TextField>
+                    <TextField [text]="_saleOrder.CustomerName" class="enabled" hint="Name" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Address"></Label>
-                    <TextField [text]="customer.AddressLine1" class="enabled" hint="Address" isEnabled="false"></TextField>
+                    <TextField [text]="_saleOrder.BillToAddress1" class="enabled" hint="Address" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label></Label>
-                    <TextField [text]="customer.AddressLine2" class="enabled" isEnabled="false"></TextField>
+                    <TextField [text]="_saleOrder.BillToAddress2" class="enabled" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label></Label>
-                    <TextField [text]="customer.AddressLine3" class="enabled" isEnabled="false"></TextField>
+                    <TextField [text]="_saleOrder.BillToAddress3" class="enabled" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label></Label>
-                    <TextField [text]="customer.City + ', ' + customer.State + ' ' + customer.ZipCode" class="enabled" hint="City" isEnabled="false"></TextField>
+                    <TextField [text]="_saleOrder.BillToCity + ', ' + _saleOrder.BillToState + ' ' + _saleOrder.BillToZipCode" class="enabled" hint="City" isEnabled="false"></TextField>
                 </DockLayout>
             </StackLayout>
             <StackLayout row="0" col="1">
@@ -99,23 +99,23 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Name"></Label>
-                    <TextField class="enabled" [text]="customer.shippingAddress.ShipToName" isEnabled="false"></TextField>
+                    <TextField class="enabled" [text]="_saleOrder.ShipToName" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Address"></Label>
-                    <TextField class="enabled" [text]="customer.shippingAddress.ShipToAddress1" isEnabled="false"></TextField>
+                    <TextField class="enabled" [text]="_saleOrder.ShipToAddress1" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label></Label>
-                    <TextField class="enabled" [text]="customer.shippingAddress.ShipToAddress2" isEnabled="false"></TextField>
+                    <TextField class="enabled" [text]="_saleOrder.ShipToAddress2" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label></Label>
-                    <TextField class="enabled" [text]="customer.shippingAddress.ShipToAddress3" isEnabled="false"></TextField>
+                    <TextField class="enabled" [text]="_saleOrder.ShipToAddress3" isEnabled="false"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label></Label>
-                    <TextField [text]="customer.shippingAddress.ShipToCity + ', ' + customer.shippingAddress.ShipToState + ' ' + customer.shippingAddress.ShipToZipCode" class="enabled" hint="City" isEnabled="false"></TextField>
+                    <TextField [text]="_saleOrder.ShipToCity + ', ' + _saleOrder.ShipToState + ' ' + _saleOrder.ShipToZipCode" class="enabled" hint="City" isEnabled="false"></TextField>
                 </DockLayout>   
                 <DockLayout>
                     <Label text="Ship Via"></Label>
@@ -317,7 +317,7 @@
                         <Label text="Extension" horizontalAlignment="left"></Label>
                     </StackLayout>
                 </GridLayout>
-                <ListView [items]="cart" class="list-group">
+                <ListView [items]="_saleOrder.Detail" class="list-group">
                     <ng-template let-item="item">
                         <GridLayout borderRadius="8" class="" columns="100, *, 120" rows="100" (tap)="setSelectedCartProduct(item)" [class.highlight]="item.ItemCode == selectedCartProduct.ItemCode">
                             <StackLayout col="0" verticalAlignment="center" paddingRight="20%">

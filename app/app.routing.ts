@@ -23,7 +23,7 @@ const routes: Routes = [
     { path: "customerTransaction", component: CustomerTransactionComponent},
     { path: "saleOrder/:CustomerNo/:IsQuote", component: SaleOrderComponent},
     { path: "customerInquiry", component: CustomerInquiryComponent},
-    { path: "sync", component: SyncComponent},
+    { path: "sync", component: SyncComponent}
 ];
 
 @NgModule({
