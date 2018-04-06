@@ -9,6 +9,7 @@ import { SERVER } from "../../config/server.config";
 import { BarcodeScanner } from 'nativescript-barcodescanner';
 import { DropDownModule } from "nativescript-drop-down/angular";
 import { CONSTANTS } from "../../config/constants.config";
+import { ImageService } from "../../services/image.service";
 
 //import para descarga de imagenes http
 /*
@@ -67,7 +68,8 @@ export class ItemInquiryComponent implements OnInit{
 
     constructor(private _couchbaseService: CouchbaseService, 
         private _productService: ProductService, 
-        private barcodeScanner: BarcodeScanner){
+        private barcodeScanner: BarcodeScanner,
+        private _imageService: ImageService){
         this.selectedProduct = {
             ItemCode: "",
             ItemCodeDesc: "",
@@ -192,7 +194,13 @@ export class ItemInquiryComponent implements OnInit{
     }
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-
+    public getImages(){
+        this.productList.map(async product => {
+            if(product.ImageFile != null){        
+                this._imageService.getImage(product.ItemCode); 
+            }
+        });
+    }
     
 }
 

@@ -30,6 +30,7 @@ import { TermsCodeService } from "./services/terms.service";
 import { UserService } from "./services/user.service";
 import { DeviceService } from "./services/device.service";
 import { ShippingAddressService } from "./services/shippingAddress.service";
+import { ImageService } from "./services/image.service";
 
 @NgModule({
     bootstrap: [
@@ -70,7 +71,8 @@ import { ShippingAddressService } from "./services/shippingAddress.service";
         TermsCodeService,
         ShippingAddressService,
         UserService,
-        DeviceService
+        DeviceService,
+        ImageService
     ],
     schemas: [
         NO_ERRORS_SCHEMA
