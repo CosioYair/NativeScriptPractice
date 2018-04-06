@@ -49,15 +49,6 @@ export class CustomerTransactionComponent implements OnInit{
     }
 
     public getCustomers(){
-        this._customerService.getCustomers()
-        .subscribe(result => {
-            this.data[this._docId] = result["Customer"];
-            this._couchbaseService.createDocument(this.data, this._docId);
-            this._customers = result["Customer"];
-            this.customerList = new ObservableArray<Customer>(this._customers);
-        }, (error) => {
-            alert(error);
-        });
     }
 
     public setDocument(){

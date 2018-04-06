@@ -11,7 +11,6 @@ import { BarcodeScanner } from 'nativescript-barcodescanner';
 //Components
 import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
-import { SyncComponent } from "./components/Sync/sync.component";
 import { SendDataComponent } from "./components/sendData/sendData.component";
 import { CustomerTransactionComponent } from "./components/customer/customer-transaction.component";
 import { SaleOrderComponent } from "./components/transaction/sale-order.component";
@@ -32,6 +31,7 @@ import { DeviceService } from "./services/device.service";
 import { ShippingAddressService } from "./services/shippingAddress.service";
 import { SaleOrderService } from "./services/saleOrder.service";
 import { FoliosTransactionService } from "./services/foliosTransaction.service";
+import { SyncComponent } from "./components/Sync/sync.component";
 
 @NgModule({
     bootstrap: [
@@ -53,14 +53,14 @@ import { FoliosTransactionService } from "./services/foliosTransaction.service";
         LoginComponent,
         HomeComponent,
         ItemInquiryComponent,
-        SyncComponent,
         SendDataComponent,
         ReviewTransactionComponent,
         CustomerTransactionComponent,
         SaleOrderComponent,
         ModalDateComponent,
         ModalProductOrderComponent,
-        CustomerInquiryComponent
+        CustomerInquiryComponent,
+        SyncComponent
     ],
     providers: [
         CouchbaseService,

@@ -3,6 +3,7 @@ import { Observable as RxObservable } from "rxjs/Observable";
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/do";
+import 'rxjs/add/operator/toPromise';
 import { SERVER } from '../config/server.config';
 import { CouchbaseService } from './couchbase.service';
 import { CONSTANTS } from '../config/constants.config';
@@ -16,14 +17,15 @@ export class InventoryService {
 
     }
 
-    public getInventories(){
+    private getInventories(){
         return this._http.get(`${SERVER.baseUrl}/Inventory`)
-        .map(res => res);
+        .map(res => res).toPromise();
     }
 
-    public setInventoriesDoc(){
-        this.getInventories()
-        .subscribe(result => {
+    public async setInventoriesDoc(){
+        this._couchbaseService.deleteDocument("inventory");
+        return await this.getInventories()
+        .then(result => {
             this.filterInventories(result["Product"]);
         }, (error) => {
             alert(error);

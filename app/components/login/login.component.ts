@@ -33,9 +33,12 @@ export class LoginComponent implements OnInit {
             this._user = this._userService.getUser(this.userId);
             if(this._user != null){
                 if(this._user.UserPassword == this.userPassword){
-                    this._router.navigate(["/home"]);
                     this.userId = "";
                     this.userPassword = "";
+                    if(this._couchbaseService.getDocument("product") == null)
+                        this._router.navigate(["/sync"]);
+                    else
+                        this._router.navigate(["/home"]);
                     SERVER.user = this._user;
                 }
                 else
