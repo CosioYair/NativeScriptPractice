@@ -12,6 +12,8 @@ import * as http from "http";
 import { SERVER } from '../config/server.config';
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 
+import { DownloadProgress } from "nativescript-download-progress"
+
 @Injectable()
 export class ImageService {
 
@@ -24,5 +26,20 @@ export class ImageService {
         }, function (e) {
             //// Argument (e) is Error!
         });
+    }
+
+    public async downloadProgress(url: string){
+        var data: string;
+        var filePath = fs.path.join(fs.knownFolders.documents().path, "Images.json");
+        var download = new DownloadProgress();
+        await download.addProgressCallback((progress)=>{
+            console.log('Progress:', progress);
+        })
+        download.downloadFile(url,filePath).then((f)=>{
+            console.log("Success", f.path);
+
+        }).catch((e)=>{
+            console.log("Error", e);
+        })
     }
 }
