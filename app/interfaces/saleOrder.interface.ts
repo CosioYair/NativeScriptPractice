@@ -7,6 +7,7 @@ export interface SaleOrder {
     CustomerFBO: string,
     SalesOrderNO: string,
     DeviceUid: string,
+    ShipMethod: string,
     BillToName: string,
     BillToAddress1: string,
     BillToAddress2: string,

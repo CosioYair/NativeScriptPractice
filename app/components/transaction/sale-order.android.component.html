@@ -27,8 +27,12 @@
                     <TextField hint="Ship Date" [(ngModel)]="dates.shipDate" (tap)="showDateModal('shipDate')"></TextField>
                 </DockLayout>
                 <DockLayout>
+                    <Label text="Ship Method"></Label>
+                    <DropDown [items]="shipMethods" (ngModelChange)="setShipMethod()" [(ngModel)]="shipMethod" colSpan="2"></DropDown>
+                </DockLayout>
+                <DockLayout>
                     <Label text="Warehouse"></Label>
-                    <DropDown [items]="warehouses" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2"></DropDown>    
+                    <DropDown [items]="warehouses" [class.enabled]="shipMethod == 1" [isEnabled]="shipMethod != 1" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2"></DropDown>    
                 </DockLayout>
                 <DockLayout>
                     <Label text="Terms"></Label>

@@ -70,6 +70,8 @@ export class SaleOrderComponent implements OnInit{
     public CustomerConfirmTo:string;
     public CustomerFBO:string;
     public Comment:string;
+    public shipMethods:any = ["Dilevey", "Pickup"];
+    public shipMethod:number = 0;
     @ViewChild('Qty') Qty: ElementRef;
 
     constructor(private _productService: ProductService, 
@@ -142,10 +144,6 @@ export class SaleOrderComponent implements OnInit{
         await this.setDocument();
         await this.refreshSaleOrder();
         this.warehouses = await GLOBALFUNCTIONS.getWarehouses();
-        if(!SERVER.isQuote)
-            console.log(JSON.stringify(this._saleOrderService.getUserSaleOrderUnsaved()));
-        else
-            console.log(JSON.stringify(this._saleOrderService.getUserQuoteUnsaved()));
     }
 
     private validateShippingAddress(){
@@ -465,6 +463,7 @@ export class SaleOrderComponent implements OnInit{
             CustomerFBO: this.CustomerFBO,
             SalesOrderNO: "",
             DeviceUid: platformModule.device.uuid,
+            ShipMethod: this.shipMethods[this.shipMethod],
             BillToName: this.customer.CustomerName,
             BillToAddress1: this.customer.AddressLine1,
             BillToAddress2: this.customer.AddressLine2,
@@ -498,7 +497,8 @@ export class SaleOrderComponent implements OnInit{
     private validations(){
         let messages = "";
         messages += this.validateProducts();
-        messages += this.validateAddress();
+        if(this.shipMethod == 0)
+            messages += this.validateAddress();
         
         return messages == "" ? "OK" : messages;
     }    
@@ -520,5 +520,13 @@ export class SaleOrderComponent implements OnInit{
             product.quantity = parseInt(product.quantity);
         });
         this.refreshSaleOrder();
+    }
+
+    public setShipMethod(){
+        setTimeout(() => {
+            if(this.shipMethod == 1)
+                this.warehouse = 0;
+            this.refreshSaleOrder();
+        }, 500);
     }
  }
