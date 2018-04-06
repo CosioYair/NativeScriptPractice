@@ -5,7 +5,7 @@ import { AppComponent } from "./app.component";
 import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
 import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.component";
-import { SyncComponent } from "./components/Sync/sync.component";
+import { SyncComponent } from "./components/sync/sync.component";
 import { SendDataComponent } from "./components/sendData/sendData.component";
 import { ReviewTransactionComponent } from "./components/reviewTransaction/reviewTransaction.component";
 import { CustomerTransactionComponent } from "./components/customer/customer-transaction.component";

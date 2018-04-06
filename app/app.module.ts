@@ -11,7 +11,7 @@ import { BarcodeScanner } from 'nativescript-barcodescanner';
 //Components
 import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
-import { SyncComponent } from "./components/Sync/sync.component";
+import { SyncComponent } from "./components/sync/sync.component";
 import { SendDataComponent } from "./components/sendData/sendData.component";
 import { CustomerTransactionComponent } from "./components/customer/customer-transaction.component";
 import { SaleOrderComponent } from "./components/transaction/sale-order.component";
