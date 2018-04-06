@@ -104,27 +104,12 @@ export class ItemInquiryComponent implements OnInit{
     }
 
     public getProducts(){
-        this._productService.getProducts()
-        .subscribe(result => {
-            this.data[this._docId] = result["Product"];
-            this._couchbaseService.createDocument(this.data, this._docId);
-            this._products = result["Product"];
-            this.productList = new ObservableArray<Product>(this._products);
-
-        }, (error) => {
-            alert(error);
-        });
-
     }
 
     public setDocument(){
         let doc = this._couchbaseService.getDocument(this._docId);
-        if(doc == null)
-            this.getProducts();
-        else {
-            this._products = doc[this._docId];
-            this.productList = new ObservableArray<Product>(this._products);
-        }
+        this._products = doc[this._docId];
+        this.productList = new ObservableArray<Product>(this._products);
     }
 
     public onTextChanged(args) {

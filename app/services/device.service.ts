@@ -38,6 +38,7 @@ export class DeviceService{
     }
     
     public setDeviceDocument(){
+        this._couchbaseService.deleteDocument("device");
         this.registerDevice()
         .subscribe(result => {
             this._doc[this._docId] = result;

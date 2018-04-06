@@ -3,6 +3,7 @@ import { Observable as RxObservable } from "rxjs/Observable";
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/do";
+import 'rxjs/add/operator/toPromise';
 
 import * as imageSource from "tns-core-modules/image-source";
 import * as fs from "tns-core-modules/file-system";
@@ -24,7 +25,7 @@ export class ProductService{
 
     public getProducts(){
         return this._http.get(`${SERVER.baseUrl}/Product?InactiveItem=N`)
-        .map(res => res);
+        .map(res => res).toPromise();
     }
 
     public getImages(parameters: string){
@@ -45,9 +46,10 @@ export class ProductService{
             return filePath;
     }
 
-    public setProductDocument(){
-        this.getProducts()
-        .subscribe(result => {
+    public async setProductDocument(){
+        this._couchbaseService.deleteDocument("product");
+        return await this.getProducts()
+        .then(result => {
             this._doc[this._docId] = result["Product"];
             this._couchbaseService.createDocument(this._doc, this._docId);
             this._products = result["Product"];

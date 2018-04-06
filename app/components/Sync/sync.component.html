@@ -5,13 +5,13 @@
             <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
         </StackLayout>
         <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
-            <Button text="&#xf021; Refresh" verticalAlignment="center" (tap)="refresh()"></Button>
+            <Button *ngIf = "refreshButton" text="&#xf021; Refresh" verticalAlignment="center" (tap)="refresh()"></Button>
             <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
         </StackLayout>
     </GridLayout>
 </ActionBar>
 
-<StackLayout>
+<StackLayout *ngIf="syncScreen">
     <DockLayout padding="10%" paddingTop="0%">
         <StackLayout padding="10%" width="50%">
                         
@@ -20,7 +20,7 @@
                     <ng-template let-item="item" let-i="index">
                         <StackLayout >
                             <Label [text]="item.name" class="list-group-item-heading" fontSize="20"></Label>
-                            <Switch checked="true" color="orangered" (checkedChange)="switch(item.id)"></Switch>
+                            <Switch checked="true" color="orangered" (checkedChange)="switch(i)"></Switch>
                         </StackLayout>
                     </ng-template>
                 </ListView>
@@ -33,4 +33,10 @@
             <Label [text]="dateUpdated" fontSize="20" horizontalAlignment="center" color="black"></Label>
         </StackLayout>
     </DockLayout>
+</StackLayout>
+
+<StackLayout *ngIf="loadingScreen" verticalAlign="center" horizontalAlign="center" width="50%" >
+        <Label paddingTop="200%" [text]="status" fontSize="30"  textAlignment="center" ></Label>
+        <Progress [value]="progressValue" (valueChanged)="onValueChanged($event)" maxValue="100" class="m-20" color="orangered"></Progress>
+        <Button [nsRouterLink]="['/home']" *ngIf="button" text="Accept" width="50%"></Button>
 </StackLayout>

@@ -3,6 +3,7 @@ import { Observable as RxObservable } from "rxjs/Observable";
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/do";
+import 'rxjs/add/operator/toPromise';
 import { SERVER } from '../config/server.config';
 import { ShippingAddress } from '../interfaces/shippingAddress.interface';
 import { ObservableArray } from 'tns-core-modules/data/observable-array/observable-array';
@@ -19,12 +20,13 @@ export class ShippingAddressService {
 
     public getShippingAddress(){
         return this._http.get(`${SERVER.baseUrl}/Customer/ShippingAddress`)
-        .map(res => res);
+        .map(res => res).toPromise();
     }
 
-    public setShippingAddressDoc(){
-        this.getShippingAddress()
-        .subscribe(result => {
+    public async setShippingAddressDoc(){
+        this._couchbaseService.deleteDocument("shippingaddress");
+        return await this.getShippingAddress()
+        .then(result => {
             this.filterCustomerShippingAddress(result);
         }, (error) => {
             alert(error);
