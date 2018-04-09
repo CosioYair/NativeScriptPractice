@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit, AfterContentChecked, DoCheck } from "@angular/core";
 import { Border } from "tns-core-modules/ui/border";
 import { Customer } from "../../interfaces/customer.interface";
 import { SearchBar } from "ui/search-bar";
@@ -17,14 +17,14 @@ import { Router } from "@angular/router";
     styleUrls: ["./customer-transaction.css"]
 })
 
-export class CustomerTransactionComponent implements OnInit{
-    private _customers:any;
-    private _docId:string = "customer";
+export class CustomerTransactionComponent implements OnInit {
+    private _customers: any;
+    private _docId: string = "customer";
     public customerList: ObservableArray<Customer> = new ObservableArray<Customer>();
     public data = {};
-    public selectedCustomer:any = {};
+    public selectedCustomer: any = {};
 
-    constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService, private _saleOrderService: SaleOrderService, private _router: Router){
+    constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService, private _saleOrderService: SaleOrderService, private _router: Router) {
         this.selectedCustomer = {
             CustomerNo: "Select a customer to view details",
             AddressLine1: "",
@@ -47,15 +47,14 @@ export class CustomerTransactionComponent implements OnInit{
 
     ngOnInit() {
         this.setDocument();
-        SERVER.editTransaction.edit = false;
     }
 
-    public getCustomers(){
+    public getCustomers() {
     }
 
-    public setDocument(){
+    public setDocument() {
         let doc = this._couchbaseService.getDocument(this._docId);
-        if(doc == null)
+        if (doc == null)
             this.getCustomers();
         else {
             this._customers = doc[this._docId];
@@ -67,9 +66,9 @@ export class CustomerTransactionComponent implements OnInit{
         let searchBar = <SearchBar>args.object;
         let searchValue = searchBar.text.toLowerCase();
 
-        if(searchValue.length > 0){
+        if (searchValue.length > 0) {
             this.customerList = new ObservableArray<Customer>();
-            this._customers.map( (customer, index) => {
+            this._customers.map((customer, index) => {
                 if (this._customers[index].CustomerName.toLowerCase().indexOf(searchValue) !== -1)
                     this.customerList.push(this._customers[index]);
             });
@@ -86,19 +85,19 @@ export class CustomerTransactionComponent implements OnInit{
         });
     }
 
-    public setSelectedCustomer(customer:Customer){
+    public setSelectedCustomer(customer: Customer) {
         this.selectedCustomer = customer;
     }
 
-    public createTransaction(){
+    public createTransaction() {
         dialogs.alert("Your message").then(result => {
             console.log("Dialog result: " + result);
         });
     }
 
-    public editTransaction(){
-        this._router.navigate(['/saleOrder', this.selectedCustomer.CustomerNo, true]);
+    public editTransaction() {
         SERVER.editTransaction.edit = true;
         SERVER.editTransaction.transactionNo = "e362c6S-000003";
+        this._router.navigate(['/saleOrder', this.selectedCustomer.CustomerNo, true]);
     }
- }
+}

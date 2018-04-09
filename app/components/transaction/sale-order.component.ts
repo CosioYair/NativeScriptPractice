@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, ElementRef, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewContainerRef, ElementRef, ViewChild, OnDestroy } from "@angular/core";
 import { Border } from "tns-core-modules/ui/border";
 import { CouchbaseService } from "../../services/couchbase.service";
 import { ModalDialogOptions, ModalDialogService } from "nativescript-angular/modal-dialog";
@@ -37,7 +37,7 @@ import { FoliosTransactionService } from "../../services/foliosTransaction.servi
     styleUrls: ["./sale-order.css"]
 })
 
-export class SaleOrderComponent implements OnInit {
+export class SaleOrderComponent implements OnInit, OnDestroy {
     public productList: any;
     private _products: any;
     public selectedProduct: any = {};
@@ -63,7 +63,7 @@ export class SaleOrderComponent implements OnInit {
     public shippingAddressList: any = [];
     private _customerShippingAddress: any;
     public totalCubes: number = 0;
-    private _saleOrder: SaleOrder;
+    public _saleOrder: SaleOrder;
     public shipMethods: any = ["Dilevey", "Pickup"];
     public shipMethod: number = 0;
     @ViewChild('Qty') Qty: ElementRef;
@@ -111,10 +111,15 @@ export class SaleOrderComponent implements OnInit {
             segmentedBarItem.title = tab.title;
             this.tabs.push(segmentedBarItem);
         });
+        //this.onInit();
+    }
+
+    ngOnDestroy(){
+        SERVER.editTransaction.edit = false;
     }
 
     async ngOnInit() {
-        if (SERVER.editTransaction)
+        if (SERVER.editTransaction.edit)
             alert("edit");
         SERVER.isQuote = JSON.parse(this.route.snapshot.params["IsQuote"]);
         await this.getCustomer(this.route.snapshot.params["CustomerNo"]);
@@ -123,7 +128,7 @@ export class SaleOrderComponent implements OnInit {
         await this.setTermsCode();
         await this.setDocument();
         this.warehouses = await GLOBALFUNCTIONS.getWarehouses();
-        if (SERVER.editTransaction) {
+        if (!SERVER.editTransaction.edit) {
             await this.refreshSaleOrder();
             this._saleOrder.ShipDate = `${this._saleOrder.ShipDate.getDate() + 1}/${this._saleOrder.ShipDate.getMonth() + 1}/${this._saleOrder.ShipDate.getFullYear()}`;
             this._saleOrder.OrderDate = `${this._saleOrder.OrderDate.getDate()}/${this._saleOrder.OrderDate.getMonth()}/${this._saleOrder.OrderDate.getFullYear()}`;
@@ -133,18 +138,20 @@ export class SaleOrderComponent implements OnInit {
         }
     }
 
-    public getTransaction(){
-        if(SERVER.isQuote){
+    public getTransaction() {
+        if (!SERVER.isQuote) {
+            console.log(JSON.stringify(this._saleOrderService.getUserQuoteSaved()));
             this._saleOrderService.getUserQuoteUnsaved().map(quote => {
-                if(quote.SalesOrderNO = SERVER.editTransaction.transactionNo)
+                if (quote.SalesOrderNO = SERVER.editTransaction.transactionNo)
                     this._saleOrder = quote;
-            });   
+            });
         }
         else {
+            console.log(JSON.stringify(this._saleOrderService.getUserSaleOrderSaved()));
             this._saleOrderService.getUserSaleOrderUnsaved().map(sale => {
-                if(sale.SalesOrderNO = SERVER.editTransaction.transactionNo)
+                if (sale.SalesOrderNO = SERVER.editTransaction.transactionNo)
                     this._saleOrder = sale;
-            });  
+            });
         }
     }
 
@@ -446,7 +453,6 @@ export class SaleOrderComponent implements OnInit {
             this._saleOrder.SalesOrderNO = await this.saveFoliosTransaction();
             await this._saleOrderService.updateSaleOrderDoc(this._saleOrder);
             console.log(JSON.stringify(this._saleOrder));
-            SERVER.editTransaction.edit = false;
             this._router.back();
         }
         else

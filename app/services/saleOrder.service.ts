@@ -38,10 +38,12 @@ export class SaleOrderService {
     }
 
     public getItems(itemSearch, itemBool, savedBool){
-        let itemDoc = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
+        let itemDoc = this._couchbaseService.getDocument("saleorder");
+        let transactions = {};
+        let items = [];
         if(itemDoc == null)
             return [];
-        let items = [];
+        transactions = itemDoc["saleorder"][SERVER.user["UserCode"]];
         itemDoc.map(item => {
             if(item[itemSearch] == itemBool && item.Saved == savedBool)
                 items.push(item);
