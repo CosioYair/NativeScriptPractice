@@ -10,79 +10,90 @@ import { CouchbaseService } from './couchbase.service';
 export class SaleOrderService {
     private _saleOrderDoc = {};
 
-    constructor(private _http: HttpClient, private _couchbaseService: CouchbaseService){
+    constructor(private _http: HttpClient, private _couchbaseService: CouchbaseService) {
 
     }
 
-    public updateSaleOrderDoc(saleOrder?){
+    public updateSaleOrderDoc(saleOrder?) {
         let doc = this._couchbaseService.getDocument("saleorder");
-        if(doc == null){
+        let existingTransaction = -1;
+        if (doc == null)
             this._saleOrderDoc["saleorder"] = {};
-            this._couchbaseService.createDocument(this._saleOrderDoc, "saleorder");
-        }
-        else
+        else{
             this._saleOrderDoc = doc;
-            
-        if(saleOrder != null){
-            if(this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]] == null)
-            this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]] = [saleOrder];
-            else
-                this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]].push(saleOrder);
-            this._couchbaseService.updateDocument("saleorder", this._saleOrderDoc);
+            existingTransaction = this.validateExistingTransaction(saleOrder);
         }
+
+        if (saleOrder != null) {
+            console.log(existingTransaction);
+            if (existingTransaction == -1) {
+                if (this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]] == null)
+                    this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]] = [saleOrder];
+                else
+                    this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]].push(saleOrder);
+            }
+            else
+                this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]][existingTransaction] = saleOrder;
+        }
+        this._couchbaseService.createDocument(this._saleOrderDoc, "saleorder");
     }
 
-    public getUnsavedUserTransactions(){
+    public getUnsavedUserTransactions() {
         let userTransactions = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
         let unsavedTransactions = [];
-        if(userTransactions == null)
+        if (userTransactions == null)
             return [];
         userTransactions.map(transaction => {
-            if(!transaction.Status)
+            if (!transaction.Status)
                 unsavedTransactions.push(transaction)
         });
         return unsavedTransactions.reverse();
     }
 
-    public getSavedUserTransactions(){
+    public getSavedUserTransactions() {
         let userTransactions = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
         let savedTransactions = [];
-        if(userTransactions == null)
+        if (userTransactions == null)
             return [];
         userTransactions.map(transaction => {
-            if(transaction.Status)
+            if (transaction.Status)
                 savedTransactions.push(transaction)
         });
         return savedTransactions.reverse();
     }
 
-    public getItems(itemSearch, itemBool, savedBool){
+    public getItems(itemSearch, itemBool, savedBool) {
         let itemDoc = this._couchbaseService.getDocument("saleorder");
         let transactions = [];
         let items = [];
-        if(itemDoc == null)
+        if (itemDoc == null)
             return [];
         transactions = itemDoc["saleorder"][SERVER.user["UserCode"]];
         transactions.map(item => {
-            if(item[itemSearch] == itemBool && item.Saved == savedBool)
+            if (item[itemSearch] == itemBool && item.Saved == savedBool)
                 items.push(item);
         });
         return itemDoc == undefined ? [] : items.reverse();
     }
 
-    public getUserSaleOrderSaved(){
+    private validateExistingTransaction(userTransaction) {
+        let transactions = this.getUnsavedUserTransactions();
+        return transactions.findIndex(transaction => transaction.SalesOrderNO == userTransaction.SalesOrderNO);
+    }
+
+    public getUserSaleOrderSaved() {
         return this.getItems("IsQuote", false, true);
     }
 
-    public getUserSaleOrderUnsaved(){
+    public getUserSaleOrderUnsaved() {
         return this.getItems("IsQuote", false, false);
     }
 
-    public getUserQuoteSaved(){
+    public getUserQuoteSaved() {
         return this.getItems("IsQuote", true, true);
     }
 
-    public getUserQuoteUnsaved(){
+    public getUserQuoteUnsaved() {
         return this.getItems("IsQuote", true, false);
     }
 }

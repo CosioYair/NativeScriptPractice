@@ -23,17 +23,15 @@ export class ReviewTransactionComponent {
     public userTransaction: number = 0;
 
     constructor(private _router: Router, private _saleOrderService: SaleOrderService) {
-        this._sales = _saleOrderService.getUserSaleOrderUnsaved();
-        this._quotes = _saleOrderService.getUserQuoteUnsaved();
+        this._sales = this._saleOrderService.getUserSaleOrderUnsaved();
+        this._quotes = this._saleOrderService.getUserQuoteUnsaved();
         this.transactionList = this._sales.slice();
-        this.userTransactions = ["Sales order", "Quotes"];
         this.selectedTransaction = this.transactionList[0];
     }
 
-    public setUserTransaction() {
-        setTimeout(() => {
-            this.resetList();
-        }, 500);
+    public setUserTransaction(transaction) {
+        this.userTransaction = transaction;
+        this.resetList();
     }
 
     public onTextChanged(args) {
@@ -55,7 +53,7 @@ export class ReviewTransactionComponent {
         this.resetList();
     }
 
-    public resetList(){
+    public resetList() {
         if (this.userTransaction == 0)
             this.transactionList = this._sales.slice();
         else

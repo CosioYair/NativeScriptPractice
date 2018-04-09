@@ -153,7 +153,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
                 }
             });
         }
-        this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByCode(this._saleOrder.WarehouseCode)["name"]); this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByCode(this._saleOrder.WarehouseCode)["name"]);
+        this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByName(this._saleOrder.WarehouseCode)["name"]); 
         this.shipMethod = this._saleOrder.ShipMethod == "Delivery" ? 0 : 1;
         this.calculateCart();
     }
@@ -242,7 +242,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             this.cancel();
             this.inventoryList = this._inventoryService.getInventoryWarehouse(this.warehouses[this.warehouse].code);
-            this._saleOrder.WarehouseCode = this.warehouses[this.warehouse].code;
+            this._saleOrder.WarehouseCode = this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByName(this._saleOrder.WarehouseCode)["name"]);;
         }, 500);
     }
 
@@ -463,10 +463,10 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         let messages = this.validations();
         if (messages == "OK") {
             await this.setLineProduct();
-            this._saleOrder.SalesOrderNO = await this.saveFoliosTransaction();
+            this._saleOrder.SalesOrderNO = this._saleOrder.SalesOrderNO == "" ? await this.saveFoliosTransaction() : this._saleOrder.SalesOrderNO;
             await this._saleOrderService.updateSaleOrderDoc(this._saleOrder);
             console.log(JSON.stringify(this._saleOrder));
-            this._router.back();
+            this._router.navigate(["/home"], { clearHistory: true });
         }
         else
             alert(messages);
