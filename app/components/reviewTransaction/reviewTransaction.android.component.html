@@ -1,5 +1,5 @@
 <ActionBar title="Mobile Sales Automation" class="action-bar">
-    <GridLayout columns="*,*" rows="auto, *" >
+    <GridLayout columns="*,*" rows="auto, *">
         <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
             <Image src="~/assets/images/logo.png"></Image>
             <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
@@ -19,7 +19,7 @@
             <GridLayout class="" columns="*" rows="*" backgroundColor="white">
                 <ListView [items]="transactionList" class="list-group">
                     <ng-template let-item="item">
-                        <StackLayout class="item list-group-item">
+                        <StackLayout class="item list-group-item" (tap)="setSelectedTransaction(item)" [class.highlight]="item.SalesOrderNO == selectedTransaction.SalesOrderNO">
                             <DockLayout>
                                 <StackLayout>
                                     <Label [text]="item.SalesOrderNO" class="list-group-item-heading"></Label>
@@ -32,17 +32,35 @@
             </GridLayout>
         </StackLayout>
         <StackLayout padding="20%" width="50%">
-            <StackLayout backgroundColor="orange">
-                <LABEL text="ITEMS" fontSize="20" horizontalAlignment="center" color="white"></LABEL>
-            </StackLayout>
+            <GridLayout color="white" backgroundColor="gray" borderRadius="8" class="" columns="100, *, 120" rows="60">
+                <StackLayout col="0" verticalAlignment="center">
+                    <Label text="Quantity"></Label>
+                </StackLayout>
+                <StackLayout col="1" verticalAlignment="center">
+                    <Label text="Item"></Label>
+                </StackLayout>
+                <StackLayout col="2" verticalAlignment="center">
+                    <Label text="Unit Price" horizontalAlignment="left"></Label>
+                    <Label text="Extension" horizontalAlignment="left"></Label>
+                </StackLayout>
+            </GridLayout>
             <GridLayout class="" columns="*" rows="*" backgroundColor="white">
-                <ListView [items]="customerList" class="list-group">
+                <ListView [items]="selectedTransaction.Detail" class="list-group">
                     <ng-template let-item="item">
-                        <StackLayout class="item list-group-item">
-                                <Label [text]="item.CustomerName" class="list-group-item-heading"></Label>
-                                <Label [text]="item.CustomerNo" class="list-group-item-heading"></Label>
-                                <Label [text]="item.City + ' ' + item.State + ' ' + item.ZipCode" class="list-group-item-heading"></Label>
-                        </StackLayout>
+                        <GridLayout borderRadius="8" class="" columns="100, *, 120" rows="100">
+                            <StackLayout col="0" verticalAlignment="center" paddingRight="20%">
+                                <Label width="100%" class="textRight" [text]="item.quantity" horizontalAlignment="right"></Label>
+                                <Label width="100%" class="totals-subtitle textRight" text="EACH" horizontalAlignment="right"></Label>
+                            </StackLayout>
+                            <StackLayout col="1" verticalAlignment="center">
+                                <Label [text]="item.ItemCodeDesc" horizontalAlignment="left" paddingRight="20%"></Label>
+                                <Label class="totals-subtitle" [text]="item.ItemCode" horizontalAlignment="left"></Label>
+                            </StackLayout>
+                            <StackLayout col="2" verticalAlignment="center" paddingRight="20%">
+                                <Label width="100%" class="textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
+                                <Label width="100%" class="totals-subtitle textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
+                            </StackLayout>
+                        </GridLayout>
                     </ng-template>
                 </ListView>
             </GridLayout>

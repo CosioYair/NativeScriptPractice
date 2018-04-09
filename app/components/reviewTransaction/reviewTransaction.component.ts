@@ -5,6 +5,7 @@ import { SaleOrder } from "../../interfaces/saleOrder.interface";
 import { SaleOrderService } from "../../services/saleOrder.service";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { SearchBar } from "tns-core-modules/ui/search-bar/search-bar";
+import { DecimalPipe } from '@angular/common';
 
 @Component({
     selector: "ns-reviewTransaction",
@@ -14,7 +15,7 @@ import { SearchBar } from "tns-core-modules/ui/search-bar/search-bar";
 
 export class ReviewTransactionComponent {
 
-    public selectedSaleOrder: SaleOrder;
+    public selectedTransaction: any;
     private _sales: SaleOrder[];
     private _quotes: SaleOrder[];
     public transactionList: any;
@@ -24,17 +25,15 @@ export class ReviewTransactionComponent {
     constructor(private _router: Router, private _saleOrderService: SaleOrderService) {
         this._sales = _saleOrderService.getUserSaleOrderUnsaved();
         this._quotes = _saleOrderService.getUserQuoteUnsaved();
-        this.transactionList = new ObservableArray<SaleOrder>(this._sales);
+        this.transactionList = this._sales.slice();
         this.userTransactions = ["Sales order", "Quotes"];
-
+        this.selectedTransaction = this.transactionList[0];
+        console.log(typeof(this.selectedTransaction));
     }
 
     public setUserTransaction() {
         setTimeout(() => {
-            if (this.userTransaction == 0)
-                this.transactionList = new ObservableArray<SaleOrder>(this._sales);
-            else
-                this.transactionList = new ObservableArray<SaleOrder>(this._quotes);
+            this.resetList();
         }, 500);
     }
 
@@ -43,14 +42,12 @@ export class ReviewTransactionComponent {
         let searchValue = searchBar.text.toLowerCase();
         let listSearch = [];
 
+        this.resetList();
         if (searchValue.length > 0) {
-            this.resetList();
             listSearch = this.searchInList(this.transactionList.slice(), searchValue);
-            this.transactionList = new ObservableArray<SaleOrder>();
-            this.transactionList = new ObservableArray<SaleOrder>(listSearch);
+            this.transactionList = [];
+            this.transactionList = listSearch.slice();
         }
-        else
-            this.resetList();
     }
 
     public onClear(args) {
@@ -61,9 +58,11 @@ export class ReviewTransactionComponent {
 
     public resetList(){
         if (this.userTransaction == 0)
-            this.transactionList = new ObservableArray<SaleOrder>(this._sales);
+            this.transactionList = this._sales.slice();
         else
-            this.transactionList = new ObservableArray<SaleOrder>(this._quotes);
+            this.transactionList = this._quotes.slice();
+
+        this.selectedTransaction = this.transactionList[0];
     }
 
     public searchInList(list, searchValue) {
@@ -75,9 +74,14 @@ export class ReviewTransactionComponent {
         return results;
     }
 
+    public setSelectedTransaction(transaction: SaleOrder) {
+        this.selectedTransaction = transaction;
+    }
+
+
     public editTransaction() {
         SERVER.editTransaction.edit = true;
         SERVER.editTransaction.transactionNo = "3b2471S-000002";
-        this._router.navigate(['/saleOrder', this.selectedSaleOrder.CustomerNo, true]);
+        this._router.navigate(['/saleOrder', this.selectedTransaction.CustomerNo, true]);
     }
 }
