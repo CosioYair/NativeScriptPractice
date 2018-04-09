@@ -12,7 +12,10 @@
 <StackLayout>
     <DockLayout>
         <StackLayout padding="20%" width="50%">
-            <SearchBar hint="Search" (textChange)="onTextChanged($event)" textFieldBackgroundColor="white"></SearchBar>
+            <DockLayout paddingBottom="5%">
+                <SearchBar hint="Search" (textChange)="onTextChanged($event)" textFieldBackgroundColor="white"></SearchBar>
+                <DropDown [items]="userTransactions" (ngModelChange)="setUserTransaction()" [(ngModel)]="userTransaction"></DropDown>
+            </DockLayout>
             <GridLayout class="" columns="*" rows="*" backgroundColor="white">
                 <ListView [items]="transactionList" class="list-group">
                     <ng-template let-item="item">
