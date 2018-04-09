@@ -11,7 +11,7 @@
     </GridLayout>
 </ActionBar>
 
-<StackLayout *ngIf="syncScreen">
+<StackLayout *ngIf="syncScreen" backgroundColor="white">
     <DockLayout padding="10%" paddingTop="0%">
         <StackLayout padding="10%" width="50%">
                         
@@ -35,7 +35,7 @@
     </DockLayout>
 </StackLayout>
 
-<StackLayout *ngIf="loadingScreen" verticalAlign="center" horizontalAlign="center" width="50%" >
+<StackLayout *ngIf="loadingScreen" verticalAlign="center" horizontalAlign="center" width="50%" backgroundColor="white">
         <Label paddingTop="200%" [text]="status" fontSize="30"  textAlignment="center" ></Label>
         <Progress [value]="progressValue" (valueChanged)="onValueChanged($event)" maxValue="100" class="m-20" color="orangered"></Progress>
         <Button [nsRouterLink]="['/home']" *ngIf="button" text="Accept" width="50%"></Button>
