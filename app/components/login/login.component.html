@@ -32,7 +32,7 @@
                 </DockLayout>
                 <DockLayout paddingTop="20%">
                     <Label text="Password:" color="orangered" width="40%"></Label>
-                    <TextField [(ngModel)]="userPassword" type="password" hint="Password" secure="true"></TextField>
+                    <TextField [(ngModel)]="userPassword" type="password" hint="Password" secure="true" maxLength="50"></TextField>
                 </DockLayout>
             </StackLayout>
             <Button text="Login" (tap)="login()"></Button>
