@@ -1,5 +1,4 @@
 .home-options Button{
-    height: 150px;
     font-weight: bold;
 }
 
@@ -9,4 +8,5 @@
 
 .buttonStyle {
     text-align: left;
+    height: 10%;
 }
