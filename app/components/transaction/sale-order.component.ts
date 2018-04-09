@@ -64,7 +64,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     private _customerShippingAddress: any;
     public totalCubes: number = 0;
     public _saleOrder: SaleOrder;
-    public shipMethods: any = ["Dilevey", "Pickup"];
+    public shipMethods: any = ["Dilevery", "Pickup"];
     public shipMethod: number = 0;
     @ViewChild('Qty') Qty: ElementRef;
 
@@ -113,7 +113,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy(){
+    ngOnDestroy() {
         SERVER.editTransaction.edit = false;
     }
 
@@ -124,7 +124,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         await this.setInventory();
         await this.setTermsCode();
         await this.setDocument();
-        this.warehouses = await GLOBALFUNCTIONS.getWarehouses();
+        this.warehouses = GLOBALFUNCTIONS.getWarehouses();
         await this.refreshSaleOrder();
         if (!SERVER.editTransaction.edit) {
             this._saleOrder.ShipDate = `${this._saleOrder.ShipDate.getDate() + 1}/${this._saleOrder.ShipDate.getMonth() + 1}/${this._saleOrder.ShipDate.getFullYear()}`;
@@ -139,7 +139,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         console.log(SERVER.isQuote)
         if (SERVER.isQuote) {
             this._saleOrderService.getUserQuoteUnsaved().map(quote => {
-                if (quote.SalesOrderNO == SERVER.editTransaction.transactionNo){
+                if (quote.SalesOrderNO == SERVER.editTransaction.transactionNo) {
                     console.log(JSON.stringify(quote));
                     this._saleOrder = quote;
                 }
@@ -147,13 +147,23 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         }
         else {
             this._saleOrderService.getUserSaleOrderUnsaved().map(sale => {
-                if (sale.SalesOrderNO == SERVER.editTransaction.transactionNo){
+                if (sale.SalesOrderNO == SERVER.editTransaction.transactionNo) {
                     console.log(JSON.stringify(sale));
                     this._saleOrder = sale;
                 }
             });
         }
-        console.log(SERVER.isQuote)
+        this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByCode(this._saleOrder.WarehouseCode)["name"]); this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByCode(this._saleOrder.WarehouseCode)["name"]);
+        this.shipMethod = this._saleOrder.ShipMethod == "Delivery" ? 0 : 1;
+        this.calculateCart();
+    }
+
+    public calculateCart() {
+        this._saleOrder.Detail.map(product => {
+            this.totalCartAmount += product.quantityPrice;
+            this.cartQuantity += parseInt(product.quantity);
+            this.totalCubes += product.Category4 * product.quantity;
+        });
     }
 
     public onSelectedIndexChange(args) {
@@ -217,6 +227,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
             this._saleOrder.ShipToAddress2 = this._customerShippingAddress[args.newIndex].ShipToAddress2;
             this._saleOrder.ShipToAddress3 = this._customerShippingAddress[args.newIndex].ShipToAddress3;
             this._saleOrder.ShipToCountryCode = this._customerShippingAddress[args.newIndex].ShipToCountryCode;
+            this._saleOrder.ShipTo = args.newIndex;
         }, 500);
     }
 
@@ -230,7 +241,8 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     public filterInventoryWarehouse() {
         setTimeout(() => {
             this.cancel();
-            this.inventoryList = this._inventoryService.getInventoryWarehouse(this.warehouse);
+            this.inventoryList = this._inventoryService.getInventoryWarehouse(this.warehouses[this.warehouse].code);
+            this._saleOrder.WarehouseCode = this.warehouses[this.warehouse].code;
         }, 500);
     }
 
@@ -486,6 +498,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
             BillToZipCode: this.customer.ZipCode,
             ShipVia: "",
             WarehouseCode: this.warehouses[this.warehouse].code,
+            ShipTo: 0,
             ShipToCity: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToCity,
             ShipToState: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToState,
             ShipToZipCode: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToZipCode,

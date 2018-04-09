@@ -32,7 +32,7 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Warehouse"></Label>
-                    <DropDown [items]="warehouses" [class.enabled]="shipMethod == 1" [isEnabled]="shipMethod != 1" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2"></DropDown>    
+                    <DropDown [items]="warehouses" [class.enabled]="_saleOrder.ShipMethod == 'Pickup'" [isEnabled]="_saleOrder.ShipMethod != 'Pickup'" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2"></DropDown>    
                 </DockLayout>
                 <DockLayout>
                     <Label text="Terms"></Label>
@@ -95,7 +95,7 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Ship To"></Label>
-                    <DropDown [items]="shippingAddressList" selectedIndex="0" (selectedIndexChanged)="setCustomerShippingAddress($event)" colSpan="2"></DropDown> 
+                    <DropDown [items]="shippingAddressList" [selectedIndex]="_saleOrder.ShipTo" (selectedIndexChanged)="setCustomerShippingAddress($event)" colSpan="2"></DropDown> 
                 </DockLayout>
                 <DockLayout>
                     <Label text="Name"></Label>

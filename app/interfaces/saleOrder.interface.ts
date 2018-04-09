@@ -19,6 +19,7 @@ export interface SaleOrder {
     BillToZipCode: string,
     ShipVia: string,
     WarehouseCode: string,
+    ShipTo: number,
     ShipToCity: string,
     ShipToState: string,
     ShipToZipCode: string,

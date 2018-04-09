@@ -2,7 +2,8 @@ import { SERVER } from "./server.config";
 import { CONSTANTS } from "./constants.config";
 
 export const GLOBALFUNCTIONS = {
-    getWarehouses: getWarehouses
+    getWarehouses: getWarehouses,
+    getWarehouseByCode: getWarehouseByCode
 };
 
 function getWarehouses(){
@@ -19,4 +20,13 @@ function getWarehouses(){
         });
     }
     return warehousesFilter;
+}
+
+function getWarehouseByCode(code){
+    let warehouseSearch = {};
+    CONSTANTS.warehouses.map(warehouse => {
+        if(warehouse.code == code)
+            warehouseSearch = warehouse;
+    });
+    return warehouseSearch;
 }
