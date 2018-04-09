@@ -111,7 +111,6 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
             segmentedBarItem.title = tab.title;
             this.tabs.push(segmentedBarItem);
         });
-        //this.onInit();
     }
 
     ngOnDestroy(){
@@ -119,8 +118,6 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     }
 
     async ngOnInit() {
-        if (SERVER.editTransaction.edit)
-            alert("edit");
         SERVER.isQuote = JSON.parse(this.route.snapshot.params["IsQuote"]);
         await this.getCustomer(this.route.snapshot.params["CustomerNo"]);
         await this.setShippingAddress();
@@ -139,19 +136,24 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     }
 
     public getTransaction() {
+        console.log(SERVER.isQuote)
         if (SERVER.isQuote) {
-            console.log(JSON.stringify(this._saleOrderService.getUserQuoteSaved()));
-            this._saleOrderService.getUserSaleOrderUnsaved().map(quote => {
-                if (quote.SalesOrderNO = SERVER.editTransaction.transactionNo)
+            this._saleOrderService.getUserQuoteUnsaved().map(quote => {
+                if (quote.SalesOrderNO == SERVER.editTransaction.transactionNo){
+                    console.log(JSON.stringify(quote));
                     this._saleOrder = quote;
+                }
             });
         }
         else {
             this._saleOrderService.getUserSaleOrderUnsaved().map(sale => {
-                if (sale.SalesOrderNO = SERVER.editTransaction.transactionNo)
+                if (sale.SalesOrderNO == SERVER.editTransaction.transactionNo){
+                    console.log(JSON.stringify(sale));
                     this._saleOrder = sale;
+                }
             });
         }
+        console.log(SERVER.isQuote)
     }
 
     public onSelectedIndexChange(args) {

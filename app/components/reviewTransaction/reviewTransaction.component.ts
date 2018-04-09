@@ -28,7 +28,6 @@ export class ReviewTransactionComponent {
         this.transactionList = this._sales.slice();
         this.userTransactions = ["Sales order", "Quotes"];
         this.selectedTransaction = this.transactionList[0];
-        console.log(typeof(this.selectedTransaction));
     }
 
     public setUserTransaction() {
@@ -81,7 +80,7 @@ export class ReviewTransactionComponent {
 
     public editTransaction() {
         SERVER.editTransaction.edit = true;
-        SERVER.editTransaction.transactionNo = "3b2471S-000002";
-        this._router.navigate(['/saleOrder', this.selectedTransaction.CustomerNo, true]);
+        SERVER.editTransaction.transactionNo = this.selectedTransaction.SalesOrderNO;
+        this._router.navigate(['/saleOrder', this.selectedTransaction.CustomerNo, this.selectedTransaction.IsQuote]);
     }
 }
