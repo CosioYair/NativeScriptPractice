@@ -21,13 +21,9 @@
                     <ng-template let-item="item">
                         <StackLayout class="item list-group-item">
                             <DockLayout>
-                                <StackLayout width="50%">
-                                    <Label text="321 Sleep INC" class="list-group-item-heading"></Label>
-                                    <Label text="" class="list-group-item-heading"></Label>
-                                </StackLayout>
                                 <StackLayout>
-                                    <Label text="321 Sleep INC" class="list-group-item-heading"></Label>
-                                    <Label text="item.CustomerNo" class="list-group-item-heading"></Label>
+                                    <Label [text]="item.SalesOrderNO" class="list-group-item-heading"></Label>
+                                    <Label [text]="item.CustomerName"></Label>
                                 </StackLayout>
                             </DockLayout>
                         </StackLayout>

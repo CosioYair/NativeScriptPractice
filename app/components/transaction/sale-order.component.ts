@@ -252,7 +252,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
 
     public onTextChanged(args) {
         let searchBar = <SearchBar>args.object;
-        let searchValue = searchBar.text.toLowerCase()
+        let searchValue = searchBar.text.toLowerCase();
         this.cancel();
 
         if (searchValue.length > 0) {
@@ -467,6 +467,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
             IsQuote: SERVER.isQuote,
             Saved: false,
             CustomerNo: this.customer.CustomerNo,
+            CustomerName: this.customer.CustomerName,
             CustomerPONo: "",
             CustomerConfirmTo: "",
             CustomerFBO: "",

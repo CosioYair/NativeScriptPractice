@@ -41,7 +41,7 @@ export class SaleOrderService {
             if(!transaction.Status)
                 unsavedTransactions.push(transaction)
         });
-        return unsavedTransactions;
+        return unsavedTransactions.reverse();
     }
 
     public getSavedUserTransactions(){
@@ -53,7 +53,7 @@ export class SaleOrderService {
             if(transaction.Status)
                 savedTransactions.push(transaction)
         });
-        return savedTransactions;
+        return savedTransactions.reverse();
     }
 
     public getItems(itemSearch, itemBool, savedBool){
@@ -67,7 +67,7 @@ export class SaleOrderService {
             if(item[itemSearch] == itemBool && item.Saved == savedBool)
                 items.push(item);
         });
-        return itemDoc == undefined ? [] : items;
+        return itemDoc == undefined ? [] : items.reverse();
     }
 
     public getUserSaleOrderSaved(){
