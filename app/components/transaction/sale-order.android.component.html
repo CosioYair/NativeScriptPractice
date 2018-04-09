@@ -10,7 +10,7 @@
         </StackLayout>
     </GridLayout>
 </ActionBar>
-<TabView selectedIndex="1" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton>
+<TabView selectedIndex="1" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton backgroundColor="white">
     <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
         <GridLayout class="tab-content" columns="*, *" rows="*">
             <StackLayout row="0" col="0">
@@ -28,7 +28,7 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Warehouse"></Label>
-                    <DropDown [items]="warehouses" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2"></DropDown>    
+                    <DropDown [items]="warehouses" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2" backgroundColor="white"></DropDown>    
                 </DockLayout>
                 <DockLayout>
                     <Label text="Ship Via"></Label>

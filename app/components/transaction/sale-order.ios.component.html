@@ -13,7 +13,7 @@
     </ActionItem>
 </ActionBar>
 
-<StackLayout sdkExampleTitle sdkToggleNavButton backgroundColor="white">
+<StackLayout sdkExampleTitle sdkToggleNavButton>
     <SegmentedBar color="black" selectedBackgroundColor="#A0A0A0" [items]="tabs" (selectedIndexChange)="onSelectedIndexChange($event)"></SegmentedBar>
     <GridLayout visibility="{{ selectionTabs[0].visibility ? 'visible' : 'collapsed' }}">
         <GridLayout class="tab-content" columns="*, *" rows="*">

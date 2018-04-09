@@ -7,12 +7,15 @@ import { CouchbaseService } from "../../services/couchbase.service";
 import { SetupItemViewArgs } from "nativescript-angular/directives";
 import { SERVER } from "../../config/server.config";
 import { BarcodeScanner } from 'nativescript-barcodescanner';
-import { DropDownModule } from "nativescript-drop-down/angular";
+import { InventoryService } from "../../services/inventory.service";
+import { Inventory } from "../../interfaces/inventory.interface";
 import { CONSTANTS } from "../../config/constants.config";
 import { ImageService } from "../../services/image.service";
 import * as imageSource from "tns-core-modules/image-source";
 import * as fs from "tns-core-modules/file-system";
-
+import { DropDownModule } from "nativescript-drop-down/angular";
+import { SelectedIndexChangedEventData } from "nativescript-drop-down";
+import { ValueList } from "nativescript-drop-down";
 //import para descarga de imagenes http
 /*
 import * as imageSource from "tns-core-modules/image-source";
@@ -64,14 +67,18 @@ export class ItemInquiryComponent implements OnInit {
     public isVisibleData: boolean = false;
     public isVisibleScanner: boolean = true;
 
-
-
+    //barcodeimp
+    public onHand: number = 0;
+    public onSOBO: number = 0;
+    public onPO: number = 0;
+    public available: number = 20;
 
 
     constructor(private _couchbaseService: CouchbaseService,
         private _productService: ProductService,
         private barcodeScanner: BarcodeScanner,
-        private _imageService: ImageService) {
+        private _imageService: ImageService,
+        private _inventoryService: InventoryService, ) {
         this.selectedProduct = {
             ItemCode: "",
             ItemCodeDesc: "",
@@ -105,6 +112,7 @@ export class ItemInquiryComponent implements OnInit {
 
     ngOnInit() {
         this.setDocument();
+        //this.setInventory();
     }
 
     public getProducts() {
@@ -196,7 +204,7 @@ export class ItemInquiryComponent implements OnInit {
     }
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    public getImages() {
+    /*public getImages() {
         /*this.productList.map(async product => {
             if (product.ImageFile != null) {
                 await this._imageService.getImage(product.ItemCode).then(res => {
@@ -206,8 +214,8 @@ export class ItemInquiryComponent implements OnInit {
                     const saved = img.saveToFile(path, "png");
                 });
             }
-        });*/
-    }
+        });
+    }*
     public listImage(){
         var i=0, cont= 0, contColl=0;
         var colletions = 0;
@@ -236,6 +244,14 @@ export class ItemInquiryComponent implements OnInit {
            st = file.readTextSync();
            console.log(file);
         }
+    }*/
+
+
+    /////////////////////////////////////
+    ////////////////////////////////////
+    public onchangeWarehouse(args: SelectedIndexChangedEventData) {
+        console.log(args.newIndex);
+        console.log(this.warehouse);
     }
 }
 
