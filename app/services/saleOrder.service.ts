@@ -32,19 +32,38 @@ export class SaleOrderService {
         }
     }
 
-    public getUserTransactions(){
-        let userSaleOrder = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
-        return userSaleOrder == undefined ? [] : userSaleOrder;
+    public getUnsavedUserTransactions(){
+        let userTransactions = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
+        let unsavedTransactions = [];
+        if(userTransactions == null)
+            return [];
+        userTransactions.map(transaction => {
+            if(!transaction.Status)
+                unsavedTransactions.push(transaction)
+        });
+        return unsavedTransactions;
+    }
+
+    public getSavedUserTransactions(){
+        let userTransactions = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
+        let savedTransactions = [];
+        if(userTransactions == null)
+            return [];
+        userTransactions.map(transaction => {
+            if(transaction.Status)
+                savedTransactions.push(transaction)
+        });
+        return savedTransactions;
     }
 
     public getItems(itemSearch, itemBool, savedBool){
         let itemDoc = this._couchbaseService.getDocument("saleorder");
-        let transactions = {};
+        let transactions = [];
         let items = [];
         if(itemDoc == null)
             return [];
         transactions = itemDoc["saleorder"][SERVER.user["UserCode"]];
-        itemDoc.map(item => {
+        transactions.map(item => {
             if(item[itemSearch] == itemBool && item.Saved == savedBool)
                 items.push(item);
         });

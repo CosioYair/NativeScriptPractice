@@ -1,4 +1,9 @@
 import { Component } from "@angular/core";
+import { SERVER } from "../../config/server.config";
+import { Router } from "@angular/router";
+import { SaleOrder } from "../../interfaces/saleOrder.interface";
+import { SaleOrderService } from "../../services/saleOrder.service";
+import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 
 @Component({
     selector: "ns-reviewTransaction",
@@ -6,6 +11,22 @@ import { Component } from "@angular/core";
     templateUrl: "./reviewTransaction.component.html",
 })
 
-export class ReviewTransactionComponent{
-    
+export class ReviewTransactionComponent {
+
+    public selectedSaleOrder: SaleOrder;
+    private _sales: SaleOrder[];
+    private _quotes: SaleOrder[];
+    public transactionList: any;
+
+    constructor(private _router: Router, private _saleOrderService: SaleOrderService) {
+        this._sales = _saleOrderService.getUserSaleOrderUnsaved();
+        this._quotes = _saleOrderService.getUserQuoteUnsaved();
+        this.transactionList = new ObservableArray<SaleOrder>(this._sales)
+    }
+
+    public editTransaction() {
+        SERVER.editTransaction.edit = true;
+        SERVER.editTransaction.transactionNo = "3b2471S-000002";
+        this._router.navigate(['/saleOrder', this.selectedSaleOrder.CustomerNo, true]);
+    }
 }

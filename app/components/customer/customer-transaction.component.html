@@ -77,7 +77,7 @@
                     -->
                 </StackLayout>
                 <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%" row="2" colSpan="2" orientation="horizontal" horizontalAlignment="center">
-                    <Button (tap)="editTransaction()" class="option-button" text="Quote"></Button>
+                    <Button [nsRouterLink]="['/saleOrder', selectedCustomer.CustomerNo, true]" class="option-button" text="Quote"></Button>
                     <Button [nsRouterLink]="['/saleOrder', selectedCustomer.CustomerNo, false]" class="option-button" text="Sales Order"></Button>
                 </StackLayout>
             </GridLayout>

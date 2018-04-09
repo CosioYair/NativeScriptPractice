@@ -94,10 +94,4 @@ export class CustomerTransactionComponent implements OnInit {
             console.log("Dialog result: " + result);
         });
     }
-
-    public editTransaction() {
-        SERVER.editTransaction.edit = true;
-        SERVER.editTransaction.transactionNo = "e362c6S-000003";
-        this._router.navigate(['/saleOrder', this.selectedCustomer.CustomerNo, true]);
-    }
 }

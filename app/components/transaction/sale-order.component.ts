@@ -128,26 +128,25 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         await this.setTermsCode();
         await this.setDocument();
         this.warehouses = await GLOBALFUNCTIONS.getWarehouses();
+        await this.refreshSaleOrder();
         if (!SERVER.editTransaction.edit) {
-            await this.refreshSaleOrder();
             this._saleOrder.ShipDate = `${this._saleOrder.ShipDate.getDate() + 1}/${this._saleOrder.ShipDate.getMonth() + 1}/${this._saleOrder.ShipDate.getFullYear()}`;
             this._saleOrder.OrderDate = `${this._saleOrder.OrderDate.getDate()}/${this._saleOrder.OrderDate.getMonth()}/${this._saleOrder.OrderDate.getFullYear()}`;
         }
         else {
-            this.getTransaction();
+            await this.getTransaction();
         }
     }
 
     public getTransaction() {
-        if (!SERVER.isQuote) {
+        if (SERVER.isQuote) {
             console.log(JSON.stringify(this._saleOrderService.getUserQuoteSaved()));
-            this._saleOrderService.getUserQuoteUnsaved().map(quote => {
+            this._saleOrderService.getUserSaleOrderUnsaved().map(quote => {
                 if (quote.SalesOrderNO = SERVER.editTransaction.transactionNo)
                     this._saleOrder = quote;
             });
         }
         else {
-            console.log(JSON.stringify(this._saleOrderService.getUserSaleOrderSaved()));
             this._saleOrderService.getUserSaleOrderUnsaved().map(sale => {
                 if (sale.SalesOrderNO = SERVER.editTransaction.transactionNo)
                     this._saleOrder = sale;
