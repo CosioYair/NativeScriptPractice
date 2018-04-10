@@ -10,7 +10,7 @@ import { ReviewTransactionComponent } from "./components/reviewTransaction/revie
 import { CustomerTransactionComponent } from "./components/customer/customer-transaction.component";
 import { SaleOrderComponent } from "./components/transaction/sale-order.component";
 import { CustomerInquiryComponent } from "./components/customer/customer-inquiry.component";
-import { SyncComponent } from "./components/Sync/sync.component";
+import { SyncComponent } from "./components/sync/sync.component";
 
 const routes: Routes = [
     { path: "", redirectTo: "/login", pathMatch: "full" },

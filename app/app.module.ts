@@ -31,7 +31,7 @@ import { DeviceService } from "./services/device.service";
 import { ShippingAddressService } from "./services/shippingAddress.service";
 import { SaleOrderService } from "./services/saleOrder.service";
 import { FoliosTransactionService } from "./services/foliosTransaction.service";
-import { SyncComponent } from "./components/Sync/sync.component";
+import { SyncComponent } from "./components/sync/sync.component";
 
 @NgModule({
     bootstrap: [
