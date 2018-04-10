@@ -11,26 +11,17 @@ import { SaleOrderService } from "../../services/saleOrder.service";
 
 export class SendDataComponent {
     public options: any;
-    public transactionList: any;
     public userTransaction: number = 0;
 
     constructor(private _saleOrderService: SaleOrderService) {
         this.options = [{
             name: "Sales order",
             list: this._saleOrderService.getUserSaleOrderUnsaved()
-        }, 
+        },
         {
             name: "Quotes",
             list: this._saleOrderService.getUserQuoteUnsaved()
         }];
-        this.resetList();
-    }
-
-    public resetList() {
-        if (this.userTransaction == 0)
-            this.transactionList = this.checkList(this.options[0]["list"]);
-        else
-            this.transactionList = this.checkList(this.options[1]["list"]);
     }
 
     public checkList(list) {
@@ -40,17 +31,18 @@ export class SendDataComponent {
             return list;
     }
 
-    public setTransactionList(index){
+    public setTransactionList(index) {
         this.userTransaction = index;
-        this.resetList();
+        this.options[0].list = this._saleOrderService.getUserSaleOrderUnsaved();
+        this.options[1].list = this._saleOrderService.getUserQuoteUnsaved();
     }
 
     public switch(transaction) {
         transaction.Sending = !transaction.Sending;
     }
 
-    public sendData(){
-        this.transactionList.map(transaction => {
+    public sendData() {
+        this.options[this.userTransaction].list.map(transaction => {
             console.log(transaction.Sending);
         });
     }

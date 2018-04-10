@@ -42,12 +42,26 @@
                     </DockLayout>
                 </StackLayout>
 
-                <GridLayout rows="*">
-                    <ListView [items]="transactionList" class="list-group">
+                <GridLayout *ngIf="userTransaction == 0" rows="*">
+                    <ListView [items]="options[0].list" class="list-group">
                         <ng-template let-item="item" let-i="index">
                             <StackLayout>
                                 <DockLayout>
-                                    <Switch width="10%" [checked]="item.Sending" color="" (checkedChange)="switch(item)"></Switch>
+                                    <Switch width="10%" checked="false" color="" (checkedChange)="switch(item)"></Switch>
+                                    <Label width="20%" [text]="item.IsQuote ? 'Quote' : 'Sale order'" class="list-group-item-heading" fontSize="20"></Label>
+                                    <Label width="25%" [text]="item.SalesOrderNO" class="list-group-item-heading" fontSize="20"></Label>
+                                    <Label width="45%" [text]="item.CustomerName" class="list-group-item-heading" fontSize="20"></Label>
+                                </DockLayout>
+                            </StackLayout>
+                        </ng-template>
+                    </ListView>
+                </GridLayout>
+                <GridLayout *ngIf="userTransaction == 1" rows="*">
+                    <ListView [items]="options[1].list" class="list-group">
+                        <ng-template let-item="item" let-i="index">
+                            <StackLayout>
+                                <DockLayout>
+                                    <Switch width="10%" checked="false" color="" (checkedChange)="switch(item)"></Switch>
                                     <Label width="20%" [text]="item.IsQuote ? 'Quote' : 'Sale order'" class="list-group-item-heading" fontSize="20"></Label>
                                     <Label width="25%" [text]="item.SalesOrderNO" class="list-group-item-heading" fontSize="20"></Label>
                                     <Label width="45%" [text]="item.CustomerName" class="list-group-item-heading" fontSize="20"></Label>
