@@ -19,7 +19,7 @@ export class SaleOrderService {
         let existingTransaction = -1;
         if (doc == null)
             this._saleOrderDoc["saleorder"] = {};
-        else {
+        else{
             this._saleOrderDoc = doc;
             existingTransaction = this.validateExistingTransaction(saleOrder);
         }
@@ -78,16 +78,7 @@ export class SaleOrderService {
 
     private validateExistingTransaction(userTransaction) {
         let transactions = userTransaction.IsQuote ? this.getUserQuoteUnsaved() : this.getUserSaleOrderUnsaved();
-        let indexTransaction = -1;
-        transactions.map((transaction, index) => {
-            if (transaction.SalesOrderNO == userTransaction.SalesOrderNO)
-                indexTransaction = index;
-            console.log(`Index trans: ${transaction.SalesOrderNO}`);
-            console.log(`Index userTrans: ${userTransaction.SalesOrderNO}`);
-            console.log("------");
-        });
-        console.log(`Index: ${indexTransaction}`);
-        return indexTransaction;
+        return transactions.findIndex(transaction => transaction.SalesOrderNO === userTransaction.SalesOrderNO);
     }
 
     public getUserSaleOrderSaved() {
