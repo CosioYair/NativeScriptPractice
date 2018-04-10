@@ -32,6 +32,6 @@ export class HomeComponent{
             });
         });
 
-        this.avgAmount = this.totalAmount / this.unsetTransactions;
+        this.avgAmount = this.totalAmount == 0 ? 0 : (this.totalAmount / this.unsetTransactions);
     }
 }

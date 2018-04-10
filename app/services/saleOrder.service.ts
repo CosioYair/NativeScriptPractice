@@ -39,11 +39,11 @@ export class SaleOrderService {
     }
 
     public getUnsavedUserTransactions() {
-        let userTransactions = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
+        let userTransactions = this._couchbaseService.getDocument("saleorder");
         let unsavedTransactions = [];
         if (userTransactions == null)
             return [];
-        userTransactions.map(transaction => {
+        userTransactions["saleorder"][SERVER.user["UserCode"]].map(transaction => {
             if (!transaction.Status)
                 unsavedTransactions.push(transaction)
         });
@@ -51,11 +51,11 @@ export class SaleOrderService {
     }
 
     public getSavedUserTransactions() {
-        let userTransactions = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
+        let userTransactions = this._couchbaseService.getDocument("saleorder");
         let savedTransactions = [];
         if (userTransactions == null)
             return [];
-        userTransactions.map(transaction => {
+        userTransactions["saleorder"][SERVER.user["UserCode"]].map(transaction => {
             if (transaction.Status)
                 savedTransactions.push(transaction)
         });
