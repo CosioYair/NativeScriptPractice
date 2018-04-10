@@ -62,7 +62,7 @@ export class ProductService{
         let productList = [];
         let doc = this._couchbaseService.getDocument("product")["product"];
         await doc.map(product => {
-            if(product.ProductType == "F")
+            if(product.ProductType == "F" && product.StandardUnitPrice > 5)
                 productList.push(product);
         });
         return productList;

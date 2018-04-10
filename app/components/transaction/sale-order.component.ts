@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef } from "@angular/core";
+import { Component, OnInit, ViewContainerRef, ElementRef, ViewChild, OnDestroy } from "@angular/core";
 import { Border } from "tns-core-modules/ui/border";
 import { CouchbaseService } from "../../services/couchbase.service";
 import { ModalDialogOptions, ModalDialogService } from "nativescript-angular/modal-dialog";
@@ -22,6 +22,13 @@ import { TermsCode } from "../../interfaces/termsCode.interface";
 import { ShippingAddress } from "../../interfaces/shippingAddress.interface";
 import { ShippingAddressService } from "../../services/shippingAddress.service";
 import { SelectedIndexChangedEventData } from "tns-core-modules/ui/tab-view/tab-view";
+import { SaleOrderService } from "../../services/saleOrder.service";
+import { SaleOrder } from "../../interfaces/saleOrder.interface";
+import { SERVER } from "../../config/server.config";
+import * as platformModule from "tns-core-modules/platform";
+import { RouterExtensions } from "nativescript-angular/router";
+import { GLOBALFUNCTIONS } from "../../config/globalFunctions.config";
+import { FoliosTransactionService } from "../../services/foliosTransaction.service";
 
 @Component({
     selector: "ns-sale-order",
@@ -30,60 +37,53 @@ import { SelectedIndexChangedEventData } from "tns-core-modules/ui/tab-view/tab-
     styleUrls: ["./sale-order.css"]
 })
 
-export class SaleOrderComponent implements OnInit{
-    public productList:any;
-    private _products:any;
-    public selectedProduct:any = {};
-    public selectedCartProduct:any = {};
-    public dates:any;
-    public warehouses:any = [];
-    public warehouse:number = 0;
-    public shipVias:any;
-    public shipVia:number = 0;
-    public lineTitle:string = "Item Details";
-    public lineSubTitle:string = "Select an item to view details and add";
-    public showingProduct:Boolean = false;
-    public itemCode:string = "";
-    public cart:any = [];
-    public productQuantity:number = 1;
+export class SaleOrderComponent implements OnInit, OnDestroy {
+    public productList: any;
+    private _products: any;
+    public selectedProduct: any = {};
+    public selectedCartProduct: any = {};
+    public warehouses: any = [];
+    public warehouse: number = 0;
+    public shipVias: any;
+    public shipVia: number = 0;
+    public lineTitle: string = "Item Details";
+    public lineSubTitle: string = "Select an item to view details and add";
+    public showingProduct: Boolean = false;
+    public itemCode: string = "";
+    public productQuantity: number = 1;
     private orientation = require('nativescript-orientation');
     public tabs: Array<SegmentedBarItem>;
-    public selectionTabs:any;
+    public selectionTabs: any;
     public selectedIndex = 0;
-    public customer:Customer;
+    public customer: Customer;
     public inventoryList: ObservableArray<Inventory> = new ObservableArray<Inventory>();
-    public totalCartAmount:number = 0;
-    public cartQuantity:number = 0;
-    public userTermsCode:string;
-    public shippingAddressList:any = [];
+    public totalCartAmount: number = 0;
+    public cartQuantity: number = 0;
+    public userTermsCode: string;
+    public shippingAddressList: any = [];
     private _customerShippingAddress: any;
-    public totalCubes:number = 0;
-    /*
-    private _scanForceDoc = {};
-    private _scanForceList:ObservableArray<ScanForce> = new ObservableArray<ScanForce>();
-    */
+    public totalCubes: number = 0;
+    public _saleOrder: SaleOrder;
+    public shipMethods: any = ["Delivery", "Pickup"];
+    public shipMethod: number = 0;
+    @ViewChild('Qty') Qty: ElementRef;
 
-    constructor(private _productService: ProductService, 
-                private _inventoryService: InventoryService, 
-                private _couchbaseService: CouchbaseService, 
-                private modalService: ModalDialogService, 
-                private vcRef: ViewContainerRef, 
-                private barcodeScanner: BarcodeScanner, 
-                private route: ActivatedRoute,
-                private _termsCodeService: TermsCodeService,
-                private _shippingAddressService: ShippingAddressService,
-            ){
-        this.dates = [];
+    constructor(private _productService: ProductService,
+        private _inventoryService: InventoryService,
+        private _couchbaseService: CouchbaseService,
+        private modalService: ModalDialogService,
+        private vcRef: ViewContainerRef,
+        private barcodeScanner: BarcodeScanner,
+        private route: ActivatedRoute,
+        private _termsCodeService: TermsCodeService,
+        private _shippingAddressService: ShippingAddressService,
+        private _saleOrderService: SaleOrderService,
+        private _router: RouterExtensions,
+        private _foliosTransactionsService: FoliosTransactionService
+    ) {
         this.shipVias = [];
-        this.dates.shipDate = new Date();
-        this.dates.date = new Date();
-        this.dates.shipDate = `${this.dates.shipDate.getDate() + 1}/${this.dates.shipDate.getMonth() + 1}/${this.dates.shipDate.getFullYear()}`;
-        this.dates.date = `${this.dates.date.getDate()}/${this.dates.date.getMonth()}/${this.dates.date.getFullYear()}`;
         CONSTANTS.shipVias.map(shipVia => {
             this.shipVias.push(shipVia.name);
-        });
-        CONSTANTS.warehouses.map(warehouse => {
-            this.warehouses.push(warehouse.name);
         });
         this.selectedProduct.ItemCode = "";
         this.selectedProduct.comment = "";
@@ -113,117 +113,133 @@ export class SaleOrderComponent implements OnInit{
         });
     }
 
+    ngOnDestroy() {
+        SERVER.editTransaction.edit = false;
+    }
+
+    async ngOnInit() {
+        SERVER.isQuote = JSON.parse(this.route.snapshot.params["IsQuote"]);
+        await this.getCustomer(this.route.snapshot.params["CustomerNo"]);
+        await this.setShippingAddress();
+        await this.setInventory();
+        this.userTermsCode = await this._termsCodeService.getUserTermsCode(this.customer);
+        await this.setDocument();
+        this.warehouses = GLOBALFUNCTIONS.getWarehouses();
+        await this.refreshSaleOrder();
+        if (!SERVER.editTransaction.edit) {
+            this._saleOrder.ShipDate = `${this._saleOrder.ShipDate.getDate() + 1}/${this._saleOrder.ShipDate.getMonth() + 1}/${this._saleOrder.ShipDate.getFullYear()}`;
+            this._saleOrder.OrderDate = `${this._saleOrder.OrderDate.getDate()}/${this._saleOrder.OrderDate.getMonth()}/${this._saleOrder.OrderDate.getFullYear()}`;
+        }
+        else {
+            await this.getTransaction();
+        }
+    }
+
+    public getTransaction() {
+        console.log(SERVER.isQuote)
+        if (SERVER.isQuote) {
+            this._saleOrderService.getUserQuoteUnsaved().map(quote => {
+                if (quote.SalesOrderNO == SERVER.editTransaction.transactionNo) {
+                    this._saleOrder = quote;
+                }
+            });
+        }
+        else {
+            this._saleOrderService.getUserSaleOrderUnsaved().map(sale => {
+                if (sale.SalesOrderNO == SERVER.editTransaction.transactionNo) {
+                    this._saleOrder = sale;
+                }
+            });
+        }
+        this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByCode(this._saleOrder.WarehouseCode)["name"]);
+        this.shipVia = this.shipVias.findIndex(shipVia => shipVia === this._saleOrder.ShipVia)
+        this.shipMethod = this._saleOrder.ShipMethod == "Delivery" ? 0 : 1;
+        this.calculateCart();
+    }
+
+    public calculateCart() {
+        this._saleOrder.Detail.map(product => {
+            this.totalCartAmount += product.quantityPrice;
+            this.cartQuantity += parseInt(product.quantity);
+            this.totalCubes += product.Category4 * product.quantity;
+        });
+    }
+
     public onSelectedIndexChange(args) {
         let segmetedBar = <SegmentedBar>args.object;
         this.selectedIndex = segmetedBar.selectedIndex;
-        this.selectionTabs.map( (tab, index) => {
-            if(index == segmetedBar.selectedIndex)
+        this.selectionTabs.map((tab, index) => {
+            if (index == segmetedBar.selectedIndex)
                 tab.visibility = true;
             else
                 tab.visibility = false;
         });
     }
 
-    ngOnInit() {
-        this.getCustomer(this.route.snapshot.params["CustomerNo"]);
-        //this._couchbaseService.deleteDocument("inventory");
-        this.setInventory();
-        //this._couchbaseService.deleteDocument(this._docIdProduct);
-        //this.setTermsCode();
-        this.setShippingAddress();
-        //this._couchbaseService.deleteDocument("shippingaddress");
-        //this.setScanForce();
-        this.setDocument();
-        //this._couchbaseService.deleteDocument("product");
-    }
-
-    public async setDocument(){
-        if(this._couchbaseService.getDocument("product") == null)
-            this._productService.setProductDocument();
-
+    public async setDocument() {
         this._products = await this._productService.getProductDocument();
         this.productList = new ObservableArray<Product>(this._products);
     }
 
-    public getCustomer(CustomerNo:string){
+    public getCustomer(CustomerNo: string) {
         let doc = this._couchbaseService.getDocument("customer")["customer"];
         doc.map(customer => {
-            if (customer.CustomerNo  == CustomerNo)
+            if (customer.CustomerNo == CustomerNo)
                 this.customer = customer;
         });
     }
 
-    public setTermsCode(){
-        if(this._couchbaseService.getDocument("termscode") == null)
-            this._termsCodeService.setTermsCodeDoc();
-        this.userTermsCode = this._termsCodeService.getUserTermsCode(this.customer);
-    }
-
-    public async setShippingAddress(){
-        if(this._couchbaseService.getDocument("shippingaddress") == null)
-            this._shippingAddressService.setShippingAddressDoc();
-        this.shippingAddressList = await this._shippingAddressService.getCustomerShippingAddressList(this.customer);
+    public async setShippingAddress() {
         this._customerShippingAddress = await this._shippingAddressService.getCustomerShippingAddress(this.customer);
-        this.customer["shippingAddress"] = this._customerShippingAddress[0];
-    }
-
-    public setInventory(){
-        if(this._couchbaseService.getDocument("inventory") == null)
-            this._inventoryService.setInventoriesDoc();
-
-        this.inventoryList = this._inventoryService.getInventoryWarehouse(this.warehouse);
-    }
-
-    /*public setScanForce(){
-        let doc = this._couchbaseService.getDocument("scanforce");
-        if(doc == null)
-            this.getScanForce();
-        else{
-            this._scanForceDoc = doc;
-            this._scanForceList = this._scanForceDoc["scanforce"];
+        if (this._customerShippingAddress == null)
+            this.shippingAddressList = [];
+        else {
+            this.shippingAddressList = await this._shippingAddressService.getCustomerShippingAddressList(this.customer);
         }
-        this.getUserScanForce();
     }
 
-    public getScanForce(){
-        this._scanForceService.getScanForce()
-        .subscribe(result => {
-            this._scanForceDoc["scanforce"] = result["Users"];
-            this._couchbaseService.createDocument(this._termsCodeDoc, "scanforce");
-            this._scanForceList = result["Users"];
-        }, (error) => {
-            alert(error);
-        });
+    public setInventory() {
+        let warehouseCode = GLOBALFUNCTIONS.getWarehouseByName(this.warehouses[this.warehouse])["code"];
+        this.inventoryList = this._inventoryService.getInventoryWarehouse(warehouseCode);
     }
 
-    public getUserScanForce(){
-        let scanForceUser = {};
-        this._scanForceList.map(user =>{
-            if(user.UserCode == userCode)
-                scanForceUser = user;
-        });
-    }*/
-
-    public setCustomerShippingAddress(args:SelectedIndexChangedEventData){
+    public setCustomerShippingAddress(args: SelectedIndexChangedEventData) {
         setTimeout(() => {
-            this.customer["shippingAddress"] = this._customerShippingAddress[args.newIndex];
+            this._saleOrder.ShipToCity = this._customerShippingAddress[args.newIndex].ShipToCity;
+            this._saleOrder.ShipToState = this._customerShippingAddress[args.newIndex].ShipToState;
+            this._saleOrder.ShipToZipCode = this._customerShippingAddress[args.newIndex].ShipToZipCode;
+            this._saleOrder.ShipToName = this._customerShippingAddress[args.newIndex].ShipToName;
+            this._saleOrder.ShipToAddress1 = this._customerShippingAddress[args.newIndex].ShipToAddress1;
+            this._saleOrder.ShipToAddress2 = this._customerShippingAddress[args.newIndex].ShipToAddress2;
+            this._saleOrder.ShipToAddress3 = this._customerShippingAddress[args.newIndex].ShipToAddress3;
+            this._saleOrder.ShipToCountryCode = this._customerShippingAddress[args.newIndex].ShipToCountryCode;
+            this._saleOrder.ShipTo = args.newIndex;
         }, 500);
     }
 
-    public filterInventoryWarehouse(){
+    public setCustomerShipVia(args: SelectedIndexChangedEventData) {
+        setTimeout(() => {
+            this.shipVia = args.newIndex;
+            this._saleOrder.ShipVia = this.shipVias[this.shipVia]
+        }, 500);
+    }
+
+    public filterInventoryWarehouse() {
         setTimeout(() => {
             this.cancel();
-            this.inventoryList = this._inventoryService.getInventoryWarehouse(this.warehouse);
+            this.inventoryList = this._inventoryService.getInventoryWarehouse(GLOBALFUNCTIONS.getWarehouseByName(this.warehouses[this.warehouse])["code"]);
+            this._saleOrder.WarehouseCode = GLOBALFUNCTIONS.getWarehouseByName(this.warehouses[this.warehouse])["code"];
         }, 500);
     }
 
-    public showDateModal(input:string) {
+    public showDateModal(input: string) {
         this.createModelView().then(result => {
-            if(result != null)
-                this.dates[input] = result;
+            if (result != null) {
+                this._saleOrder[input] = result;
+            }
         }).catch(error => alert(error));
     }
-    
+
     private createModelView(): Promise<any> {
         const today = new Date();
         const options: ModalDialogOptions = {
@@ -236,12 +252,12 @@ export class SaleOrderComponent implements OnInit{
 
     public onTextChanged(args) {
         let searchBar = <SearchBar>args.object;
-        let searchValue = searchBar.text.toLowerCase()
+        let searchValue = searchBar.text.toLowerCase();
         this.cancel();
 
-        if(searchValue.length > 0){
+        if (searchValue.length > 0) {
             this.productList = new ObservableArray<Product>();
-            this._products.map( (product, index) => {
+            this._products.map((product, index) => {
                 if (this._products[index].ItemCode.toLowerCase().indexOf(searchValue) !== -1)
                     this.productList.push(this._products[index]);
             });
@@ -255,15 +271,15 @@ export class SaleOrderComponent implements OnInit{
         this.productList = new ObservableArray<Product>(this._products);
     }
 
-    public cancel(){
+    public cancel() {
         this.showingProduct = false;
         this.selectedProduct = {};
-        this.lineTitle =  "Item Details";
+        this.lineTitle = "Item Details";
         this.lineSubTitle = "Select an item to view details and add";
         this.productQuantity = 1;
     }
 
-    public viewProduct(product:Product){
+    public viewProduct(product: Product) {
         this.selectedProduct = product;
         this.showingProduct = true;
         this.lineTitle = product.ItemCodeDesc;
@@ -272,57 +288,73 @@ export class SaleOrderComponent implements OnInit{
         this.getInventoryQuantit();
     }
 
-    private searchItemCode(code:string, list:any){
+    private searchItemCode(code: string, list: any) {
         let item = false;
-        list.map( (product, index) => {
-            if(list[index].ItemCode.toLowerCase() == code.toLowerCase()){
+        list.map((product, index) => {
+            if (list[index].ItemCode.toLowerCase() == code.toLowerCase()) {
                 item = product;
-                this.selectedProduct = this._products[index]; 
+                this.selectedProduct = this._products[index];
             }
         });
         return item;
     }
 
-    public validateProductList(){
-        if(this.searchItemCode(this.itemCode, this._products) == false)
+    public validateProductList() {
+        if (this.searchItemCode(this.itemCode, this._products) == false)
             alert(`Invalid item code. ${this.itemCode} does not exist.`);
         else
             this.viewProduct(this.selectedProduct);
     }
 
-    public addProduct(){
-        let product = this.searchItemCode(this.itemCode, this.cart);
-        if(product == false){
-            this.selectedProduct.quantity = this.productQuantity;
-            this.selectedProduct.quantityPrice = this.selectedProduct.quantity * parseFloat(this.selectedProduct.StandardUnitPrice);
-            this.cart.push(this.selectedProduct);
-            this.totalCartAmount += this.selectedProduct.quantityPrice;
-            this.cartQuantity = this.cartQuantity + parseInt(this.selectedProduct.quantity);
-            this.totalCubes += this.selectedProduct.Category4 * this.selectedProduct.quantity;
-            alert(`Item ${this.itemCode} added to cart.`);
-        }
-        else{
-            this.selectedCartProduct = product;
-            this.showProductOrderModal();
-        }
-        this.cancel();
+    public validateIntegerNumber(number) {
+        if (number != parseInt(number, 10) || number < 1)
+            return false;
+        return true;
     }
 
-    public showCart(){
-        console.log(JSON.stringify(this.cart));
+    public addProduct() {
+        let product = this.searchItemCode(this.itemCode, this._saleOrder.Detail);
+        if (this.validateIntegerNumber(this.productQuantity)) {
+            if (product == false) {
+                this.selectedProduct.quantity = this.productQuantity;
+                this.selectedProduct.quantityPrice = this.selectedProduct.quantity * parseFloat(this.selectedProduct.StandardUnitPrice);
+                this._saleOrder.Detail.push(this.selectedProduct);
+                this.totalCartAmount += this.selectedProduct.quantityPrice;
+                this.cartQuantity = this.cartQuantity + parseInt(this.selectedProduct.quantity);
+                this.totalCubes += this.selectedProduct.Category4 * this.selectedProduct.quantity;
+                alert(`Item ${this.itemCode} added to cart.`);
+            }
+            else {
+                this.selectedCartProduct = product;
+                this.showProductOrderModal();
+            }
+            this.cancel();
+        }
+        else {
+            alert("Invalid quantity");
+            this.Qty.nativeElement.focus();
+            setTimeout(() => {
+                this.Qty.nativeElement.android.selectAll();
+            }, 500);
+            this.Qty.nativeElement.ios.textRangeFromPositionToPosition(this.Qty.nativeElement.ios.beginningOfDocument, this.Qty.nativeElement.ios.endOfDocument);
+        }
     }
 
-    public setSelectedCartProduct(product:Product){
+    public showCart() {
+        console.log(JSON.stringify(this._saleOrder.Detail));
+    }
+
+    public setSelectedCartProduct(product: Product) {
         this.selectedCartProduct = product;
     }
 
-    public deleteCartProduct(){
-        this.cart.map( (product, index) => {
-            if(this.cart[index].ItemCode == this.selectedCartProduct.ItemCode){
+    public deleteCartProduct() {
+        this._saleOrder.Detail.map((product, index) => {
+            if (this._saleOrder.Detail[index].ItemCode == this.selectedCartProduct.ItemCode) {
                 this.totalCartAmount = this.totalCartAmount - parseFloat(this.selectedCartProduct.quantityPrice);
                 this.cartQuantity = this.cartQuantity - this.selectedCartProduct.quantity;
                 this.totalCubes -= this.selectedCartProduct.Category4 * this.selectedCartProduct.quantity;
-                this.cart.splice(index, 1);
+                this._saleOrder.Detail.splice(index, 1);
             }
         });
     }
@@ -330,28 +362,28 @@ export class SaleOrderComponent implements OnInit{
     public onScan() {
         this.barcodeScanner.scan({
             formats: "QR_CODE, EAN_13",
-            showFlipCameraButton: true,   
-            preferFrontCamera: false,     
-            showTorchButton: true,        
-            beepOnScan: true,             
-            torchOn: false,               
-            resultDisplayDuration: 500,   
-            orientation: "orientation",     
+            showFlipCameraButton: true,
+            preferFrontCamera: false,
+            showTorchButton: true,
+            beepOnScan: true,
+            torchOn: false,
+            resultDisplayDuration: 500,
+            orientation: "orientation",
             openSettingsIfPermissionWasPreviouslyDenied: true
         }).then((result) => {
-                this.itemCode = result.text;
-                this.validateProductList();
-            }, (errorMessage) => {
-                console.log("Error when scanning " + errorMessage);
-            }
+            this.itemCode = result.text;
+            this.validateProductList();
+        }, (errorMessage) => {
+            console.log("Error when scanning " + errorMessage);
+        }
         );
     }
 
-    public showProductOrderModal(){
-        if(this.selectedCartProduct.quantity != undefined){
+    public showProductOrderModal() {
+        if (this.selectedCartProduct.quantity != undefined) {
             let oldProductQuantity = parseInt(this.selectedCartProduct.quantity);
             this.createModelViewProductEdit().then(result => {
-                if(result != null && result.quantity > 0){
+                if (result != null && result.quantity > 0) {
                     this.cartQuantity = this.cartQuantity - oldProductQuantity;
                     this.totalCartAmount = this.totalCartAmount - this.selectedCartProduct.quantityPrice;
                     this.totalCubes -= this.selectedCartProduct.Category4 * oldProductQuantity;
@@ -365,12 +397,12 @@ export class SaleOrderComponent implements OnInit{
             }).catch(error => alert(error));
         }
     }
-    
+
     private createModelViewProductEdit(): Promise<any> {
-        if(this.selectedCartProduct.quantity != null){
+        if (this.selectedCartProduct.quantity != null) {
             const productDetails = {
                 selectedCartProduct: this.selectedCartProduct,
-                warehouse: CONSTANTS.warehouses[this.warehouse].name
+                warehouse: GLOBALFUNCTIONS.getWarehouseByCode(this._saleOrder.WarehouseCode)["name"]
             };
             const options: ModalDialogOptions = {
                 viewContainerRef: this.vcRef,
@@ -381,20 +413,138 @@ export class SaleOrderComponent implements OnInit{
         }
     }
 
-    private async getInventoryQuantit(){
+    private async getInventoryQuantit() {
+        // console.log(JSON.stringify(this.inventoryList));
         await this.inventoryList.map(product => {
             let quantityAvail = product.QuantityOnHand - product.QuantityOnSalesOrder;
-            if(this.selectedProduct.ItemCode == product.ItemCode){
+            if (this.selectedProduct.ItemCode == product.ItemCode) {
                 this.selectedProduct.quantityOnHand = product.QuantityOnHand;
                 this.selectedProduct.quantityAvail = quantityAvail < 0 ? 0 : quantityAvail;
             }
         });
     }
 
-    public showDescription(){
-        if(this.selectedProduct.ExtendedDescriptionText != undefined)
+    public showDescription() {
+        if (this.selectedProduct.ExtendedDescriptionText != undefined || this.selectedProduct.ExtendedDescriptionText != "")
             alert(this.selectedProduct.ExtendedDescriptionText);
         else
             alert("Description not available");
     }
- }
+
+    private saveFoliosTransaction() {
+        let folioNumber = SERVER.isQuote ? this._foliosTransactionsService.getQuoteTransactions().length + 1 : this._foliosTransactionsService.getSaleTransactions().length + 1;
+        let folioSerie = `${this.padLeft(folioNumber.toString(), '0', 6)}`;
+        let doc = SERVER.isQuote ? "Quote" : "Sale";
+        let docSerie = SERVER.isQuote ? "Q" : "S";
+        let serie = `${platformModule.device.uuid.slice(0, 6)}${docSerie}-${folioSerie}`;
+        let folio = {
+            Folio: folioSerie,
+            Document: doc,
+            Serie: serie
+        };
+        this._foliosTransactionsService.updateFoliosTransactionDoc(folio);
+        return serie;
+    }
+
+    public async save() {
+        let messages = this.validations();
+        if (messages == "OK") {
+            await this.setLineProduct();
+            this._saleOrder.SalesOrderNO = this._saleOrder.SalesOrderNO == "" ? await this.saveFoliosTransaction() : this._saleOrder.SalesOrderNO;
+            await this._saleOrderService.updateSaleOrderDoc(this._saleOrder);
+            console.log(JSON.stringify(this._saleOrder));
+            this._router.navigate(["/home"], { clearHistory: true });
+        }
+        else
+            alert(messages);
+    }
+
+    private padLeft(text: string, padChar: string, size: number): string {
+        return (String(padChar).repeat(size) + text).substr((size * -1), size);
+    }
+
+    private refreshSaleOrder() {
+        this._saleOrder = {
+            IsQuote: SERVER.isQuote,
+            Saved: false,
+            CustomerNo: this.customer.CustomerNo,
+            CustomerName: this.customer.CustomerName,
+            CustomerPONo: "",
+            CustomerConfirmTo: "",
+            CustomerFBO: "",
+            SalesOrderNO: "",
+            DeviceUid: platformModule.device.uuid,
+            ShipMethod: "",
+            BillToName: this.customer.CustomerName,
+            BillToAddress1: this.customer.AddressLine1,
+            BillToAddress2: this.customer.AddressLine2 == null ? "" : this.customer.AddressLine2,
+            BillToAddress3: this.customer.AddressLine3 == null ? "" : this.customer.AddressLine3,
+            BillToCountryCode: this.customer.CountryCode,
+            BillToCity: this.customer.City,
+            BillToState: this.customer.State,
+            BillToZipCode: this.customer.ZipCode,
+            ShipVia: "",
+            WarehouseCode: GLOBALFUNCTIONS.getWarehouseByName(this.warehouses[this.warehouse])["code"],
+            ShipTo: 0,
+            ShipToCity: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToCity,
+            ShipToState: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToState,
+            ShipToZipCode: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToZipCode,
+            DiscountAmt: 0,
+            ShipToName: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToName,
+            ShipToAddress1: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToAddress1,
+            ShipToAddress2: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToAddress2,
+            ShipToAddress3: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToAddress3,
+            ShipToCountryCode: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToCountryCode,
+            OrderDate: new Date(),
+            ShipDate: new Date(),
+            DateCreated: new Date(),
+            DateUpdated: new Date(),
+            UserCode: SERVER.user["UserCode"],
+            SalespersonNo: SERVER.user["DefaultSalespersonID"],
+            TermsCode: this.customer.TermsCode,
+            Comment: "",
+            Detail: []
+        };
+    }
+
+    private validations() {
+        let messages = "";
+        messages += this.validateProducts();
+        if (this.shipMethod == 0)
+            messages += this.validateAddress();
+
+        return messages == "" ? "OK" : messages;
+    }
+
+    private validateProducts() {
+        return this._saleOrder.Detail.length > 0 ? "" : "You need to add products to cart \n";
+    }
+
+    private validateAddress() {
+        if (this._saleOrder.ShipToAddress1 == "" || this._saleOrder.ShipToCity == "" || this._saleOrder.ShipToState == "" || this._saleOrder.ShipToZipCode == "")
+            return "Your Shipping Address must have (First Address line, City, State and Zip code) \n";
+        else
+            return "";
+    }
+
+    private setLineProduct() {
+        this._saleOrder.Detail.map((product, index) => {
+            product.lineItem = index + 1;
+            product.quantity = parseInt(product.quantity);
+        });
+    }
+
+    public setShipMethod() {
+        setTimeout(() => {
+            if (this.shipMethod == 1) {
+                this.warehouse = 0;
+                this.warehouses.splice(this.warehouses.length - 1);
+            }
+            else {
+                if (this.warehouses.indexOf("Direct") == -1)
+                    this.warehouses.push("Direct");
+            }
+            this._saleOrder.ShipMethod = this.shipMethods[this.shipMethod];
+        }, 500);
+    }
+}

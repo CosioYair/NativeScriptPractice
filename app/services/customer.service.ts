@@ -12,37 +12,51 @@ import { Customer } from "../interfaces/customer.interface";
 @Injectable()
 export class CustomerService {
     private _customers: any;
-    private _docId:string = "customer";
+    private _docId: string = "customer";
     private _doc = {};
 
-    constructor(private _http: HttpClient, private _couchbaseService: CouchbaseService){
+    constructor(private _http: HttpClient, private _couchbaseService: CouchbaseService) {
 
     }
 
-    public getCustomers(){
+    public getCustomers() {
         return this._http.get(`${SERVER.baseUrl}/Customer`)
-        .map(res => res).toPromise();
+            .map(res => res).toPromise();
     }
 
-    public async setCustomerDocument(){
+    public async setCustomerDocument() {
         this._couchbaseService.deleteDocument("customer");
         return await this.getCustomers()
-        .then(result => {
-            this._doc[this._docId] = result["Customer"];
-            this._couchbaseService.createDocument(this._doc, this._docId);
-            this._customers = result["Customer"];
-        }, (error) => {
-            alert(error);
-        });
+            .then(result => {
+                this._doc[this._docId] = result["Customer"];
+                this._couchbaseService.createDocument(this._doc, this._docId);
+                this._customers = result["Customer"];
+            }, (error) => {
+                alert(error);
+            });
     }
 
-    public getCustomer(customerId){
+    public getCustomer(customerId) {
         let customerSearch = null;
         let doc = this._couchbaseService.getDocument("customer")["customer"];
-         doc.map(customer => {
-            if(customer.CustomerNo == customerId)
+        doc.map(customer => {
+            if (customer.CustomerNo == customerId)
                 customerSearch = customer;
         });
         return customerSearch;
+    }
+
+    public getFilterCustomers() {
+        let customers = [];
+        let doc = this._couchbaseService.getDocument("customer")["customer"];
+        if (SERVER.user["SupervisorRights"] == "Y")
+            return doc;
+        else {
+            doc.map(customer => {
+                if (parseInt(customer.SalespersonNo) == parseInt(SERVER.user["DefaultSalespersonID"]))
+                    customers.push(customer);
+            });
+            return customers;
+        }
     }
 }

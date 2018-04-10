@@ -45,7 +45,7 @@ export class InventoryService {
         this._couchbaseService.createDocument(this._inventoryDoc, "inventory");
     }
 
-    public getInventoryWarehouse(warehouse){
-        return this._couchbaseService.getDocument("inventory")["inventory"][CONSTANTS.warehouses[warehouse].code];
+    public getInventoryWarehouse(warehouseCode){
+        return this._couchbaseService.getDocument("inventory")["inventory"][warehouseCode];
     }
 }

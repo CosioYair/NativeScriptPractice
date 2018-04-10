@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit, AfterContentChecked, DoCheck } from "@angular/core";
 import { Border } from "tns-core-modules/ui/border";
 import { Customer } from "../../interfaces/customer.interface";
 import { SearchBar } from "ui/search-bar";
@@ -7,6 +7,8 @@ import { CustomerService } from "../../services/customer.service";
 import { CouchbaseService } from "../../services/couchbase.service";
 import { SERVER } from "../../config/server.config";
 import * as dialogs from "ui/dialogs";
+import { SaleOrderService } from "../../services/saleOrder.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "ns-customer-transaction",
@@ -15,14 +17,15 @@ import * as dialogs from "ui/dialogs";
     styleUrls: ["./customer-transaction.css"]
 })
 
-export class CustomerTransactionComponent implements OnInit{
-    private _customers:any;
-    private _docId:string = "customer";
+export class CustomerTransactionComponent implements OnInit {
+    private _customers: any;
+    private _docId: string = "customer";
     public customerList: ObservableArray<Customer> = new ObservableArray<Customer>();
     public data = {};
-    public selectedCustomer:any = {};
+    public selectedCustomer: any = {};
+    public salesRep: string =  SERVER.user['UserName'];
 
-    constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService){
+    constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService, private _saleOrderService: SaleOrderService, private _router: Router) {
         this.selectedCustomer = {
             CustomerNo: "Select a customer to view details",
             AddressLine1: "",
@@ -47,27 +50,19 @@ export class CustomerTransactionComponent implements OnInit{
         this.setDocument();
     }
 
-    public getCustomers(){
-    }
-
-    public setDocument(){
-        let doc = this._couchbaseService.getDocument(this._docId);
-        if(doc == null)
-            this.getCustomers();
-        else {
-            this._customers = doc[this._docId];
-            this.customerList = new ObservableArray<Customer>(this._customers);
-        }
+    public setDocument() {
+        this._customers = this._customerService.getFilterCustomers();
+        this.customerList = new ObservableArray<Customer>(this._customers);
     }
 
     public onTextChanged(args) {
         let searchBar = <SearchBar>args.object;
         let searchValue = searchBar.text.toLowerCase();
 
-        if(searchValue.length > 0){
+        if (searchValue.length > 0) {
             this.customerList = new ObservableArray<Customer>();
-            this._customers.map( (customer, index) => {
-                if (this._customers[index].CustomerName.toLowerCase().indexOf(searchValue) !== -1)
+            this._customers.map((customer, index) => {
+                if (this._customers[index].CustomerName.toLowerCase().indexOf(searchValue) !== -1 || this._customers[index].CustomerNo.toLowerCase().indexOf(searchValue) !== -1)
                     this.customerList.push(this._customers[index]);
             });
         }
@@ -83,13 +78,13 @@ export class CustomerTransactionComponent implements OnInit{
         });
     }
 
-    public setSelectedCustomer(customer:Customer){
+    public setSelectedCustomer(customer: Customer) {
         this.selectedCustomer = customer;
     }
 
-    public createTransaction(){
+    public createTransaction() {
         dialogs.alert("Your message").then(result => {
             console.log("Dialog result: " + result);
         });
     }
- }
+}

@@ -5,12 +5,12 @@ import { AppComponent } from "./app.component";
 import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
 import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.component";
-import { SyncComponent } from "./components/sync/sync.component";
 import { SendDataComponent } from "./components/sendData/sendData.component";
 import { ReviewTransactionComponent } from "./components/reviewTransaction/reviewTransaction.component";
 import { CustomerTransactionComponent } from "./components/customer/customer-transaction.component";
 import { SaleOrderComponent } from "./components/transaction/sale-order.component";
 import { CustomerInquiryComponent } from "./components/customer/customer-inquiry.component";
+import { SyncComponent } from "./components/Sync/sync.component";
 
 const routes: Routes = [
     { path: "", redirectTo: "/login", pathMatch: "full" },
@@ -18,12 +18,12 @@ const routes: Routes = [
     { path: "login", component: LoginComponent },
     { path: "home", component:HomeComponent},
     { path: "itemInquiry", component:ItemInquiryComponent},
-    { path: "sync", component:SyncComponent},
     { path: "sendData", component:SendDataComponent},
     { path: "reviewTransaction", component:ReviewTransactionComponent},
     { path: "customerTransaction", component: CustomerTransactionComponent},
-    { path: "saleOrder/:CustomerNo", component: SaleOrderComponent},
+    { path: "saleOrder/:CustomerNo/:IsQuote", component: SaleOrderComponent},
     { path: "customerInquiry", component: CustomerInquiryComponent},
+    { path: "sync", component: SyncComponent}
 ];
 
 @NgModule({
