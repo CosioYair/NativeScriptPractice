@@ -19,7 +19,7 @@ import { ModalProductOrderComponent } from "./components/modal/productOrder/moda
 import { CustomerInquiryComponent } from "./components/customer/customer-inquiry.component";
 import { ItemInquiryComponent } from "./components/itemsInquiry/itemInquiry.component";
 import { ReviewTransactionComponent } from "./components/reviewTransaction/reviewTransaction.component";
-
+import { SyncComponent } from "./components/sync/sync.component";
 //Services
 import { CouchbaseService } from "./services/couchbase.service";
 import { CustomerService } from "./services/customer.service";
@@ -31,7 +31,7 @@ import { DeviceService } from "./services/device.service";
 import { ShippingAddressService } from "./services/shippingAddress.service";
 import { SaleOrderService } from "./services/saleOrder.service";
 import { FoliosTransactionService } from "./services/foliosTransaction.service";
-import { SyncComponent } from "./components/sync/sync.component";
+import { ImageService } from "./services/image.service";
 
 @NgModule({
     bootstrap: [
@@ -74,7 +74,8 @@ import { SyncComponent } from "./components/sync/sync.component";
         UserService,
         DeviceService,
         SaleOrderService,
-        FoliosTransactionService
+        FoliosTransactionService,
+        ImageService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

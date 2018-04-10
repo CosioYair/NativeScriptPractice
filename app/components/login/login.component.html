@@ -1,28 +1,39 @@
-<ActionBar title="Mobile Sales Automation" class="action-bar">
-    <GridLayout columns="*,*" rows="auto, *" >
+<ActionBar title="Mobile Sales" class="action-bar">
+    <GridLayout columns="*,*" rows="auto, *">
         <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
-            <Image src="~/assets/images/logo.png"></Image>
-            <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+            <Image src="~/assets/images/iconMS.png"></Image>
+            <Label text="Mobile Sales" verticalAlignment="center"></Label>
         </StackLayout>
         <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
-            <Button text="&#xf021; Refresh" verticalAlignment="center"></Button>
-            <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
+            <Button text="&#xf021; Refresh" verticalAlignment="center" (tap)="checkDocument()"></Button>
         </StackLayout>
     </GridLayout>
 </ActionBar>
 
-<GridLayout class="login-content" columns="*, 500, *" rows="50, 400, 50" >
+<GridLayout class="login-content" columns="*, 500, *" rows="50, 400, 50">
     <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
     </StackLayout>
     <Border class="login-box" row="1" col="1" borderRadius="8" borderWidth="3" borderColor="#FB8D70" horizontalAlignment="stretch">
         <StackLayout class="form" horizontalAlignment="stretch">
             <Image src="~/assets/images/ifd-international.png"></Image>
             <Border borderBottomWidth="2" borderBottomColor="#FB8D70">
-                <Label class="h2" text="User Login" verticalAlignment="center"></Label>
+                <DockLayout>
+                    <Label class="h2" text="User Login" verticalAlignment="center" width="80%"></Label>
+                    <Label text="Ver. 5.0.0" color="orangered"></Label>
+                </DockLayout>
             </Border>
             <StackLayout class="form fields" horizontalAlignment="stretch">
-                <TextField [(ngModel)]="userId" hint="User ID"></TextField>
-                <TextField [(ngModel)]="userPassword" type="password" hint="Password" secure="true"></TextField>
+                <DockLayout>
+                    <Label text="User:" color="orangered" width="40%"></Label>
+                    <DropDown [items]="userArray" class="enabled" [(ngModel)]="userName" colSpan="2" isEnabled="true" hint="Select..." backgroundColor="white"
+                        (selectedIndexChanged)="onchange($event)">
+                        <TextField [text]="userName" [(ngModel)]="userName"></TextField>
+                    </DropDown>
+                </DockLayout>
+                <DockLayout paddingTop="20%">
+                    <Label text="Password:" color="orangered" width="40%"></Label>
+                    <TextField [(ngModel)]="userPassword" type="password" hint="Password" secure="true" maxLength="50"></TextField>
+                </DockLayout>
             </StackLayout>
             <Button text="Login" (tap)="login()"></Button>
         </StackLayout>

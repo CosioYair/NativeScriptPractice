@@ -1,8 +1,12 @@
 .home-options Button{
-    height: 150px;
     font-weight: bold;
 }
 
 .home-transaction {
     padding: 30%;
+}
+
+.buttonStyle {
+    text-align: left;
+    height: 10%;
 }

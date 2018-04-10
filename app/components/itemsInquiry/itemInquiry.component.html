@@ -1,21 +1,23 @@
 <ActionBar title="Mobile Sales Automation" class="action-bar">
-    <GridLayout columns="*,*" rows="auto, *" >
+    <GridLayout columns="*,*" rows="auto, *">
         <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
             <Image src="~/assets/images/logo.png"></Image>
             <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
         </StackLayout>
         <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
-            <Button text="&#xf021; Refresh" verticalAlignment="center"></Button>
+            <Button text="&#xf021; archivo" (tap)="openJson()" verticalAlignment="center"></Button>
+            <Button text="&#xf021; Refresh" (tap)="listImage()" verticalAlignment="center"></Button>
             <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
         </StackLayout>
     </GridLayout>
 </ActionBar>
-<StackLayout class="page">
+<StackLayout class="page" backgroundColor="">
     <DockLayout>
-        <StackLayout class="itemInquiry-layout" width="50%">                             
+        <StackLayout class="itemInquiry-layout" width="50%">
             <SearchBar row="0" hint="Search" (textChange)="onTextChanged($event)"></SearchBar>
-            <GridLayout rows="*">
-                    <ListView [items]="productList" class="list-group" >
+            <Border backgroundColor="white" borderRadius="8" borderBottomWidth="2" borderTopWidth="2" borderColor="orangered" horizontalAlignment="stretch">
+                <GridLayout rows="*">
+                    <ListView [items]="productList" class="list-group">
                         <ng-template let-item="item">
                             <StackLayout class="item list-group-item" [class.highlight]="item.ItemCode == selectedProduct.ItemCode" (tap)="setSelectedProduct(item)">
                                 <label [text]="item.ItemCode" class="list-group-item-heading" fontSize="20"></label>
@@ -24,24 +26,26 @@
                         </ng-template>
                     </ListView>
                 </GridLayout>
-        </StackLayout>    
-            
+            </Border>
+        </StackLayout>
+
+
         <StackLayout *ngIf="isVisibleData" class="itemInquiry-layout" padding="10%">
             <DockLayout>
                 <StackLayout width="70%">
-                    <label class="itemInquiry-itemNameLabel" [text]="selectedProduct.ItemCodeDesc"></label>
-                    <label [text]="selectedProduct.ItemCode"></label>
+                    <label class="itemInquiry-itemNameLabel" [text]="selectedProduct.ItemCode"></label>
+                    <label [text]="selectedProduct.ItemCodeDesc"></label>
                 </StackLayout>
                 <StackLayout>
                     <DockLayout>
-                        <button text="&#xf075;" width="30%" (tap)= "description(product)"></button>
+                        <button text="&#xf075;" width="30%" (tap)="description(product)"></button>
                         <button text="Cancel" (tap)="cancel()"></button>
-                    </DockLayout>                   
+                    </DockLayout>
                 </StackLayout>
             </DockLayout>
             <DockLayout paddingTop="50%">
                 <StackLayout width="33%">
-                    <Label class="itemInquiry-labelBold" text="STD PRICE"></Label>       
+                    <Label class="itemInquiry-labelBold" text="STD PRICE"></Label>
                     <DockLayout>
                         <Label class="itemInquiry-numberLabel" text="$"></Label>
                         <Label class="itemInquiry-numberLabel" [text]="stdUnitPrice"></Label>
@@ -57,7 +61,7 @@
                         <Label class="itemInquiry-numberLabel" text="$"></Label>
                         <Label class="itemInquiry-numberLabel" [text]="stdUnitCost"></Label>
                     </DockLayout>
-                    <label  class="itemInquiry-labelBold" text="STOCK STATUS" paddingTop="75%"></label>   
+                    <label class="itemInquiry-labelBold" text="STOCK STATUS" paddingTop="75%"></label>
                 </StackLayout>
                 <StackLayout width="33%">
                     <Image src="{{ picture }}"></Image>
@@ -65,36 +69,41 @@
             </DockLayout>
             <DockLayout>
                 <StackLayout width="30%">
-                        <label class="itemInquiry-labelBold" text="CUBES"></label>
-                        <label [text]="selectedProduct.Category4"></label>
+                    <label class="itemInquiry-labelBold" text="CUBES"></label>
+                    <label [text]="selectedProduct.Category4"></label>
                 </StackLayout>
-                
+
                 <StackLayout width="30%">
                     <Label text="WAREHOUSE:" class="itemInquiry-labelBold"></Label>
-                    <DropDown [items]="warehouses" class="enabled" [(ngModel)]="warehouse" colSpan="2" isEnabled="true" hint="Select..."></DropDown>
+                    <DropDown [items]="warehouses" class="enabled" [(ngModel)]="warehouse" colSpan="2" isEnabled="true" hint="Select..." backgroundColor="white"
+                        (selectedIndexChanged)="onchangeWarehouse($event)">
+                        <TextField [text]="warehouse" [(ngModel)]="userName"></TextField>
+                    </DropDown>
                 </StackLayout>
             </DockLayout>
             <DockLayout padding="10%">
-                    <StackLayout width="25%">
-                        <label text="ON HAND"></label>
-                        <label text="0" fontSize="30"></label>
-                        <Label [text]="picture"></Label>
-                    </StackLayout>
-                    <StackLayout width="25%">
-                        <label text="ON SO & BO"></label>
-                        <label text="0" fontSize="30"></label>
-                    </StackLayout>
-                    <StackLayout width="25%">
-                        <label text="ON PO"></label>
-                        <label text="0" fontSize="30"></label>
-                    </StackLayout>
-                    <StackLayout width="25%">
-                        <label text="AVAILABLE"></label>
-                        <label text="0" fontSize="30"></label>
-                    </StackLayout>
-                </DockLayout>
+                <StackLayout width="25%">
+                    <label text="ON HAND"></label>
+                    <label [text]="onHand" fontSize="30"></label>
+                    <Label [text]="picture"></Label>
+                </StackLayout>
+                <StackLayout width="25%">
+                    <label text="ON SO & BO"></label>
+                    <label [text]="onSOBO" fontSize="30"></label>
+                </StackLayout>
+                <StackLayout width="25%">
+                    <label text="ON PO"></label>
+                    <label [text]="onPO" fontSize="30"></label>
+                </StackLayout>
+                <StackLayout width="25%">
+                    <label text="AVAILABLE"></label>
+                    <label [text]="available" fontSize="30"></label>
+                </StackLayout>
+            </DockLayout>
         </StackLayout>
-        
+
+
+
         <StackLayout *ngIf="isVisibleScanner" padding="10%">
             <Label class="itemInquiry-itemNameLabel" text="Item Details"></Label>
             <Label text="Enter or select an item to view details"></Label>
@@ -105,4 +114,5 @@
             </DockLayout>
         </StackLayout>
     </DockLayout>
+
 </StackLayout>
