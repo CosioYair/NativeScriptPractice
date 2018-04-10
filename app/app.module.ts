@@ -32,6 +32,7 @@ import { ShippingAddressService } from "./services/shippingAddress.service";
 import { SaleOrderService } from "./services/saleOrder.service";
 import { FoliosTransactionService } from "./services/foliosTransaction.service";
 import { ImageService } from "./services/image.service";
+import { SendDataService } from "./services/sendData.service";
 
 @NgModule({
     bootstrap: [
@@ -75,7 +76,8 @@ import { ImageService } from "./services/image.service";
         DeviceService,
         SaleOrderService,
         FoliosTransactionService,
-        ImageService
+        ImageService,
+        SendDataService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

@@ -1,6 +1,9 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { SERVER } from "../../config/server.config";
+import { SaleOrderService } from "../../services/saleOrder.service";
+import { SaleOrder } from "../../interfaces/saleOrder.interface";
+import { DecimalPipe } from '@angular/common';
 
 @Component({
     selector: "ns-home",
@@ -11,7 +14,24 @@ import { SERVER } from "../../config/server.config";
 
 export class HomeComponent{
 
-    constructor(){
+    private userTransactions: SaleOrder[];
+    public unsetTransactions: number = 0;
+    public avgAmount: number = 0;
+    public totalAmount: number = 0;
 
+    constructor(private _saleOrderService: SaleOrderService){
+        this.userTransactions =  _saleOrderService.getUnsavedUserTransactions();
+        this.unsetTransactions = this.userTransactions.length;
+        this.getAmounts();
+    }
+
+    public getAmounts(){
+        this.userTransactions.map(transaction => {
+            transaction.Detail.map(product => {
+                this.totalAmount += product.quantityPrice;
+            });
+        });
+
+        this.avgAmount = this.totalAmount == 0 ? 0 : (this.totalAmount / this.unsetTransactions);
     }
 }

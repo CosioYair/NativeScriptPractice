@@ -1,4 +1,7 @@
 import { Component } from "@angular/core";
+import { SaleOrder } from "../../interfaces/saleOrder.interface";
+import { SaleOrderService } from "../../services/saleOrder.service";
+import { SendDataService } from "../../services/sendData.service";
 
 @Component({
     selector: "ns-sendData",
@@ -7,65 +10,45 @@ import { Component } from "@angular/core";
     styleUrls: ["./sendData.component.css"]
 })
 
- export class SendDataComponent{
+export class SendDataComponent {
     public options: any;
+    public userTransaction: number = 0;
 
-    constructor(){
-        this.options = [
-            {   id: 0,
-                name: "Address",
-                status: true,
-            },
-            {
-                id:1,
-                name: "Customers",
-                status: true
-            },
-            {
-                id:2,
-                name: "Customers Sales",
-                status: true
-            },
-            {
-                id:3,
-                name:"Images",
-                status:true
-            },
-            {
-                id:4,
-                name:"Inventory",
-                status:true
-            },
-            {
-                id:5,
-                name:"Products",
-                status:true
-            },
-            {
-                id:6,
-                name:"Purcharse Orders",
-                status:true
-            },
-            {
-                id:7,
-                name:"Sales Orders Hystory",
-                status:true
-            },
-            {
-                id:8,
-                name:"Scan Force",
-                status:true
-            },
-            {
-                id:9,
-                name:"Users",
-                status:true
-            },
-            {
-                id:10,
-                name:"Terms Code",
-                status:true
-            }
-    ];
+    constructor(private _saleOrderService: SaleOrderService, private _sendDataService: SendDataService) {
+        this.options = [{
+            name: "Sales order",
+            list: this._saleOrderService.getUserSaleOrderUnsaved()
+        },
+        {
+            name: "Quotes",
+            list: this._saleOrderService.getUserQuoteUnsaved()
+        }];
     }
- }
+
+    public checkList(list) {
+        if (list == null || list == undefined)
+            return [];
+        else
+            return list;
+    }
+
+    public setTransactionList(index) {
+        this.userTransaction = index;
+        this.options[0].list = this._saleOrderService.getUserSaleOrderUnsaved();
+        this.options[1].list = this._saleOrderService.getUserQuoteUnsaved();
+    }
+
+    public switch(transaction) {
+        transaction.Sending = !transaction.Sending;
+    }
+
+    public sendData() {
+        let response;
+        this.options[this.userTransaction].list.map(async transaction => {
+            if(transaction.Sending)
+                response = await this._sendDataService.sendTransaction(transaction);
+
+            console.log(JSON.stringify(response));
+        });
+    }
+}

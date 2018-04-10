@@ -467,6 +467,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         this._saleOrder = {
             IsQuote: SERVER.isQuote,
             Saved: false,
+            Sending: false,
             CustomerNo: this.customer.CustomerNo,
             CustomerName: this.customer.CustomerName,
             CustomerPONo: "",
@@ -510,6 +511,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     private validations() {
         let messages = "";
         messages += this.validateProducts();
+        console.log(this.shipMethod)
         if (this.shipMethod == 0)
             messages += this.validateAddress();
 

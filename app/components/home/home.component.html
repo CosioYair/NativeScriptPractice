@@ -14,13 +14,13 @@
                         <label text="Adrian Cortes" fontSize="32"></label>
                         <DockLayout>
                             <label text="Unsend Transactions:" fontSize="16"></label>
-                            <label text="0" horizontalAlignment="right" verticalAligment="center" fontSize="28"></label>
+                            <label [text]="unsetTransactions" horizontalAlignment="right" verticalAligment="center" fontSize="28"></label>
                         </DockLayout>
                         <DockLayout>
                             <label text="Avg Amount:" fontSize="16"></label>
                             <DockLayout horizontalAlignment="right">
                                     <label text="$"  verticalAligment="center" fontSize="28"></label>
-                                    <label text="0.00"  verticalAligment="center" fontSize="28"></label>
+                                    <label [text]="avgAmount | number:'1.2-5'"  verticalAligment="center" fontSize="28"></label>
                             </DockLayout>
                             
                         </DockLayout>
@@ -28,7 +28,7 @@
                             <label text="Total Amount:" fontSize="16"></label>
                             <DockLayout horizontalAlignment="right">
                                     <label text="$"  verticalAligment="center" fontSize="28"></label>
-                                    <label text="0.00"  verticalAligment="center" fontSize="28"></label>
+                                    <label [text]="totalAmount | number:'1.2-5'"  verticalAligment="center" fontSize="28"></label>
                             </DockLayout>
                         </DockLayout>
                     </StackLayout>
@@ -38,7 +38,7 @@
                             <StackLayout width="50%">
                                     <label text="Transactions" fontSize="30"></label>
                                     <button [nsRouterLink]="['/customerTransaction']" text="&#xf09d;    New Transaction" fontSize="18" color="white" backgroundColor="orangered" class="buttonStyle"></button>
-                                    <button text="&#xf022;    Review Transactions" fontSize="18" color="white" backgroundColor="orangered" class="buttonStyle"></button>
+                                    <button [nsRouterLink]="['/reviewTransaction']" text="&#xf022;    Review Transactions" fontSize="18" color="white" backgroundColor="orangered" class="buttonStyle"></button>
                                     <label text="Communications" fontSize="30"></label>
                                     <button [nsRouterLink]="['/sendData']" text="&#xf093;    Send Data" fontSize="18" color="white" backgroundColor="#006064" class="buttonStyle"></button>
                                     <button [nsRouterLink]="['/sync']" text="&#xf021;    Refresh Data" fontSize="18" color="white" backgroundColor="#006064" class="buttonStyle"></button>

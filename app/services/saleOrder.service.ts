@@ -16,34 +16,31 @@ export class SaleOrderService {
 
     public updateSaleOrderDoc(saleOrder?) {
         let doc = this._couchbaseService.getDocument("saleorder");
-        let existingTransaction = -1;
+        let existingTransaction = false;
         if (doc == null)
             this._saleOrderDoc["saleorder"] = {};
-        else{
+        else {
             this._saleOrderDoc = doc;
             existingTransaction = this.validateExistingTransaction(saleOrder);
         }
 
-        if (saleOrder != null) {
-            console.log(existingTransaction);
-            if (existingTransaction == -1) {
-                if (this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]] == null)
-                    this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]] = [saleOrder];
-                else
-                    this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]].push(saleOrder);
-            }
+        if (saleOrder != null && !existingTransaction) {
+            if (this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]] == null)
+                this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]] = [saleOrder];
             else
-                this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]][existingTransaction] = saleOrder;
+                this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]].push(saleOrder);
         }
-        this._couchbaseService.createDocument(this._saleOrderDoc, "saleorder");
+
+        if (!existingTransaction)
+            this._couchbaseService.createDocument(this._saleOrderDoc, "saleorder");
     }
 
     public getUnsavedUserTransactions() {
-        let userTransactions = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
+        let userTransactions = this._couchbaseService.getDocument("saleorder");
         let unsavedTransactions = [];
         if (userTransactions == null)
             return [];
-        userTransactions.map(transaction => {
+        userTransactions["saleorder"][SERVER.user["UserCode"]].map(transaction => {
             if (!transaction.Status)
                 unsavedTransactions.push(transaction)
         });
@@ -51,11 +48,11 @@ export class SaleOrderService {
     }
 
     public getSavedUserTransactions() {
-        let userTransactions = this._couchbaseService.getDocument("saleorder")["saleorder"][SERVER.user["UserCode"]];
+        let userTransactions = this._couchbaseService.getDocument("saleorder");
         let savedTransactions = [];
         if (userTransactions == null)
             return [];
-        userTransactions.map(transaction => {
+        userTransactions["saleorder"][SERVER.user["UserCode"]].map(transaction => {
             if (transaction.Status)
                 savedTransactions.push(transaction)
         });
@@ -77,8 +74,19 @@ export class SaleOrderService {
     }
 
     private validateExistingTransaction(userTransaction) {
-        let transactions = userTransaction.IsQuote ? this.getUserQuoteSaved() : this.getUserSaleOrderUnsaved();
-        return transactions.findIndex(transaction => transaction.SalesOrderNO === userTransaction.SalesOrderNO);
+        let transactions = this.getUnsavedUserTransactions();
+        let exist = false;
+        transactions.map(async (transaction, index) => {
+            if (transaction.SalesOrderNO == userTransaction.SalesOrderNO) {
+                transactions[index] = userTransaction;
+                exist = true;
+            }
+        });
+        if (exist) {
+            this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]] = transactions;
+            this._couchbaseService.createDocument(this._saleOrderDoc, "saleorder");
+        }
+        return exist;
     }
 
     public getUserSaleOrderSaved() {
