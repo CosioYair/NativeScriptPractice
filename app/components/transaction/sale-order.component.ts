@@ -64,7 +64,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     private _customerShippingAddress: any;
     public totalCubes: number = 0;
     public _saleOrder: SaleOrder;
-    public shipMethods: any = ["Dilevery", "Pickup"];
+    public shipMethods: any = ["Delivery", "Pickup"];
     public shipMethod: number = 0;
     @ViewChild('Qty') Qty: ElementRef;
 
@@ -153,7 +153,8 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
                 }
             });
         }
-        this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByName(this._saleOrder.WarehouseCode)["name"]); 
+        this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByCode(this._saleOrder.WarehouseCode)["name"]); 
+        console.log(this._saleOrder.ShipMethod);
         this.shipMethod = this._saleOrder.ShipMethod == "Delivery" ? 0 : 1;
         this.calculateCart();
     }
@@ -211,10 +212,10 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     }
 
     public setInventory() {
+        let warehouseCode = GLOBALFUNCTIONS.getWarehouseByName(this.warehouses[this.warehouse])["code"];
         if (this._couchbaseService.getDocument("inventory") == null)
             this._inventoryService.setInventoriesDoc();
-
-        this.inventoryList = this._inventoryService.getInventoryWarehouse(this.warehouse);
+        this.inventoryList = this._inventoryService.getInventoryWarehouse(warehouseCode);
     }
 
     public setCustomerShippingAddress(args: SelectedIndexChangedEventData) {
@@ -241,8 +242,8 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     public filterInventoryWarehouse() {
         setTimeout(() => {
             this.cancel();
-            this.inventoryList = this._inventoryService.getInventoryWarehouse(this.warehouses[this.warehouse].code);
-            this._saleOrder.WarehouseCode = this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByName(this._saleOrder.WarehouseCode)["name"]);;
+            this.inventoryList = this._inventoryService.getInventoryWarehouse(GLOBALFUNCTIONS.getWarehouseByName(this.warehouses[this.warehouse])["code"]);
+            this._saleOrder.WarehouseCode = GLOBALFUNCTIONS.getWarehouseByName(this.warehouses[this.warehouse])["code"];
         }, 500);
     }
 
@@ -416,7 +417,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         if (this.selectedCartProduct.quantity != null) {
             const productDetails = {
                 selectedCartProduct: this.selectedCartProduct,
-                warehouse: CONSTANTS.warehouses[this.warehouse].name
+                warehouse: CONSTANTS.warehouses[this.warehouse]
             };
             const options: ModalDialogOptions = {
                 viewContainerRef: this.vcRef,
@@ -428,6 +429,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     }
 
     private async getInventoryQuantit() {
+        // console.log(JSON.stringify(this.inventoryList));
         await this.inventoryList.map(product => {
             let quantityAvail = product.QuantityOnHand - product.QuantityOnSalesOrder;
             if (this.selectedProduct.ItemCode == product.ItemCode) {
@@ -497,7 +499,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
             BillToState: this.customer.State,
             BillToZipCode: this.customer.ZipCode,
             ShipVia: "",
-            WarehouseCode: this.warehouses[this.warehouse].code,
+            WarehouseCode: GLOBALFUNCTIONS.getWarehouseByName(this.warehouses[this.warehouse])["code"],
             ShipTo: 0,
             ShipToCity: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToCity,
             ShipToState: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToState,

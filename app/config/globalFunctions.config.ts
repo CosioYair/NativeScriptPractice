@@ -3,6 +3,7 @@ import { CONSTANTS } from "./constants.config";
 
 export const GLOBALFUNCTIONS = {
     getWarehouses: getWarehouses,
+    getWarehouseByCode: getWarehouseByCode,
     getWarehouseByName: getWarehouseByName
 };
 
@@ -20,6 +21,15 @@ function getWarehouses(){
         });
     }
     return warehousesFilter;
+}
+
+function getWarehouseByCode(code){
+    let warehouseSearch = {};
+    CONSTANTS.warehouses.map(warehouse => {
+        if(warehouse.code == code)
+            warehouseSearch = warehouse;
+    });
+    return warehouseSearch;
 }
 
 function getWarehouseByName(name){
