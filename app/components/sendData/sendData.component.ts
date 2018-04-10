@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { SaleOrder } from "../../interfaces/saleOrder.interface";
 import { SaleOrderService } from "../../services/saleOrder.service";
+import { SendDataService } from "../../services/sendData.service";
 
 @Component({
     selector: "ns-sendData",
@@ -13,7 +14,7 @@ export class SendDataComponent {
     public options: any;
     public userTransaction: number = 0;
 
-    constructor(private _saleOrderService: SaleOrderService) {
+    constructor(private _saleOrderService: SaleOrderService, private _sendDataService: SendDataService) {
         this.options = [{
             name: "Sales order",
             list: this._saleOrderService.getUserSaleOrderUnsaved()
@@ -42,8 +43,12 @@ export class SendDataComponent {
     }
 
     public sendData() {
-        this.options[this.userTransaction].list.map(transaction => {
-            console.log(transaction.Sending);
+        let response;
+        this.options[this.userTransaction].list.map(async transaction => {
+            if(transaction.Sending)
+                response = await this._sendDataService.sendTransaction(transaction);
+
+            console.log(JSON.stringify(response));
         });
     }
 }
