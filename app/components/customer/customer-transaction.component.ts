@@ -49,17 +49,9 @@ export class CustomerTransactionComponent implements OnInit {
         this.setDocument();
     }
 
-    public getCustomers() {
-    }
-
     public setDocument() {
-        let doc = this._couchbaseService.getDocument(this._docId);
-        if (doc == null)
-            this.getCustomers();
-        else {
-            this._customers = doc[this._docId];
-            this.customerList = new ObservableArray<Customer>(this._customers);
-        }
+        this._customers = this._customerService.getFilterCustomers();
+        this.customerList = new ObservableArray<Customer>(this._customers);
     }
 
     public onTextChanged(args) {
