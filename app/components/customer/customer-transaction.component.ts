@@ -61,7 +61,7 @@ export class CustomerTransactionComponent implements OnInit {
         if (searchValue.length > 0) {
             this.customerList = new ObservableArray<Customer>();
             this._customers.map((customer, index) => {
-                if (this._customers[index].CustomerName.toLowerCase().indexOf(searchValue) !== -1)
+                if (this._customers[index].CustomerName.toLowerCase().indexOf(searchValue) !== -1 || this._customers[index].CustomerNo.toLowerCase().indexOf(searchValue) !== -1)
                     this.customerList.push(this._customers[index]);
             });
         }

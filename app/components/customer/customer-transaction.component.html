@@ -1,16 +1,12 @@
-<ActionBar title="" class="action-bar">
-    <ActionItem ios.position="left">
-        <Image src="~/assets/images/logo.png"></Image>
-    </ActionItem>
-    <ActionItem position="left">
-        <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
-    </ActionItem>
-    <ActionItem ios.position="right">
-        <StackLayout orientation="horizontal" horizontalAlignment="right">
-            <Button text="&#xf0b0; Filter" verticalAlignment="center"></Button>
-            <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
+<ActionBar title="Mobile Sales Automation" class="action-bar">
+    <GridLayout columns="*,*" rows="auto, *">
+        <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
+            <Image src="~/assets/images/logo.png"></Image>
+            <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
         </StackLayout>
-    </ActionItem>
+        <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
+        </StackLayout>
+    </GridLayout>
 </ActionBar>
 
 <GridLayout class="" columns="*, *" rows="*">
@@ -20,7 +16,8 @@
             <GridLayout borderRadius="8" class="" columns="*" rows="*" backgroundColor="white">
                 <ListView [items]="customerList" class="list-group">
                     <ng-template let-item="item">
-                        <StackLayout borderRadius="8" class="item list-group-item" [class.highlight]="selectedCustomer.CustomerNo == item.CustomerNo" (tap)="setSelectedCustomer(item)">
+                        <StackLayout borderRadius="8" class="item list-group-item" [class.highlight]="selectedCustomer.CustomerNo == item.CustomerNo"
+                            (tap)="setSelectedCustomer(item)">
                             <Label [text]="item.CustomerName" class="list-group-item-heading h2"></Label>
                             <StackLayout marginLeft="5%">
                                 <Label [text]="item.CustomerNo" class="list-group-item-heading"></Label>
@@ -62,7 +59,7 @@
                     <Label [text]="" class="list-group-item-heading"></Label>
                     -->
                 </StackLayout>
-                <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%"  col="1" row="1">
+                <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%" col="1" row="1">
                     <Label text="SALESREP" class="h2"></Label>
                     <Label [text]="" class="list-group-item-heading"></Label>
                     <!--
@@ -76,7 +73,8 @@
                     <Label [text]="selectedCustomer.CustomerDiscountRate" class="list-group-item-heading"></Label>
                     -->
                 </StackLayout>
-                <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%" row="2" colSpan="2" orientation="horizontal" horizontalAlignment="center">
+                <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%" row="2" colSpan="2" orientation="horizontal"
+                    horizontalAlignment="center">
                     <Button [nsRouterLink]="['/saleOrder', selectedCustomer.CustomerNo, true]" class="option-button" text="Quote"></Button>
                     <Button [nsRouterLink]="['/saleOrder', selectedCustomer.CustomerNo, false]" class="option-button" text="Sales Order"></Button>
                 </StackLayout>
