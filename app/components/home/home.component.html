@@ -18,13 +18,13 @@
                         <label text="Adrian Cortes" fontSize="32"></label>
                         <DockLayout>
                             <label text="Unsend Transactions:" fontSize="16"></label>
-                            <label text="0" horizontalAlignment="right" verticalAligment="center" fontSize="28"></label>
+                            <label [text]="unsetTransactions" horizontalAlignment="right" verticalAligment="center" fontSize="28"></label>
                         </DockLayout>
                         <DockLayout>
                             <label text="Avg Amount:" fontSize="16"></label>
                             <DockLayout horizontalAlignment="right">
                                     <label text="$"  verticalAligment="center" fontSize="28"></label>
-                                    <label text="0.00"  verticalAligment="center" fontSize="28"></label>
+                                    <label [text]="avgAmount | number:'1.2-5'"  verticalAligment="center" fontSize="28"></label>
                             </DockLayout>
                             
                         </DockLayout>
@@ -32,7 +32,7 @@
                             <label text="Total Amount:" fontSize="16"></label>
                             <DockLayout horizontalAlignment="right">
                                     <label text="$"  verticalAligment="center" fontSize="28"></label>
-                                    <label text="0.00"  verticalAligment="center" fontSize="28"></label>
+                                    <label [text]="totalAmount | number:'1.2-5'"  verticalAligment="center" fontSize="28"></label>
                             </DockLayout>
                         </DockLayout>
                     </StackLayout>

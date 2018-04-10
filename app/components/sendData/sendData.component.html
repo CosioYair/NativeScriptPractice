@@ -47,7 +47,7 @@
                         <ng-template let-item="item" let-i="index">
                             <StackLayout>
                                 <DockLayout>
-                                    <Switch width="10%" checked="false" color="" (checkedChange)="switch(item)"></Switch>
+                                    <Switch width="10%" [checked]="item.Sending" color="" (checkedChange)="switch(item)"></Switch>
                                     <Label width="20%" [text]="item.IsQuote ? 'Quote' : 'Sale order'" class="list-group-item-heading" fontSize="20"></Label>
                                     <Label width="25%" [text]="item.SalesOrderNO" class="list-group-item-heading" fontSize="20"></Label>
                                     <Label width="45%" [text]="item.CustomerName" class="list-group-item-heading" fontSize="20"></Label>
