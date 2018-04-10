@@ -510,6 +510,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     private validations() {
         let messages = "";
         messages += this.validateProducts();
+        console.log(this.shipMethod)
         if (this.shipMethod == 0)
             messages += this.validateAddress();
 
