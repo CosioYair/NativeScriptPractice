@@ -33,8 +33,8 @@
         <StackLayout *ngIf="isVisibleData" class="itemInquiry-layout" padding="10%">
             <DockLayout>
                 <StackLayout width="70%">
-                    <label class="itemInquiry-itemNameLabel" [text]="selectedProduct.ItemCodeDesc"></label>
-                    <label [text]="selectedProduct.ItemCode"></label>
+                    <label class="itemInquiry-itemNameLabel" [text]="selectedProduct.ItemCode"></label>
+                    <label [text]="selectedProduct.ItemCodeDesc"></label>
                 </StackLayout>
                 <StackLayout>
                     <DockLayout>
@@ -84,20 +84,20 @@
             <DockLayout padding="10%">
                 <StackLayout width="25%">
                     <label text="ON HAND"></label>
-                    <label text="0" fontSize="30"></label>
+                    <label [text]="onHand" fontSize="30"></label>
                     <Label [text]="picture"></Label>
                 </StackLayout>
                 <StackLayout width="25%">
                     <label text="ON SO & BO"></label>
-                    <label text="0" fontSize="30"></label>
+                    <label [text]="onSOBO" fontSize="30"></label>
                 </StackLayout>
                 <StackLayout width="25%">
                     <label text="ON PO"></label>
-                    <label text="0" fontSize="30"></label>
+                    <label [text]="onPO" fontSize="30"></label>
                 </StackLayout>
                 <StackLayout width="25%">
                     <label text="AVAILABLE"></label>
-                    <label text="0" fontSize="30"></label>
+                    <label [text]="available" fontSize="30"></label>
                 </StackLayout>
             </DockLayout>
         </StackLayout>

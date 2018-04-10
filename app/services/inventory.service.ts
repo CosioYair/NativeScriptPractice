@@ -48,4 +48,8 @@ export class InventoryService {
     public getInventoryWarehouse(warehouse){
         return this._couchbaseService.getDocument("inventory")["inventory"][CONSTANTS.warehouses[warehouse].code];
     }
+
+    public getInventoryWarehouseII(warehouseCode: any){
+        return this._couchbaseService.getDocument("inventory")["inventory"][warehouseCode];
+    }
 }

@@ -52,7 +52,7 @@ export class ItemInquiryComponent implements OnInit {
     public selectedProduct: any = {};
     public itemCode: string = "";
     public warehouses: any = [];
-    public warehouse: number = 0;
+    public warehouse: any;
     public stdUnitPrice: number = 0;
     public stdUnitCost: number = 0;
 
@@ -71,7 +71,8 @@ export class ItemInquiryComponent implements OnInit {
     public onHand: number = 0;
     public onSOBO: number = 0;
     public onPO: number = 0;
-    public available: number = 20;
+    public available: number = 0;
+    public inventoryList: ObservableArray<Inventory> = new ObservableArray<Inventory>();
 
 
     constructor(private _couchbaseService: CouchbaseService,
@@ -161,6 +162,7 @@ export class ItemInquiryComponent implements OnInit {
             this.isVisibleData = true;
             this.isVisibleScanner = false;
         }
+        this.inventoryWarehouse();
     }
 
     public cancel() {
@@ -196,6 +198,7 @@ export class ItemInquiryComponent implements OnInit {
         }).then((result) => {
             this.itemCode = result.text;
             //this.validateProductList();
+            this.setSelectedProduct(this.findByScanner(this.itemCode));
             console.log(this.itemCode);
         }, (errorMessage) => {
             console.log("Error when scanning " + errorMessage);
@@ -250,8 +253,41 @@ export class ItemInquiryComponent implements OnInit {
     /////////////////////////////////////
     ////////////////////////////////////
     public onchangeWarehouse(args: SelectedIndexChangedEventData) {
+        let warehouseCode: any;
         console.log(args.newIndex);
         console.log(this.warehouse);
+        console.log(CONSTANTS.warehouses[args.newIndex]["code"] + " " + CONSTANTS.warehouses[args.newIndex]["name"]);
+        warehouseCode = CONSTANTS.warehouses[args.newIndex]["code"];
+        this.inventoryWarehouse();
+        this.inventoryList = this._inventoryService.getInventoryWarehouseII(warehouseCode);
+    }
+
+
+    public inventoryWarehouse() { 
+        this.inventoryList.map(product => {
+            // console.log(product.ItemCode+" "+product.QuantityOnHand);
+            if (this.selectedProduct.ItemCode === product.ItemCode) {
+                this.onHand = product.QuantityOnHand;
+                this.onSOBO = product.QuantityOnSalesOrder;
+                this.onPO = product.QuantityOnPurchaseOrder;
+                this.available = this.onHand - this.onSOBO;
+                if(this.available<0){
+                    this.available = 0;
+                }
+            }
+            //console.log(product.ItemCode+" "+this.selectedProduct.ItemCode+ " Hola");
+        })
+        //console.log(this.selectedProduct.ItemCode);
+    }
+
+    public findByScanner(itemCode){
+        var objScanned: any;
+        this.productList.map(product =>{
+            if(this.itemCode == product.ItemCode){
+                objScanned = product;
+            }
+        });
+        return objScanned;
     }
 }
 
