@@ -153,7 +153,6 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         }
         this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByCode(this._saleOrder.WarehouseCode)["name"]); 
         this.shipVia = this.shipVias.findIndex(shipVia => shipVia === this._saleOrder.ShipVia)
-        console.log(this.shipVia);
         this.shipMethod = this._saleOrder.ShipMethod == "Delivery" ? 0 : 1;
         this.calculateCart();
     }

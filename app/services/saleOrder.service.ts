@@ -77,8 +77,8 @@ export class SaleOrderService {
     }
 
     private validateExistingTransaction(userTransaction) {
-        let transactions = this.getUnsavedUserTransactions();
-        return transactions.findIndex(transaction => transaction.SalesOrderNO == userTransaction.SalesOrderNO);
+        let transactions = userTransaction.IsQuote ? this.getUserQuoteSaved() : this.getUserSaleOrderUnsaved();
+        return transactions.findIndex(transaction => transaction.SalesOrderNO === userTransaction.SalesOrderNO);
     }
 
     public getUserSaleOrderSaved() {
