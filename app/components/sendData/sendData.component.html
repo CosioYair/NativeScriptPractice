@@ -6,7 +6,7 @@
                 <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
             </StackLayout>
             <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
-                <Button text="&#xf093; Send" verticalAlignment="center" (tap)="refresh()"></Button>
+                <Button text="&#xf093; Send" verticalAlignment="center" (tap)="sendData()"></Button>
             </StackLayout>
         </GridLayout>
     </ActionBar>
@@ -47,7 +47,7 @@
                         <ng-template let-item="item" let-i="index">
                             <StackLayout>
                                 <DockLayout>
-                                    <Switch width="10%" checked="true" color=""></Switch>
+                                    <Switch width="10%" checked="false" color="" (checkedChange)="switch(item)"></Switch>
                                     <Label width="20%" [text]="item.IsQuote ? 'Quote' : 'Sale order'" class="list-group-item-heading" fontSize="20"></Label>
                                     <Label width="25%" [text]="item.SalesOrderNO" class="list-group-item-heading" fontSize="20"></Label>
                                     <Label width="45%" [text]="item.CustomerName" class="list-group-item-heading" fontSize="20"></Label>

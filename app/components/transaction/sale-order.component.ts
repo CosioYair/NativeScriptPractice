@@ -467,6 +467,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         this._saleOrder = {
             IsQuote: SERVER.isQuote,
             Saved: false,
+            Sending: false,
             CustomerNo: this.customer.CustomerNo,
             CustomerName: this.customer.CustomerName,
             CustomerPONo: "",

@@ -44,4 +44,14 @@ export class SendDataComponent {
         this.userTransaction = index;
         this.resetList();
     }
+
+    public switch(transaction) {
+        transaction.Sending = !transaction.Sending;
+    }
+
+    public sendData(){
+        this.transactionList.map(transaction => {
+            console.log(transaction.Sending);
+        });
+    }
 }
