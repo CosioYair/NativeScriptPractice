@@ -122,7 +122,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         await this.getCustomer(this.route.snapshot.params["CustomerNo"]);
         await this.setShippingAddress();
         await this.setInventory();
-        await this.setTermsCode();
+        this.userTermsCode = await this._termsCodeService.getUserTermsCode(this.customer);
         await this.setDocument();
         this.warehouses = GLOBALFUNCTIONS.getWarehouses();
         await this.refreshSaleOrder();
@@ -179,9 +179,6 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     }
 
     public async setDocument() {
-        if (this._couchbaseService.getDocument("product") == null)
-            this._productService.setProductDocument();
-
         this._products = await this._productService.getProductDocument();
         this.productList = new ObservableArray<Product>(this._products);
     }
@@ -194,15 +191,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         });
     }
 
-    public setTermsCode() {
-        if (this._couchbaseService.getDocument("termscode") == null)
-            this._termsCodeService.setTermsCodeDoc();
-        this.userTermsCode = this._termsCodeService.getUserTermsCode(this.customer);
-    }
-
     public async setShippingAddress() {
-        if (this._couchbaseService.getDocument("shippingaddress") == null)
-            this._shippingAddressService.setShippingAddressDoc();
         this._customerShippingAddress = await this._shippingAddressService.getCustomerShippingAddress(this.customer);
         if (this._customerShippingAddress == null)
             this.shippingAddressList = [];
@@ -213,8 +202,6 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
 
     public setInventory() {
         let warehouseCode = GLOBALFUNCTIONS.getWarehouseByName(this.warehouses[this.warehouse])["code"];
-        if (this._couchbaseService.getDocument("inventory") == null)
-            this._inventoryService.setInventoriesDoc();
         this.inventoryList = this._inventoryService.getInventoryWarehouse(warehouseCode);
     }
 
@@ -417,7 +404,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         if (this.selectedCartProduct.quantity != null) {
             const productDetails = {
                 selectedCartProduct: this.selectedCartProduct,
-                warehouse: CONSTANTS.warehouses[this.warehouse]
+                warehouse: GLOBALFUNCTIONS.getWarehouseByCode(this._saleOrder.WarehouseCode)["name"]
             };
             const options: ModalDialogOptions = {
                 viewContainerRef: this.vcRef,
