@@ -23,6 +23,7 @@ export class CustomerTransactionComponent implements OnInit {
     public customerList: ObservableArray<Customer> = new ObservableArray<Customer>();
     public data = {};
     public selectedCustomer: any = {};
+    public salesRep: string =  SERVER.user['UserName'];
 
     constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService, private _saleOrderService: SaleOrderService, private _router: Router) {
         this.selectedCustomer = {

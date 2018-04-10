@@ -31,7 +31,7 @@
     </StackLayout>
     <StackLayout class="customer-content customer-detail" row="0" col="1">
         <Border borderRadius="8" borderRightWidth="3" borderLeftWidth="3" borderColor="#DE6427" horizontalAlignment="stretch">
-            <GridLayout borderRadius="8" class="" columns="*, *" rows="100, *, 100" backgroundColor="white">
+            <GridLayout borderRadius="8" class="" columns="*" rows="100, *, 100" backgroundColor="white">
                 <Border margin="3%" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
                     <StackLayout>
                         <Label [text]="selectedCustomer.CustomerName" class="h1"></Label>
@@ -52,25 +52,11 @@
                     <Label text="TERMS" class="h2"></Label>
                     <Label [text]="selectedCustomer.TermsCode" class="list-group-item-heading"></Label>
 
-                    <Label text="BALANCE" class="h2"></Label>
-                    <Label [text]="" class="list-group-item-heading"></Label>
+                    <Label text="SALESREP" class="h2"></Label>
+                    <Label [text]="salesRep" class="list-group-item-heading"></Label>
                     <!--
                     <Label text="PRICE LEVEL" class="h2"></Label>
                     <Label [text]="" class="list-group-item-heading"></Label>
-                    -->
-                </StackLayout>
-                <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%" col="1" row="1">
-                    <Label text="SALESREP" class="h2"></Label>
-                    <Label [text]="" class="list-group-item-heading"></Label>
-                    <!--
-                    <Label text="TAX SCHEDULE" class="h2"></Label>
-                    <Label [text]="" class="list-group-item-heading"></Label>
-
-                    <Label text="CREDIT LIMIT" class="h2"></Label>
-                    <Label [text]="" class="list-group-item-heading"></Label>
-
-                    <Label text="DISCOUNT RATE" class="h2"></Label>
-                    <Label [text]="selectedCustomer.CustomerDiscountRate" class="list-group-item-heading"></Label>
                     -->
                 </StackLayout>
                 <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%" row="2" colSpan="2" orientation="horizontal"
