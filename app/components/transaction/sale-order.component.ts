@@ -151,7 +151,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
                 }
             });
         }
-        this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByCode(this._saleOrder.WarehouseCode)["name"]); 
+        this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByCode(this._saleOrder.WarehouseCode)["name"]);
         this.shipVia = this.shipVias.findIndex(shipVia => shipVia === this._saleOrder.ShipVia)
         this.shipMethod = this._saleOrder.ShipMethod == "Delivery" ? 0 : 1;
         this.calculateCart();
@@ -536,8 +536,14 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
 
     public setShipMethod() {
         setTimeout(() => {
-            if (this.shipMethod == 1)
+            if (this.shipMethod == 1) {
                 this.warehouse = 0;
+                this.warehouses.splice(this.warehouses.length - 1);
+            }
+            else {
+                if (this.warehouses.indexOf("Direct") == -1)
+                    this.warehouses.push("Direct");
+            }
             this._saleOrder.ShipMethod = this.shipMethods[this.shipMethod];
         }, 500);
     }

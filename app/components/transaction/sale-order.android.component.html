@@ -32,7 +32,7 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Warehouse"></Label>
-                    <DropDown [items]="warehouses" [class.enabled]="_saleOrder.ShipMethod == 'Pickup'" [isEnabled]="_saleOrder.ShipMethod != 'Pickup'" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2"></DropDown>    
+                    <DropDown [items]="warehouses" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2"></DropDown>    
                 </DockLayout>
                 <DockLayout>
                     <Label text="Terms"></Label>
