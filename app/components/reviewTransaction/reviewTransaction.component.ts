@@ -25,8 +25,7 @@ export class ReviewTransactionComponent {
     constructor(private _router: Router, private _saleOrderService: SaleOrderService) {
         this._sales = this._saleOrderService.getUserSaleOrderUnsaved();
         this._quotes = this._saleOrderService.getUserQuoteUnsaved();
-        this.transactionList = this._sales.slice();
-        this.selectedTransaction = this.transactionList[0];
+        this.resetList();
     }
 
     public setUserTransaction(transaction) {
@@ -55,11 +54,21 @@ export class ReviewTransactionComponent {
 
     public resetList() {
         if (this.userTransaction == 0)
-            this.transactionList = this._sales.slice();
+            this.transactionList = this.checkList(this._sales);
         else
-            this.transactionList = this._quotes.slice();
+            this.transactionList = this.checkList(this._quotes);
+    }
 
-        this.selectedTransaction = this.transactionList[0];
+    public checkList(list) {
+        if (list == null || list == undefined) {
+            this.selectedTransaction = {};
+            this.selectedTransaction.Detail = [];
+            return [];
+        }
+        else {
+            this.selectedTransaction = list[0];
+            return list;
+        }
     }
 
     public searchInList(list, searchValue) {

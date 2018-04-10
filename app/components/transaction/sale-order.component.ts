@@ -140,7 +140,6 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         if (SERVER.isQuote) {
             this._saleOrderService.getUserQuoteUnsaved().map(quote => {
                 if (quote.SalesOrderNO == SERVER.editTransaction.transactionNo) {
-                    console.log(JSON.stringify(quote));
                     this._saleOrder = quote;
                 }
             });
@@ -148,13 +147,13 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         else {
             this._saleOrderService.getUserSaleOrderUnsaved().map(sale => {
                 if (sale.SalesOrderNO == SERVER.editTransaction.transactionNo) {
-                    console.log(JSON.stringify(sale));
                     this._saleOrder = sale;
                 }
             });
         }
         this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByCode(this._saleOrder.WarehouseCode)["name"]); 
-        console.log(this._saleOrder.ShipMethod);
+        this.shipVia = this.shipVias.findIndex(shipVia => shipVia === this._saleOrder.ShipVia)
+        console.log(this.shipVia);
         this.shipMethod = this._saleOrder.ShipMethod == "Delivery" ? 0 : 1;
         this.calculateCart();
     }
