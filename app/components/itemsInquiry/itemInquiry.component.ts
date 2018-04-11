@@ -52,7 +52,7 @@ export class ItemInquiryComponent implements OnInit {
     public selectedProduct: any = {};
     public itemCode: string = "";
     public warehouses: any = [];
-    public warehouse: any;
+    public warehouse: any = 0;
     public stdUnitPrice: number = 0;
     public stdUnitCost: number = 0;
 
@@ -109,6 +109,9 @@ export class ItemInquiryComponent implements OnInit {
         CONSTANTS.warehouses.map(warehouse => {
             this.warehouses.push(warehouse.name);
         });
+
+        this.inventoryList = this._inventoryService.getInventoryWarehouse(CONSTANTS.warehouses[0]["code"]);
+        this.inventoryWarehouse();
     }
 
     ngOnInit() {
@@ -254,30 +257,22 @@ export class ItemInquiryComponent implements OnInit {
     ////////////////////////////////////
     public onchangeWarehouse(args: SelectedIndexChangedEventData) {
         let warehouseCode: any;
-        console.log(args.newIndex);
-        console.log(this.warehouse);
-        console.log(CONSTANTS.warehouses[args.newIndex]["code"] + " " + CONSTANTS.warehouses[args.newIndex]["name"]);
         warehouseCode = CONSTANTS.warehouses[args.newIndex]["code"];
+        this.inventoryList = this._inventoryService.getInventoryWarehouse(warehouseCode);
         this.inventoryWarehouse();
-        this.inventoryList = this._inventoryService.getInventoryWarehouseII(warehouseCode);
     }
 
 
     public inventoryWarehouse() { 
         this.inventoryList.map(product => {
-            // console.log(product.ItemCode+" "+product.QuantityOnHand);
+            let quantityAvail = product.QuantityOnHand - product.QuantityOnSalesOrder;
             if (this.selectedProduct.ItemCode === product.ItemCode) {
                 this.onHand = product.QuantityOnHand;
                 this.onSOBO = product.QuantityOnSalesOrder;
                 this.onPO = product.QuantityOnPurchaseOrder;
-                this.available = this.onHand - this.onSOBO;
-                if(this.available<0){
-                    this.available = 0;
-                }
+                this.available = quantityAvail < 0 ? 0 : quantityAvail;
             }
-            //console.log(product.ItemCode+" "+this.selectedProduct.ItemCode+ " Hola");
-        })
-        //console.log(this.selectedProduct.ItemCode);
+        });
     }
 
     public findByScanner(itemCode){

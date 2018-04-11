@@ -19,7 +19,7 @@
                 <GridLayout rows="*">
                     <ListView [items]="productList" class="list-group">
                         <ng-template let-item="item">
-                            <StackLayout class="item list-group-item" [class.highlight]="item.ItemCode == selectedProduct.ItemCode" (tap)="setSelectedProduct(item)">
+                            <StackLayout [(ngModal)]="warehouse" class="item list-group-item" [class.highlight]="item.ItemCode == selectedProduct.ItemCode" (tap)="setSelectedProduct(item)">
                                 <label [text]="item.ItemCode" class="list-group-item-heading" fontSize="20"></label>
                                 <label [text]="item.ItemCodeDesc" class="list-group-item-heading" color="gray"></label>
                             </StackLayout>
