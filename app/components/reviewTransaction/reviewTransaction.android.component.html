@@ -52,7 +52,7 @@
                     <ng-template let-item="item">
                         <GridLayout borderRadius="8" class="" columns="100, *, 120" rows="100">
                             <StackLayout col="0" verticalAlignment="center" paddingRight="20%">
-                                <Label width="100%" class="textRight" [text]="item.quantity" horizontalAlignment="right"></Label>
+                                <Label width="100%" class="textRight" [text]="item.quantity | number:'1.2-5'" horizontalAlignment="right"></Label>
                                 <Label width="100%" class="totals-subtitle textRight" text="EACH" horizontalAlignment="right"></Label>
                             </StackLayout>
                             <StackLayout col="1" verticalAlignment="center">
@@ -61,7 +61,7 @@
                             </StackLayout>
                             <StackLayout col="2" verticalAlignment="center" paddingRight="20%">
                                 <Label width="100%" class="textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
-                                <Label width="100%" class="totals-subtitle textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
+                                <Label width="100%" class="totals-subtitle textRight" [text]="item.quantityPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
                             </StackLayout>
                         </GridLayout>
                     </ng-template>

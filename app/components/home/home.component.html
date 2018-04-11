@@ -14,7 +14,7 @@
                         <label text="Adrian Cortes" fontSize="32"></label>
                         <DockLayout>
                             <label text="Unsend Transactions:" fontSize="16"></label>
-                            <label [text]="unsetTransactions" horizontalAlignment="right" verticalAligment="center" fontSize="28"></label>
+                            <label [text]="unsetTransactions | number:'1.2-5'" horizontalAlignment="right" verticalAligment="center" fontSize="28"></label>
                         </DockLayout>
                         <DockLayout>
                             <label text="Avg Amount:" fontSize="16"></label>

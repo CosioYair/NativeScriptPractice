@@ -180,7 +180,7 @@
                                     <Border borderBottomWidth="2">
                                         <DockLayout>
                                             <Label text="Total Qty:"></Label>
-                                            <Label class="h2" [text]="cartQuantity"></Label>
+                                            <Label class="h2" [text]="cartQuantity | number:'1.0-5'"></Label>
                                         </DockLayout>
                                     </Border>
                                 </StackLayout>
@@ -226,11 +226,11 @@
                                     <GridLayout class="" columns="125, *, *" rows="*">
                                         <StackLayout class="" row="0" col="0" horizontalAlignment="right">
                                             <Label text="QTY ON HAND"></Label>
-                                            <Label [text]="selectedProduct.quantityOnHand"></Label>
+                                            <Label [text]="selectedProduct.quantityOnHand | number:'1.0-5'"></Label>
                                         </StackLayout>
                                         <StackLayout row="0" col="1" horizontalAlignment="right">
                                             <Label text="QTY AVAIL"></Label>
-                                            <Label [text]="selectedProduct.quantityAvail"></Label>
+                                            <Label [text]="selectedProduct.quantityAvail | number:'1.0-5'"></Label>
                                         </StackLayout>
                                         <StackLayout row="0" col="2" horizontalAlignment="right">
                                             <Label text="STD PRICE"></Label>
@@ -260,7 +260,7 @@
                                 <Label text="Total Qty" class="" paddingRight="25%"></Label>
                             </StackLayout>
                             <StackLayout width="45%">
-                                <Label borderBottomWidth="0" width="100%" class="textRight h1" isEnabled="false" [text]="cartQuantity"></Label>
+                                <Label borderBottomWidth="0" width="100%" class="textRight h1" isEnabled="false" [text]="cartQuantity | number:'1.0-5'"></Label>
                             </StackLayout>
                         </DockLayout>
                     </Border>
@@ -327,7 +327,7 @@
                     <ng-template let-item="item">
                         <GridLayout borderRadius="8" class="" columns="100, *, 120" rows="100" (tap)="setSelectedCartProduct(item)" [class.highlight]="item.ItemCode == selectedCartProduct.ItemCode">
                             <StackLayout col="0" verticalAlignment="center" paddingRight="20%">
-                                <Label width="100%" class="textRight" [text]="item.quantity" horizontalAlignment="right"></Label>
+                                <Label width="100%" class="textRight" [text]="item.quantity | number:'1.0-5'" horizontalAlignment="right"></Label>
                                 <Label width="100%" class="totals-subtitle textRight" text="EACH" horizontalAlignment="right"></Label>
                             </StackLayout>
                             <StackLayout col="1" verticalAlignment="center">
@@ -336,7 +336,7 @@
                             </StackLayout>
                             <StackLayout col="2" verticalAlignment="center" paddingRight="20%">
                                 <Label width="100%" class="textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
-                                <Label width="100%" class="totals-subtitle textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
+                                <Label width="100%" class="totals-subtitle textRight" [text]="item.quantityPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
                             </StackLayout>
                         </GridLayout>
                     </ng-template>
