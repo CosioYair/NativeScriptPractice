@@ -122,7 +122,7 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Ship Via"></Label>
-                    <DropDown [items]="shipVias" (selectedIndexChanged)="setCustomerShipVia($event)" [(ngModel)]="shipVia"></DropDown>
+                    <TextField [(ngModel)]="_saleOrder.ShipVia"></TextField>
                 </DockLayout>
             </StackLayout>
         </GridLayout>

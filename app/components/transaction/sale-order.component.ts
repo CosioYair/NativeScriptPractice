@@ -44,8 +44,6 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     public selectedCartProduct: any = {};
     public warehouses: any = [];
     public warehouse: number = 0;
-    public shipVias: any;
-    public shipVia: number = 0;
     public lineTitle: string = "Item Details";
     public lineSubTitle: string = "Select an item to view details and add";
     public showingProduct: Boolean = false;
@@ -81,10 +79,6 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         private _router: RouterExtensions,
         private _foliosTransactionsService: FoliosTransactionService
     ) {
-        this.shipVias = [];
-        CONSTANTS.shipVias.map(shipVia => {
-            this.shipVias.push(shipVia.name);
-        });
         this.selectedProduct.ItemCode = "";
         this.selectedProduct.comment = "";
         this.selectedCartProduct.ItemCode = "";
@@ -152,7 +146,6 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
             });
         }
         this.warehouse = this.warehouses.indexOf(GLOBALFUNCTIONS.getWarehouseByCode(this._saleOrder.WarehouseCode)["name"]);
-        this.shipVia = this.shipVias.findIndex(shipVia => shipVia === this._saleOrder.ShipVia)
         this.shipMethod = this._saleOrder.ShipMethod == "Delivery" ? 0 : 1;
         this.calculateCart();
     }
@@ -205,6 +198,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
 
     public setCustomerShippingAddress(args: SelectedIndexChangedEventData) {
         setTimeout(() => {
+            this._saleOrder.ShipVia = this._customerShippingAddress[args.newIndex].ShipVia;
             this._saleOrder.ShipToCity = this._customerShippingAddress[args.newIndex].ShipToCity;
             this._saleOrder.ShipToState = this._customerShippingAddress[args.newIndex].ShipToState;
             this._saleOrder.ShipToZipCode = this._customerShippingAddress[args.newIndex].ShipToZipCode;
@@ -214,13 +208,6 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
             this._saleOrder.ShipToAddress3 = this._customerShippingAddress[args.newIndex].ShipToAddress3;
             this._saleOrder.ShipToCountryCode = this._customerShippingAddress[args.newIndex].ShipToCountryCode;
             this._saleOrder.ShipTo = args.newIndex;
-        }, 500);
-    }
-
-    public setCustomerShipVia(args: SelectedIndexChangedEventData) {
-        setTimeout(() => {
-            this.shipVia = args.newIndex;
-            this._saleOrder.ShipVia = this.shipVias[this.shipVia]
         }, 500);
     }
 
@@ -489,7 +476,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
             BillToCity: this.customer.City,
             BillToState: this.customer.State,
             BillToZipCode: this.customer.ZipCode,
-            ShipVia: "",
+            ShipVia: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipVia,
             WarehouseCode: GLOBALFUNCTIONS.getWarehouseByName(this.warehouses[this.warehouse])["code"],
             ShipTo: 0,
             ShipToCity: this._customerShippingAddress == null ? "" : this._customerShippingAddress[0].ShipToCity,
