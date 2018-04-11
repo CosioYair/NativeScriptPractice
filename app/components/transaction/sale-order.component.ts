@@ -312,7 +312,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         return true;
     }
 
-    public addProduct() {
+    public async addProduct() {
         let product = this.searchItemCode(this.itemCode, this._saleOrder.Detail);
         if (this.validateIntegerNumber(this.productQuantity)) {
             if (product == false) {
@@ -326,6 +326,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
             }
             else {
                 this.selectedCartProduct = product;
+                await alert(`Item ${this.itemCode} is already added to cart.`);
                 this.showProductOrderModal();
             }
             this.cancel();
