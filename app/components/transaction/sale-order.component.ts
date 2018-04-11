@@ -423,6 +423,10 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
                 this.selectedProduct.quantityAvail = quantityAvail < 0 ? 0 : quantityAvail;
             }
         });
+        if(this.selectedProduct.quantityOnHand == null) {
+            this.selectedProduct.quantityOnHand = 0;
+            this.selectedProduct.quantityAvail = 0;
+        }
     }
 
     public showDescription() {
