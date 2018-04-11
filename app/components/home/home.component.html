@@ -11,10 +11,10 @@
             <StackLayout class="home-transaction">
                     <Image src="~/assets/images/ifd.png" width="30%" height="40%"></Image>
                     <StackLayout>
-                        <label text="Adrian Cortes" fontSize="32"></label>
+                        <label [text]="userName" fontSize="32"></label>
                         <DockLayout>
                             <label text="Unsend Transactions:" fontSize="16"></label>
-                            <label [text]="unsetTransactions | number:'1.2-5'" horizontalAlignment="right" verticalAligment="center" fontSize="28"></label>
+                            <label [text]="unsetTransactions | number:'1.0-5'" horizontalAlignment="right" verticalAligment="center" fontSize="28"></label>
                         </DockLayout>
                         <DockLayout>
                             <label text="Avg Amount:" fontSize="16"></label>
