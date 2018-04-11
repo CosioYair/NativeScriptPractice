@@ -19,8 +19,8 @@
 </ActionBar>
 <TabView selectedIndex="0" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton backgroundColor="white">
     <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
-        <GridLayout class="tab-content" columns="*, *" rows="*">
-            <StackLayout row="0" col="0">
+        <DockLayout class="tab-content">
+            <StackLayout width="50%">
                 <DockLayout>
                     <Label text="Customer No"></Label>
                     <TextField [text]="_saleOrder.CustomerNo" class="enabled" hint="Customer No" isEnabled="false"></TextField>
@@ -46,7 +46,7 @@
                     <TextField [text]="_saleOrder.TermsCode + ': ' + userTermsCode" class="enabled" hint="Terms" isEnabled="false"></TextField>
                 </DockLayout>
             </StackLayout>
-            <StackLayout row="0" col="1">
+            <StackLayout width="50%">
                 <DockLayout horizontalAlignment="left">
                     <TextField [text]="_saleOrder.CustomerName" class="enabled" hint="371 FURNITURE" isEnabled="false"></TextField>
                 </DockLayout>
@@ -67,11 +67,11 @@
                     <TextField [(ngModel)]="_saleOrder.Comment"></TextField>
                 </DockLayout>
             </StackLayout>
-        </GridLayout>
+        </DockLayout>
     </StackLayout>
     <StackLayout *tabItem="{title: '&#xf2ba; ADDRESS'}">
-        <GridLayout class="tab-content" columns="*, *" rows="*">
-            <StackLayout row="0" col="0">
+        <DockLayout class="tab-content" columns="*, *" rows="*">
+            <StackLayout width="50%">
                 <DockLayout>
                     <Label class="h3" text="BILL TO ADDRESS"></Label>
                 </DockLayout>
@@ -97,7 +97,7 @@
                         hint="City" isEnabled="false"></TextField>
                 </DockLayout>
             </StackLayout>
-            <StackLayout row="0" col="1">
+            <StackLayout width="50%">
                 <DockLayout>
                     <Label class="h3" text="SHIP TO ADDRESS"></Label>
                 </DockLayout>
@@ -132,7 +132,7 @@
                     <DropDown [items]="shipVias" (selectedIndexChanged)="setCustomerShipVia($event)" [(ngModel)]="shipVia"></DropDown>
                 </DockLayout>
             </StackLayout>
-        </GridLayout>
+        </DockLayout>
     </StackLayout>
     <StackLayout *tabItem="{title: '&#xf02e; LINES'}">
         <GridLayout class="tab-content" columns="*, *" rows="*">
