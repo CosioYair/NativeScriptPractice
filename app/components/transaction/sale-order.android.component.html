@@ -1,16 +1,23 @@
-<ActionBar title="Mobile Sales Automation" class="action-bar">
-    <GridLayout columns="*,*" rows="auto, *" >
-        <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
-            <Image src="~/assets/images/logo.png"></Image>
-            <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+<ActionBar title="Mobile Sales" class="action-bar">
+    <DockLayout>
+        <StackLayout width="33%">
+            <DockLayout>
+                <StackLayout width="15%" horizontalAlignment="left">
+                    <Image src="~/assets/images/iconMS.png" width="100%" height="100%"></Image>
+                </StackLayout>
+                <StackLayout width="75%">
+                    <Label text="Mobile Sales" textAlignment="left" fontSize="20" paddingTop="10%"></Label>
+                </StackLayout>
+            </DockLayout>
         </StackLayout>
-        <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
-            <Button text="&#xf187; SAVE" verticalAlignment="center" (tap)="save()"></Button>
-            <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
+        <StackLayout width="33%">
         </StackLayout>
-    </GridLayout>
+        <StackLayout width="33%">
+            <Button text="&#xf187; SAVE" verticalAlignment="center" horizontalAlignment="right" (tap)="save()" fontSize="15%" backgroundColor="orangered"></Button>
+        </StackLayout>
+    </DockLayout>
 </ActionBar>
-<TabView selectedIndex="0" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton>
+<TabView selectedIndex="0" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton backgroundColor="white">
     <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
         <GridLayout class="tab-content" columns="*, *" rows="*">
             <StackLayout row="0" col="0">
@@ -32,7 +39,7 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Warehouse"></Label>
-                    <DropDown [items]="warehouses" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2"></DropDown>    
+                    <DropDown [items]="warehouses" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2"></DropDown>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Terms"></Label>
@@ -62,7 +69,7 @@
             </StackLayout>
         </GridLayout>
     </StackLayout>
-    <StackLayout *tabItem="{title: '&#xf2ba; ADDRESS'}" >
+    <StackLayout *tabItem="{title: '&#xf2ba; ADDRESS'}">
         <GridLayout class="tab-content" columns="*, *" rows="*">
             <StackLayout row="0" col="0">
                 <DockLayout>
@@ -86,7 +93,8 @@
                 </DockLayout>
                 <DockLayout>
                     <Label></Label>
-                    <TextField [text]="_saleOrder.BillToCity + ', ' + _saleOrder.BillToState + ' ' + _saleOrder.BillToZipCode" class="enabled" hint="City" isEnabled="false"></TextField>
+                    <TextField [text]="_saleOrder.BillToCity + ', ' + _saleOrder.BillToState + ' ' + _saleOrder.BillToZipCode" class="enabled"
+                        hint="City" isEnabled="false"></TextField>
                 </DockLayout>
             </StackLayout>
             <StackLayout row="0" col="1">
@@ -95,7 +103,8 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Ship To"></Label>
-                    <DropDown [items]="shippingAddressList" [selectedIndex]="_saleOrder.ShipTo" (selectedIndexChanged)="setCustomerShippingAddress($event)" colSpan="2"></DropDown> 
+                    <DropDown [items]="shippingAddressList" [selectedIndex]="_saleOrder.ShipTo" (selectedIndexChanged)="setCustomerShippingAddress($event)"
+                        colSpan="2"></DropDown>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Name"></Label>
@@ -115,8 +124,9 @@
                 </DockLayout>
                 <DockLayout>
                     <Label></Label>
-                    <TextField [text]="_saleOrder.ShipToCity + ', ' + _saleOrder.ShipToState + ' ' + _saleOrder.ShipToZipCode" class="enabled" hint="City" isEnabled="false"></TextField>
-                </DockLayout>   
+                    <TextField [text]="_saleOrder.ShipToCity + ', ' + _saleOrder.ShipToState + ' ' + _saleOrder.ShipToZipCode" class="enabled"
+                        hint="City" isEnabled="false"></TextField>
+                </DockLayout>
                 <DockLayout>
                     <Label text="Ship Via"></Label>
                     <DropDown [items]="shipVias" (selectedIndexChanged)="setCustomerShipVia($event)" [(ngModel)]="shipVia"></DropDown>
@@ -124,7 +134,7 @@
             </StackLayout>
         </GridLayout>
     </StackLayout>
-    <StackLayout *tabItem="{title: '&#xf02e; LINES'}" >
+    <StackLayout *tabItem="{title: '&#xf02e; LINES'}">
         <GridLayout class="tab-content" columns="*, *" rows="*">
             <StackLayout class="tab-list" row="0" col="0">
                 <SearchBar hint="Search" (textChange)="onTextChanged($event)" (clear)="onClear($event)" textFieldBackgroundColor="white"></SearchBar>
@@ -143,7 +153,7 @@
                                     </GridLayout>
                                 </ng-template>
                             </ListView>
-                        </StackLayout> 
+                        </StackLayout>
                     </GridLayout>
                 </Border>
             </StackLayout>
@@ -215,7 +225,8 @@
                                             <Label text="Whse"></Label>
                                             <DropDown [items]="warehouses" class="enabled" [(ngModel)]="warehouse" colSpan="2" isEnabled="false"></DropDown>
                                         </DockLayout>
-                                        <TextView backgroundColor="white" style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="300px" marginBottom="60px" marginTop="100px" [(ngModel)]="selectedProduct.comment" class="input input-border"></TextView>
+                                        <TextView backgroundColor="white" style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="300px" marginBottom="60px"
+                                            marginTop="100px" [(ngModel)]="selectedProduct.comment" class="input input-border"></TextView>
                                     </StackLayout>
                                     <GridLayout class="" columns="125, *, *" rows="*">
                                         <StackLayout class="" row="0" col="0" horizontalAlignment="right">
@@ -233,8 +244,8 @@
                                     </GridLayout>
                                 </StackLayout>
                                 <StackLayout class="" row="0" col="1">
-                                    <Button class="option-button" text="Add" verticalAlignment="center" (tap)="addProduct()"></Button>
-                                    <Button class="option-button" text="Cancel" verticalAlignment="center" (tap)="cancel()"></Button>
+                                    <Button class="option-button" text="Add" verticalAlignment="center" (tap)="addProduct()" color="white" backgroundColor="orangered"></Button>
+                                    <Button class="option-button" text="Cancel" verticalAlignment="center" (tap)="cancel()" color="white" backgroundColor="orangered"></Button>
                                     <Image class="productImage" src="~/assets/images/barCode.png" (tap)="showCart()"></Image>
                                 </StackLayout>
                             </GridLayout>
@@ -244,7 +255,7 @@
             </StackLayout>
         </GridLayout>
     </StackLayout>
-    <StackLayout *tabItem="{title: '&#xf2b5; TOTALS'}" >
+    <StackLayout *tabItem="{title: '&#xf2b5; TOTALS'}">
         <GridLayout class="tab-content" columns="300, *, auto" rows="*">
             <StackLayout class="tab-list" row="0" col="0">
                 <GridLayout borderRadius="8" class="totals" columns="*" rows="80, *">
@@ -337,9 +348,9 @@
                 </ListView>
             </StackLayout>
             <StackLayout class="product-detail-icons" row="0" col="2">
-                <Button class="option-button" text="&#xf044;" verticalAlignment="center" (tap)="showProductOrderModal()"></Button>
-                <Button class="option-button" text="&#xf1f8;" verticalAlignment="center" (tap)="deleteCartProduct()"></Button>
+                <Button class="option-button" text="&#xf044;" verticalAlignment="center" (tap)="showProductOrderModal()" color="white" backgroundColor="orangered"></Button>
+                <Button class="option-button" text="&#xf1f8;" verticalAlignment="center" (tap)="deleteCartProduct()" color="white" backgroundColor="orangered"></Button>
             </StackLayout>
-        </GridLayout>   
+        </GridLayout>
     </StackLayout>
 </TabView>

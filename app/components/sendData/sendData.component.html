@@ -1,14 +1,22 @@
 <StackLayout>
-    <ActionBar title="Mobile Sales Automation" class="action-bar">
-        <GridLayout columns="*,*" rows="auto, *">
-            <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
-                <Image src="~/assets/images/logo.png"></Image>
-                <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+    <ActionBar title="Mobile Sales" class="action-bar">
+        <DockLayout>
+            <StackLayout width="33%">
+                <DockLayout>
+                    <StackLayout width="15%" horizontalAlignment="left">
+                        <Image src="~/assets/images/iconMS.png" width="100%" height="100%"></Image>
+                    </StackLayout>
+                    <StackLayout width="75%">
+                        <Label text="Mobile Sales" textAlignment="left" fontSize="20" paddingTop="10%"></Label>
+                    </StackLayout>
+                </DockLayout>
             </StackLayout>
-            <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
-                <Button text="&#xf093; Send" verticalAlignment="center" (tap)="sendData()"></Button>
+            <StackLayout width="33%">
             </StackLayout>
-        </GridLayout>
+            <StackLayout width="33%">
+                <Button text="&#xf093; Send" verticalAlignment="center" horizontalAlignment="right" (tap)="sendData()" fontSize="15%" backgroundColor="orangered"></Button>
+            </StackLayout>
+        </DockLayout>
     </ActionBar>
     <DockLayout>
         <StackLayout width="30%" padding="10%">

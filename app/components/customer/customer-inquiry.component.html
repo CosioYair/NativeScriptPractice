@@ -1,18 +1,22 @@
-<ActionBar title="Mobile Sales Automation" class="action-bar">
-    <GridLayout columns="*,*" rows="auto, *">
-        <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
-            <Image src="~/assets/images/logo.png"></Image>
-            <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+<ActionBar title="Mobile Sales" class="action-bar">
+    <DockLayout>
+        <StackLayout width="33%">
+            <DockLayout>
+                <StackLayout width="15%" horizontalAlignment="left">
+                    <Image src="~/assets/images/iconMS.png" width="100%" height="100%"></Image>
+                </StackLayout>
+                <StackLayout width="75%">
+                    <Label text="Mobile Sales" textAlignment="left" fontSize="20" paddingTop="10%"></Label>
+                </StackLayout>
+            </DockLayout>
         </StackLayout>
-        <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
-            <Button text="&#xf0b0; Filter" verticalAlignment="center"></Button>
-            <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
+        <StackLayout width="66%">
         </StackLayout>
-    </GridLayout>
+    </DockLayout>
 </ActionBar>
 
-<GridLayout class="" columns="*, *" rows="*" backgroundColor="white">
-    <StackLayout class="customer-content" row="0" col="0">
+<DockLayout class="" columns="*, *" rows="*" backgroundColor="white">
+    <StackLayout width="50%">
         <SearchBar hint="Search" (textChange)="onTextChanged($event)" (clear)="onClear($event)" textFieldBackgroundColor="white"></SearchBar>
         <Border borderRadius="8" borderBottomWidth="2" borderTopWidth="2" borderColor="#DE6427" horizontalAlignment="stretch">
             <GridLayout borderRadius="8" class="" columns="*" rows="*" backgroundColor="white">
@@ -31,37 +35,31 @@
             </GridLayout>
         </Border>
     </StackLayout>
-    <StackLayout class="customer-content customer-detail" row="0" col="1">
-        <Border borderRadius="8" borderRightWidth="3" borderLeftWidth="3" borderColor="#DE6427" horizontalAlignment="stretch">
-            <GridLayout borderRadius="8" class="" columns="*" rows="100, *, 100" backgroundColor="white">
-                <Border margin="3%" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
-                    <StackLayout>
-                        <Label [text]="selectedCustomer.CustomerName" class="h1"></Label>
-                        <Label [text]="selectedCustomer.CustomerNo" class="list-group-item-heading"></Label>
-                    </StackLayout>
-                </Border>
-                <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%" col="0" row="1">
-                    <Label text="ADDRESS" class="h2"></Label>
-                    <Label [text]="selectedCustomer.City + ' ' + selectedCustomer.State + ' ' + selectedCustomer.ZipCode" class="list-group-item-heading"></Label>
-                    <Label [text]="selectedCustomer.AddressLine1" class="list-group-item-heading"></Label>}
+    <StackLayout width="50%" padding="10%">
+            <StackLayout padding="10%">
+                <Label [text]="selectedCustomer.CustomerName" fontSize="30%"></Label>
+                <Label [text]="selectedCustomer.CustomerNo" fontSize="15%"></Label>
+            </StackLayout>
+        <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%" borderRadius="8" borderBottomWidth="2" borderTopWidth="2" borderColor="#DE6427">
+            <Label text="ADDRESS:" fontSize="25%" color="gray" paddingTop="10%"></Label>
+            <Label [text]="selectedCustomer.City + ' ' + selectedCustomer.State + ' ' + selectedCustomer.ZipCode" class="list-group-item-heading" color="black" paddingTop="10%" textAlignment="center"></Label>
+            <Label [text]="selectedCustomer.AddressLine1" class="list-group-item-heading" color="black" paddingTop="10%" textAlignment="center"></Label>}
 
-                    <Label text="PHONE" class="h2"></Label>
-                    <Label [text]="selectedCustomer.TelephoneNo" class="list-group-item-heading"></Label>
+            <Label text="PHONE:" fontSize="25%" color="gray" paddingTop="10%"></Label>
+            <Label [text]="selectedCustomer.TelephoneNo" class="list-group-item-heading" color="black" paddingTop="10%" textAlignment="center"></Label>
 
-                    <Label text="PRIMARY CONTACT" class="h2"></Label>
-                    <Label [text]="selectedCustomer.TelephoneNo" class="list-group-item-heading"></Label>
+            <Label text="PRIMARY CONTACT:" fontSize="25%" color="gray" paddingTop="10%"></Label>
+            <Label [text]="selectedCustomer.TelephoneNo" class="list-group-item-heading" color="black" paddingTop="10%" textAlignment="center"></Label>
 
-                    <Label text="TERMS" class="h2"></Label>
-                    <Label [text]="selectedCustomer.TermsCode" class="list-group-item-heading"></Label>
+            <Label text="TERMS:" fontSize="25%" color="gray" paddingTop="10%"></Label>
+            <Label [text]="selectedCustomer.TermsCode" class="list-group-item-heading" color="black" paddingTop="10%" textAlignment="center"></Label>
 
-                    <Label text="SALESREP" class="h2"></Label>
-                    <Label [text]="salesRep" class="list-group-item-heading"></Label>
-                    <!--
+            <Label text="SALESREP:" fontSize="25%" color="gray" paddingTop="10%"></Label>
+            <Label [text]="salesRep" class="list-group-item-heading" color="black" paddingTop="10%" textAlignment="center"></Label>
+            <!--
                         <Label text="PRICE LEVEL" class="h2"></Label>
                         <Label [text]="" class="list-group-item-heading"></Label>
                         -->
-                </StackLayout>
-            </GridLayout>
-        </Border>
+        </StackLayout>
     </StackLayout>
-</GridLayout>
+</DockLayout>

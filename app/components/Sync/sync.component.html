@@ -1,32 +1,37 @@
-<ActionBar title="Mobile Sales Automation" class="action-bar">
-    <GridLayout columns="*,*" rows="auto, *" >
-        <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
-            <Image src="~/assets/images/logo.png"></Image>
-            <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+<ActionBar title="Mobile Sales" class="action-bar">
+    <DockLayout>
+        <StackLayout width="33%">
+            <DockLayout>
+                <StackLayout width="15%" horizontalAlignment="left">
+                    <Image src="~/assets/images/iconMS.png" width="100%" height="100%"></Image>
+                </StackLayout>
+                <StackLayout width="75%">
+                    <Label text="Mobile Sales" textAlignment="left" fontSize="20" paddingTop="10%"></Label>
+                </StackLayout>
+            </DockLayout>
         </StackLayout>
-        <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
-            <Button *ngIf = "refreshButton" text="&#xf021; Refresh" verticalAlignment="center" (tap)="refresh()"></Button>
-            <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
+        <StackLayout width="33%">
         </StackLayout>
-    </GridLayout>
+        <StackLayout width="33%">
+            <DockLayout>
+                <Button *ngIf="refreshButton" text="&#xf021; Refresh" verticalAlignment="center" horizontalAlignment="right" (tap)="refresh()" textSize="15%" backgroundColor="orangered"></Button>
+            </DockLayout>
+        </StackLayout>
+    </DockLayout>
 </ActionBar>
-
 <StackLayout *ngIf="syncScreen" backgroundColor="white">
     <DockLayout padding="10%" paddingTop="0%">
         <StackLayout padding="10%" width="50%">
-                        
             <GridLayout rows="*">
-                <ListView [items]="options" class="list-group" >
+                <ListView [items]="options" class="list-group">
                     <ng-template let-item="item" let-i="index">
-                        <StackLayout >
+                        <StackLayout>
                             <Label [text]="item.name" class="list-group-item-heading" fontSize="20"></Label>
                             <Switch checked="true" color="orangered" (checkedChange)="switch(i)"></Switch>
                         </StackLayout>
                     </ng-template>
                 </ListView>
             </GridLayout>
-            
-
         </StackLayout>
         <StackLayout width="50%">
             <Label padding="20%" text="Last Refresh"></Label>
@@ -34,9 +39,10 @@
         </StackLayout>
     </DockLayout>
 </StackLayout>
-
-<StackLayout *ngIf="loadingScreen" verticalAlign="center" horizontalAlign="center" width="50%" backgroundColor="white">
-        <Label paddingTop="200%" [text]="status" fontSize="30"  textAlignment="center" ></Label>
+<StackLayout *ngIf="loadingScreen" backgriounColor="white">
+    <StackLayout verticalAlign="center" horizontalAlign="center" width="50%">
+        <Label paddingTop="200%" [text]="status" fontSize="30" textAlignment="center"></Label>
         <Progress [value]="progressValue" (valueChanged)="onValueChanged($event)" maxValue="100" class="m-20" color="orangered"></Progress>
         <Button [nsRouterLink]="['/home']" *ngIf="button" text="Accept" width="50%"></Button>
+    </StackLayout>
 </StackLayout>

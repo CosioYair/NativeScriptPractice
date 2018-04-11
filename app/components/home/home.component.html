@@ -1,56 +1,71 @@
-<ActionBar title="Mobile Sales Automation" class="action-bar">
-    <GridLayout columns="*,*" rows="auto, *" >
-        <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
-            <Image src="~/assets/images/iconMS.png"></Image>
-            <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+<ActionBar title="Mobile Sales" class="action-bar">
+    <DockLayout>
+        <StackLayout width="33%">
+            <DockLayout>
+                <StackLayout width="15%" horizontalAlignment="left">
+                    <Image src="~/assets/images/iconMS.png" width="100%" height="100%"></Image>
+                </StackLayout>
+                <StackLayout width="75%">
+                    <Label text="Mobile Sales" textAlignment="left" fontSize="20" paddingTop="10%"></Label>
+                </StackLayout>
+            </DockLayout>
         </StackLayout>
-    </GridLayout>
+        <StackLayout width="66%">
+
+        </StackLayout>
+    </DockLayout>
 </ActionBar>
 <StackLayout class="page">
     <DockLayout>
-            <StackLayout class="home-transaction">
-                    <Image src="~/assets/images/ifd.png" width="30%" height="40%"></Image>
-                    <StackLayout>
-                        <label text="Adrian Cortes" fontSize="32"></label>
-                        <DockLayout>
-                            <label text="Unsend Transactions:" fontSize="16"></label>
-                            <label [text]="unsetTransactions" horizontalAlignment="right" verticalAligment="center" fontSize="28"></label>
-                        </DockLayout>
-                        <DockLayout>
-                            <label text="Avg Amount:" fontSize="16"></label>
-                            <DockLayout horizontalAlignment="right">
-                                    <label text="$"  verticalAligment="center" fontSize="28"></label>
-                                    <label [text]="avgAmount | number:'1.2-5'"  verticalAligment="center" fontSize="28"></label>
-                            </DockLayout>
-                            
-                        </DockLayout>
-                        <DockLayout>
-                            <label text="Total Amount:" fontSize="16"></label>
-                            <DockLayout horizontalAlignment="right">
-                                    <label text="$"  verticalAligment="center" fontSize="28"></label>
-                                    <label [text]="totalAmount | number:'1.2-5'"  verticalAligment="center" fontSize="28"></label>
-                            </DockLayout>
-                        </DockLayout>
-                    </StackLayout>
+        <StackLayout class="home-transaction">
+            <Image src="~/assets/images/ifd.png" width="30%" height="40%"></Image>
+            <StackLayout>
+                <label text="Adrian Cortes" fontSize="32"></label>
+                <DockLayout>
+                    <label text="Unsend Transactions:" fontSize="16"></label>
+                    <label [text]="unsetTransactions" horizontalAlignment="right" verticalAligment="center" fontSize="28"></label>
+                </DockLayout>
+                <DockLayout>
+                    <label text="Avg Amount:" fontSize="16"></label>
+                    <DockLayout horizontalAlignment="right">
+                        <label text="$" verticalAligment="center" fontSize="28"></label>
+                        <label [text]="avgAmount | number:'1.2-5'" verticalAligment="center" fontSize="28"></label>
+                    </DockLayout>
+
+                </DockLayout>
+                <DockLayout>
+                    <label text="Total Amount:" fontSize="16"></label>
+                    <DockLayout horizontalAlignment="right">
+                        <label text="$" verticalAligment="center" fontSize="28"></label>
+                        <label [text]="totalAmount | number:'1.2-5'" verticalAligment="center" fontSize="28"></label>
+                    </DockLayout>
+                </DockLayout>
             </StackLayout>
-            <DockLayout class="home-options" paddingTop="100%">
-                                
-                            <StackLayout width="50%">
-                                    <label text="Transactions" fontSize="30"></label>
-                                    <button [nsRouterLink]="['/customerTransaction']" text="&#xf09d;    New Transaction" fontSize="18" color="white" backgroundColor="orangered" class="buttonStyle"></button>
-                                    <button [nsRouterLink]="['/reviewTransaction']" text="&#xf022;    Review Transactions" fontSize="18" color="white" backgroundColor="orangered" class="buttonStyle"></button>
-                                    <label text="Communications" fontSize="30"></label>
-                                    <button [nsRouterLink]="['/sendData']" text="&#xf093;    Send Data" fontSize="18" color="white" backgroundColor="#006064" class="buttonStyle"></button>
-                                    <button [nsRouterLink]="['/sync']" text="&#xf021;    Refresh Data" fontSize="18" color="white" backgroundColor="#006064" class="buttonStyle"></button>
-                                </StackLayout>
-                                <StackLayout>
-                                    <label text="Inquiries" fontSize="30"></label>
-                                    <button [nsRouterLink]="['/customerInquiry']" text="&#xf0c0; Customer Inquiry" fontSize="18" color="white" backgroundColor="gray" alignmentText="left" class="buttonStyle"></button>
-                                    <button [nsRouterLink]="['/itemInquiry']" text="&#xf291; Item Inquiry" fontSize="18" color="white" backgroundColor="gray" class="buttonStyle"></button>
-                            </StackLayout>
-            </DockLayout>
-            
-            
+        </StackLayout>
+        <DockLayout class="home-options" paddingTop="100%">
+
+            <StackLayout width="50%">
+                <label text="Transactions" fontSize="30%"></label>
+                <button [nsRouterLink]="['/customerTransaction']" text="&#xf09d;  New Transaction" fontSize="20%" color="white" backgroundColor="orangered"
+                    class="buttonStyle"></button>
+                <button [nsRouterLink]="['/reviewTransaction']" text="&#xf022;  Review Transactions" fontSize="20%" color="white" backgroundColor="orangered"
+                    class="buttonStyle"></button>
+                <label text="Data" fontSize="30%"></label>
+                <button [nsRouterLink]="['/sendData']" text="&#xf093;  Send Data" fontSize="20%" color="white" backgroundColor="#006064"
+                    class="buttonStyle"></button>
+                <button [nsRouterLink]="['/sync']" text="&#xf021;  Refresh Data" fontSize="20%" color="white" backgroundColor="#006064"
+                    class="buttonStyle"></button>
+            </StackLayout>
+            <StackLayout>
+                <label text="Inquiries" fontSize="30%"></label>
+                <button [nsRouterLink]="['/customerInquiry']" text="&#xf0c0;  Customer Inquiry" fontSize="20%" color="white" backgroundColor="gray"
+                    alignmentText="left" class="buttonStyle"></button>
+                <button [nsRouterLink]="['/itemInquiry']" text="&#xf291;  Item Inquiry" fontSize="20%" color="white" backgroundColor="gray"
+                    class="buttonStyle"></button>
+            </StackLayout>
+        </DockLayout>
+
+
     </DockLayout>
-    
+
 </StackLayout>
