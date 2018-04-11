@@ -21,7 +21,7 @@
                             <Label [text]="item.CustomerName" class="list-group-item-heading h2"></Label>
                             <StackLayout marginLeft="5%">
                                 <Label [text]="item.CustomerNo" class="list-group-item-heading"></Label>
-                                <Label [text]="item.City + ' ' + item.State + ' ' + item.ZipCode" class="list-group-item-heading"></Label>
+                                <Label [text]="item.City + ', ' + item.State + '. ' + item.ZipCode" class="list-group-item-heading"></Label>
                             </StackLayout>
                         </StackLayout>
                     </ng-template>
@@ -40,8 +40,8 @@
                 </Border>
                 <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%" col="0" row="1">
                     <Label text="ADDRESS" class="h2"></Label>
-                    <Label [text]="selectedCustomer.City + ' ' + selectedCustomer.State + ' ' + selectedCustomer.ZipCode" class="list-group-item-heading"></Label>
-                    <Label [text]="selectedCustomer.AddressLine1" class="list-group-item-heading"></Label>}
+                    <Label [text]="selectedCustomer.AddressLine1" class="list-group-item-heading"></Label>
+                    <Label [text]="selectedCustomer.City + ', ' + selectedCustomer.State + '. ' + selectedCustomer.ZipCode" class="list-group-item-heading"></Label>
 
                     <Label text="PHONE" class="h2"></Label>
                     <Label [text]="selectedCustomer.TelephoneNo" class="list-group-item-heading"></Label>
