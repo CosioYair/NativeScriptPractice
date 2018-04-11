@@ -6,7 +6,7 @@
         </StackLayout>
         <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
             <Button *ngIf = "refreshButton" text="&#xf021; Refresh" verticalAlignment="center" (tap)="refresh()"></Button>
-            <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
+            <Button (tap)="getImages()" text="&#xf142;" verticalAlignment="center" class="options"></Button>
         </StackLayout>
     </GridLayout>
 </ActionBar>
@@ -30,6 +30,7 @@
         </StackLayout>
         <StackLayout width="50%">
             <Label padding="20%" text="Last Refresh"></Label>
+            <Image row="2" [src]="test"></Image>
             <Label [text]="dateUpdated" fontSize="20" horizontalAlignment="center" color="black"></Label>
         </StackLayout>
     </DockLayout>

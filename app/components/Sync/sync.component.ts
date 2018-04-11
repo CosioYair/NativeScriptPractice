@@ -43,6 +43,8 @@ export class SyncComponent {
     public refreshButton: boolean = true;
     public progressValue = 0;
     public status: string = "Downloading...";
+    public test: any;
+
     constructor(
         private _productService: ProductService,
         private _customerService: CustomerService,
@@ -157,7 +159,10 @@ export class SyncComponent {
         this.refreshButton = true;
     }
 
-    public defaultFunction() {
-
+    public async getImages() {
+        let products = this._couchbaseService.getDocument("product")["product"];
+        await products.map(async product => {
+            await this._productService.downloadImage(product.ItemCode);
+        });
     }
 }
