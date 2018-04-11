@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
                         this._router.navigate(["/sync"]);
                     else
                         this._router.navigate(["/home"]);
+                    this.userPassword = "";
                     SERVER.user = this._user;
                 }
                 else
