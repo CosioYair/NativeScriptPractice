@@ -135,7 +135,7 @@
         </DockLayout>
     </StackLayout>
     <StackLayout *tabItem="{title: '&#xf02e; LINES'}">
-        <DockLayout class="tab-content">
+        <DockLayout >
             <StackLayout class="tab-list" width="50%">
                 <SearchBar hint="Search" (textChange)="onTextChanged($event)" (clear)="onClear($event)" textFieldBackgroundColor="white"></SearchBar>
                 <Border backgroundColor="white" borderRadius="8" borderBottomWidth="2" borderTopWidth="2" borderColor="#DE6427" horizontalAlignment="stretch">
@@ -157,13 +157,13 @@
                     </GridLayout>
                 </Border>
             </StackLayout>
-            <StackLayout class="product-detail" width="50%">
-                <StackLayout borderRadius="8">
-                    <Border margin="3%" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
+            <StackLayout  width="50%">
+                <StackLayout>
+                    <Border borderBottomWidth="2" borderColor="orangered" horizontalAlignment="stretch">
                         <DockLayout borderRadius="8">
                             <StackLayout class="product-detail-title" width="50%">
-                                <Label [text]="lineTitle" class="h1"></Label>
-                                <Label [text]="lineSubTitle" class="list-group-item-heading"></Label>
+                                <Label [text]="lineSubTitle" class="h1" color="orangered"></Label>
+                                <Label [text]="lineTitle" class="list-group-item-heading"></Label>
                             </StackLayout>
                             <StackLayout *ngIf="showingProduct" width="50%">
                                 <Label text="&#xf129;" (tap)="showDescription()"></Label>
@@ -200,55 +200,60 @@
                             </DockLayout>
                         </StackLayout>
                         <StackLayout *ngIf="showingProduct">
-                            <GridLayout class="product-quantity" columns="340, *" rows="auto">/////aqui me quede
-                                <StackLayout class="" row="0" col="0">
-                                    <GridLayout class="product-sections" columns="*, *" rows="*">
-                                        <StackLayout class="" row="0" col="0">
+                            <DockLayout>/////aqui me quede
+                                <StackLayout width="50%">
+                                    <StackLayout>
+                                        <StackLayout>
                                             <DockLayout>
-                                                <Label text="Qty"></Label>
-                                                <TextField #Qty maxLength="4" keyboardType="number" [(ngModel)]="productQuantity" keyboardType="number" hint=""></TextField>
+                                                <Label text="Qty:" width="30%"></Label>
+                                                <TextField #Qty maxLength="4" keyboardType="number" [(ngModel)]="productQuantity" keyboardType="number" hint="" borderColor="orangered" borderWidth="1"></TextField>
                                             </DockLayout>
-                                            <DockLayout marginTop="50px">
-                                                <Label text="Price"></Label>
-                                                <TextField [text]="selectedProduct.StandardUnitPrice | number:'1.2-5'" class="enabled" hint="" isEnabled="false"></TextField>
+                                            <DockLayout paddingTop="10%">
+                                                <Label text="Price:" width="30%"></Label>
+                                                <TextField [text]="selectedProduct.StandardUnitPrice | number:'1.2-5'" class="enabled" hint="" isEnabled="false" borderColor="orangered"></TextField>
                                             </DockLayout>
                                         </StackLayout>
-                                        <StackLayout row="0" col="1">
-                                            <DockLayout>
-                                                <Label text="Disc %"></Label>
+                                        <StackLayout>
+                                            <DockLayout paddingTop="10%">
+                                                <Label text="Disc: %" width="30%"></Label>
                                                 <TextField class="enabled" hint="" isEnabled="false"></TextField>
                                             </DockLayout>
                                         </StackLayout>
-                                    </GridLayout>
-                                    <StackLayout marginTop="20px">
-                                        <DockLayout>
-                                            <Label text="Whse"></Label>
-                                            <DropDown [items]="warehouses" class="enabled" [(ngModel)]="warehouse" colSpan="2" isEnabled="false"></DropDown>
-                                        </DockLayout>
-                                        <TextView backgroundColor="white" style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="300px" marginBottom="60px"
-                                            marginTop="100px" [(ngModel)]="selectedProduct.comment" class="input input-border"></TextView>
                                     </StackLayout>
-                                    <GridLayout class="" columns="125, *, *" rows="*">
-                                        <StackLayout class="" row="0" col="0" horizontalAlignment="right">
-                                            <Label text="QTY ON HAND"></Label>
-                                            <Label [text]="selectedProduct.quantityOnHand"></Label>
-                                        </StackLayout>
-                                        <StackLayout row="0" col="1" horizontalAlignment="right">
-                                            <Label text="QTY AVAIL"></Label>
-                                            <Label [text]="selectedProduct.quantityAvail"></Label>
-                                        </StackLayout>
-                                        <StackLayout row="0" col="2" horizontalAlignment="right">
-                                            <Label text="STD PRICE"></Label>
-                                            <Label [text]="selectedProduct.StandardUnitPrice | number:'1.2-5'"></Label>
-                                        </StackLayout>
-                                    </GridLayout>
+                                    <StackLayout paddingTop="10%">
+                                        <DockLayout>
+                                            <Label text="Whse:" width="30%"></Label>
+                                            <DropDown [items]="warehouses" class="enabled" [(ngModel)]="warehouse" colSpan="2" isEnabled="false" borderColor="orangered"></DropDown>
+                                        </DockLayout>
+                                    </StackLayout>
+                                    
                                 </StackLayout>
-                                <StackLayout class="" row="0" col="1">
-                                    <Button class="option-button" text="Add" verticalAlignment="center" (tap)="addProduct()" color="white" backgroundColor="orangered"></Button>
-                                    <Button class="option-button" text="Cancel" verticalAlignment="center" (tap)="cancel()" color="white" backgroundColor="orangered"></Button>
-                                    <Image class="productImage" src="~/assets/images/barCode.png" (tap)="showCart()"></Image>
+                                <StackLayout width="50%">
+                                    <Image class="productImage" src="~/assets/images/barCode.png" (tap)="showCart()" width="30%" height="30%"></Image>
                                 </StackLayout>
-                            </GridLayout>
+                            </DockLayout>
+                            <TextView backgroundColor="white" borderColor="orangered" borderWidth="1" [(ngModel)]="selectedProduct.comment" class="input input-border" maxLenght="150" height="30%"></TextView>
+                            <DockLayout>
+                                    <StackLayout width="33%">
+                                        <Label text="ON HAND"></Label>
+                                        <Label [text]="selectedProduct.quantityOnHand" textSize="30%" textAlignment="center" color="black"></Label>
+                                    </StackLayout>
+                                    <StackLayout width="33%">
+                                        <Label text="AVAILABLE"></Label>
+                                        <Label [text]="selectedProduct.quantityAvail" textSize="30%" textAlignment="center" color="black"></Label>
+                                    </StackLayout>
+                                    <StackLayout width="33%">
+                                        <Label text="STD PRICE"></Label>
+                                        <Label [text]="selectedProduct.StandardUnitPrice | number:'1.2-5'" textSize="30%" textAlignment="center" color="black"></Label>
+                                    </StackLayout>
+                                </DockLayout>
+                            <DockLayout>
+                                    <Button class="option-button" text="Add" verticalAlignment="center" (tap)="addProduct()" color="white" backgroundColor="orangered" width="50%"></Button>
+                                    <Button class="option-button" text="Cancel" verticalAlignment="center" (tap)="cancel()" color="white" backgroundColor="orangered" width="50%"></Button>
+                            </DockLayout>
+                            
+                            
+                                
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
