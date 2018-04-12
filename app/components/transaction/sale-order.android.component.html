@@ -158,14 +158,14 @@
                 </Border>
             </StackLayout>
             <StackLayout  width="50%">
-                <StackLayout>
+                <StackLayout paddingTop="10%">
                     <Border borderBottomWidth="2" borderColor="orangered" horizontalAlignment="stretch">
                         <DockLayout borderRadius="8">
-                            <StackLayout class="product-detail-title" width="50%">
+                            <StackLayout class="product-detail-title" width="90%">
                                 <Label [text]="lineSubTitle" class="h1" color="orangered"></Label>
                                 <Label [text]="lineTitle" class="list-group-item-heading"></Label>
                             </StackLayout>
-                            <StackLayout *ngIf="showingProduct" width="50%">
+                            <StackLayout *ngIf="showingProduct" width="10%">
                                 <Label text="&#xf129;" (tap)="showDescription()"></Label>
                             </StackLayout>
                         </DockLayout>
@@ -173,9 +173,15 @@
                     <StackLayout class="product-description" margin="3%">
                         <StackLayout *ngIf="!showingProduct">
                             <DockLayout>
-                                <Label text="Item Code"></Label>
-                                <TextField [(ngModel)]="itemCode" hint="" (returnPress)="validateProductList()"></TextField>
-                                <Image class="icon" src="~/assets/images/barCode.png" (tap)="onScan()"></Image>
+                                <StackLayout width="50%">
+                                        <Label text="Item Code"></Label>
+                                        <TextField [(ngModel)]="itemCode" hint="" (returnPress)="validateProductList()"></TextField>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label text="Tap to scan:"></Label>
+                                    <Button text="&#xf029;" fontSize="20%" (tap)="onScan()" color="white" backgroundColor="orangered"></Button>
+                                </StackLayout>
+                                
                             </DockLayout>
                             <DockLayout>
                                 <Image class="miniImage" src="~/assets/images/taskList.png"></Image>
