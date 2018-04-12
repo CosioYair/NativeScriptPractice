@@ -206,7 +206,7 @@
                             </DockLayout>
                         </StackLayout>
                         <StackLayout *ngIf="showingProduct">
-                            <DockLayout>/////aqui me quede
+                            <DockLayout>
                                 <StackLayout width="50%">
                                     <StackLayout>
                                         <StackLayout>
@@ -238,28 +238,27 @@
                                     <Image class="productImage" src="~/assets/images/barCode.png" (tap)="showCart()" width="30%" height="30%"></Image>
                                 </StackLayout>
                             </DockLayout>
-                            <TextView backgroundColor="white" borderColor="orangered" borderWidth="1" [(ngModel)]="selectedProduct.comment" class="input input-border" maxLenght="150" height="30%"></TextView>
-                            <DockLayout>
-                                    <StackLayout width="33%">
-                                        <Label text="ON HAND"></Label>
-                                        <Label [text]="selectedProduct.quantityOnHand" textSize="30%" textAlignment="center" color="black"></Label>
-                                    </StackLayout>
-                                    <StackLayout width="33%">
-                                        <Label text="AVAILABLE"></Label>
-                                        <Label [text]="selectedProduct.quantityAvail" textSize="30%" textAlignment="center" color="black"></Label>
-                                    </StackLayout>
-                                    <StackLayout width="33%">
-                                        <Label text="STD PRICE"></Label>
-                                        <Label [text]="selectedProduct.StandardUnitPrice | number:'1.2-5'" textSize="30%" textAlignment="center" color="black"></Label>
-                                    </StackLayout>
-                                </DockLayout>
-                            <DockLayout>
-                                    <Button class="option-button" text="Add" verticalAlignment="center" (tap)="addProduct()" color="white" backgroundColor="orangered" width="50%"></Button>
-                                    <Button class="option-button" text="Cancel" verticalAlignment="center" (tap)="cancel()" color="white" backgroundColor="orangered" width="50%"></Button>
-                            </DockLayout>
-                            
-                            
-                                
+                            <StackLayout>
+                                    <TextView backgroundColor="white" borderColor="orangered" borderWidth="1" [(ngModel)]="selectedProduct.comment" class="input input-border" maxLenght="150" height="40%"></TextView>
+                                    <DockLayout>
+                                            <StackLayout width="33%">
+                                                <Label text="ON HAND"></Label>
+                                                <Label [text]="selectedProduct.quantityOnHand" textSize="30%" textAlignment="center" color="black"></Label>
+                                            </StackLayout>
+                                            <StackLayout width="33%">
+                                                <Label text="AVAILABLE"></Label>
+                                                <Label [text]="selectedProduct.quantityAvail" textSize="30%" textAlignment="center" color="black"></Label>
+                                            </StackLayout>
+                                            <StackLayout width="33%">
+                                                <Label text="STD PRICE"></Label>
+                                                <Label [text]="selectedProduct.StandardUnitPrice | number:'1.2-5'" textSize="30%" textAlignment="center" color="black"></Label>
+                                            </StackLayout>
+                                        </DockLayout>
+                                    <DockLayout>
+                                            <Button text="Add" verticalAlignment="center" (tap)="addProduct()" color="white" backgroundColor="orangered" width="50%"></Button>
+                                            <Button text="Cancel" verticalAlignment="center" (tap)="cancel()" color="white" backgroundColor="orangered" width="50%"></Button>
+                                    </DockLayout>
+                            </StackLayout>       
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
