@@ -261,37 +261,29 @@
         </DockLayout>
     </StackLayout>
     <StackLayout *tabItem="{title: '&#xf2b5; TOTALS'}">
-        <GridLayout class="tab-content" columns="300, *, auto" rows="*">
-            <StackLayout class="tab-list" row="0" col="0">
-                <GridLayout borderRadius="8" class="totals" columns="*" rows="80, *">
+        <DockLayout>
+            <StackLayout width="22.5%">
+                <StackLayout>
                     <Border verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
                         <DockLayout paddingTop="30%" class="">
-                            <StackLayout width="55%">
+                            <StackLayout width="70%">
                                 <Label text="Total Qty" class="" paddingRight="25%"></Label>
                             </StackLayout>
-                            <StackLayout width="45%">
+                            <StackLayout width="30%">
                                 <Label borderBottomWidth="0" width="100%" class="textRight h1" isEnabled="false" [text]="cartQuantity"></Label>
                             </StackLayout>
                         </DockLayout>
                     </Border>
-                    <StackLayout class="product-description" margin="3%" col="0" row="1">
+                    <StackLayout class="product-description" margin="3%">
                         <StackLayout class="totals">
-                            <DockLayout paddingTop="30%" class="totals">
-                                <StackLayout width="55%">
+                                <StackLayout>
                                     <Label text="NET AMOUNT" class=""></Label>
-                                </StackLayout>
-                                <StackLayout width="45%">
-                                    <Label width="100%" [text]="totalCartAmount | number:'1.2-5'" class="textRight"></Label>
-                                </StackLayout>
-                            </DockLayout>
-                            <DockLayout paddingTop="30%" class="totals">
-                                <StackLayout width="55%">
+                                    <Label [text]="totalCartAmount | number:'1.2-5'" textAlignment="center" color="black"></Label>
+                                </StackLayout>>
+                                <StackLayout>
                                     <Label text="TOTAL CUBES" class=""></Label>
+                                    <Label width="100%" [text]="totalCubes | number:'1.2-5'" textAlignment="center" color="black"></Label>
                                 </StackLayout>
-                                <StackLayout width="45%">
-                                    <Label width="100%" [text]="totalCubes | number:'1.2-5'" class="textRight"></Label>
-                                </StackLayout>
-                            </DockLayout>
                             <!--
                             <DockLayout>
                                 <Label text="DISC AMOUNT"></Label>
@@ -306,33 +298,31 @@
                                 <Label text="0.00" horizontalAlignment="right"></Label>
                             </DockLayout>
                             -->
-                            <Border verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
+                            <Border verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="center">
                                 <DockLayout paddingTop="30%" class="totals">
-                                    <StackLayout width="45%">
+                                    <StackLayout>
                                         <Label text="Total Amount" class=""></Label>
-                                    </StackLayout>
-                                    <StackLayout width="55%">
-                                        <Label width="100%" [text]="totalCartAmount | number:'1.2-5'" class="h1 textRight" horizontalAlignment="right"></Label>
+                                        <Label width="100%" [text]="totalCartAmount | number:'1.2-5'" textAlignment="center"></Label>
                                     </StackLayout>
                                 </DockLayout>
                             </Border>
                         </StackLayout>
                     </StackLayout>
-                </GridLayout>
+                </StackLayout>
             </StackLayout>
-            <StackLayout class="totals" row="0" col="1" backgroundColor="white">
-                <GridLayout color="white" backgroundColor="gray" borderRadius="8" class="" columns="100, *, 120" rows="60">
-                    <StackLayout col="0" verticalAlignment="center">
+            <StackLayout width="70%" backgroundColor="white">
+                <DockLayout color="white" backgroundColor="gray" borderRadius="8" class="" columns="100, *, 120" rows="60">
+                    <StackLayout width="15%" verticalAlignment="center">
                         <Label text="Quantity"></Label>
                     </StackLayout>
-                    <StackLayout col="1" verticalAlignment="center">
-                        <Label text="Item"></Label>
+                    <StackLayout width="65%" verticalAlignment="center">
+                        <Label text="Item" textAlignment="left"></Label>
                     </StackLayout>
-                    <StackLayout col="2" verticalAlignment="center">
-                        <Label text="Unit Price" horizontalAlignment="left"></Label>
-                        <Label text="Extension" horizontalAlignment="left"></Label>
+                    <StackLayout width="20%" verticalAlignment="center">
+                        <Label text="Unit Price" horizontalAlignment="left" textAlignment="right"></Label>
+                        <Label text="Extension" horizontalAlignment="left" textAlignment="right"></Label>
                     </StackLayout>
-                </GridLayout>
+                </DockLayout>
                 <ListView [items]="_saleOrder.Detail" class="list-group">
                     <ng-template let-item="item">
                         <GridLayout borderRadius="8" class="" columns="100, *, 120" rows="100" (tap)="setSelectedCartProduct(item)" [class.highlight]="item.ItemCode == selectedCartProduct.ItemCode">
@@ -348,14 +338,17 @@
                                 <Label width="100%" class="textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
                                 <Label width="100%" class="totals-subtitle textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
                             </StackLayout>
+                            <StackLayout>
+                                
+                            </StackLayout>
                         </GridLayout>
                     </ng-template>
                 </ListView>
             </StackLayout>
-            <StackLayout class="product-detail-icons" row="0" col="2">
+            <StackLayout width="7.5%">
                 <Button class="option-button" text="&#xf044;" verticalAlignment="center" (tap)="showProductOrderModal()" color="white" backgroundColor="orangered"></Button>
                 <Button class="option-button" text="&#xf1f8;" verticalAlignment="center" (tap)="deleteCartProduct()" color="white" backgroundColor="orangered"></Button>
             </StackLayout>
-        </GridLayout>
+        </DockLayout>
     </StackLayout>
 </TabView>
