@@ -41,7 +41,8 @@ export class LoginComponent implements OnInit {
         if (this.checkDocument()) {
             this._user = this._userService.getUser(this.userId);
             if (this._user != null) {
-                if (this._user.UserPassword.toLocaleLowerCase() == this.userPassword.toLocaleLowerCase()) {
+                let password = this.userPassword == undefined ? "" : this.userPassword.toLocaleLowerCase();
+                if (this._user.UserPassword.toLocaleLowerCase() == password) {
                     if (this._couchbaseService.getDocument("product") == null)
                         this._router.navigate(["/sync"]);
                     else
