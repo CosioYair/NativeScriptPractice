@@ -18,10 +18,12 @@ export class HomeComponent{
     public unsetTransactions: number = 0;
     public avgAmount: number = 0;
     public totalAmount: number = 0;
+    public userName: string;
 
     constructor(private _saleOrderService: SaleOrderService){
         this.userTransactions =  _saleOrderService.getUnsavedUserTransactions();
         this.unsetTransactions = this.userTransactions.length;
+        this.userName = SERVER.user["UserName"];
         this.getAmounts();
     }
 

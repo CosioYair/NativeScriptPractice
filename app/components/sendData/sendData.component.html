@@ -24,7 +24,7 @@
                         <StackLayout (tap)="setTransactionList(i)">
                             <DockLayout>
                                 <Label width="75%" [text]="item.name" class="list-group-item-heading" fontSize="20"></Label>
-                                <Label width="25%" [text]="item.list.length" class="list-group-item-heading" fontSize="20"></Label>
+                                <Label width="25%" [text]="item.list.length | number:'1.2-5'" class="list-group-item-heading" fontSize="20"></Label>
                             </DockLayout>
                         </StackLayout>
                     </ng-template>

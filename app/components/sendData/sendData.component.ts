@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { SaleOrder } from "../../interfaces/saleOrder.interface";
 import { SaleOrderService } from "../../services/saleOrder.service";
 import { SendDataService } from "../../services/sendData.service";
+import { DecimalPipe } from '@angular/common';
 
 @Component({
     selector: "ns-sendData",

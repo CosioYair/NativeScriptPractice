@@ -9,6 +9,7 @@ import { SERVER } from "../../config/server.config";
 import * as dialogs from "ui/dialogs";
 import { SaleOrderService } from "../../services/saleOrder.service";
 import { Router } from "@angular/router";
+import { TermsCodeService } from "../../services/terms.service";
 
 @Component({
     selector: "ns-customer-transaction",
@@ -24,8 +25,9 @@ export class CustomerTransactionComponent implements OnInit {
     public data = {};
     public selectedCustomer: any = {};
     public salesRep: string =  SERVER.user['UserName'];
+    public userTermsCode: string;
 
-    constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService, private _saleOrderService: SaleOrderService, private _router: Router) {
+    constructor(private _couchbaseService: CouchbaseService, private _customerService: CustomerService, private _saleOrderService: SaleOrderService, private _router: Router, private _termsCodeService: TermsCodeService) {
         this.selectedCustomer = {
             CustomerNo: "Select a customer to view details",
             AddressLine1: "",
@@ -80,6 +82,7 @@ export class CustomerTransactionComponent implements OnInit {
 
     public setSelectedCustomer(customer: Customer) {
         this.selectedCustomer = customer;
+        this.userTermsCode = this._termsCodeService.getUserTermsCode(customer);
     }
 
     public createTransaction() {

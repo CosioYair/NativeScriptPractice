@@ -33,6 +33,7 @@ import { SaleOrderService } from "./services/saleOrder.service";
 import { FoliosTransactionService } from "./services/foliosTransaction.service";
 import { ImageService } from "./services/image.service";
 import { SendDataService } from "./services/sendData.service";
+import { LastRefreshService } from "./services/lastRefresh.service";
 
 @NgModule({
     bootstrap: [
@@ -77,7 +78,8 @@ import { SendDataService } from "./services/sendData.service";
         SaleOrderService,
         FoliosTransactionService,
         ImageService,
-        SendDataService
+        SendDataService,
+        LastRefreshService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

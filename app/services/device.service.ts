@@ -21,7 +21,7 @@ export class DeviceService{
     public registerDevice(){ 
         return this._http.post(`${SERVER.baseUrl}/Device`,{
             DeviceUid: platformModule.device.uuid,
-            MobileAppVersion: this.getAppVersion(),
+            MobileAppVersion: "5.0.0",
             MobileDeviceType: platformModule.device.deviceType,
             MobileOsVersion: platformModule.device.osVersion,
             DeviceName: platformModule.device.model,

@@ -1,11 +1,11 @@
 <ActionBar title="Mobile Sales Automation" class="action-bar">
-    <GridLayout columns="*,*" rows="auto, *" >
+    <GridLayout columns="*,*" rows="auto, *">
         <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
-            <Image src="~/assets/images/logo.png"></Image>
+
             <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
         </StackLayout>
         <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
-            <Button *ngIf = "refreshButton" text="&#xf021; Refresh" verticalAlignment="center" (tap)="refresh()"></Button>
+            <Button *ngIf="refreshButton" text="&#xf021; Refresh" verticalAlignment="center" (tap)="refresh()"></Button>
             <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
         </StackLayout>
     </GridLayout>
@@ -14,29 +14,44 @@
 <StackLayout *ngIf="syncScreen" backgroundColor="white">
     <DockLayout padding="10%" paddingTop="0%">
         <StackLayout padding="10%" width="50%">
-                        
+
             <GridLayout rows="*">
-                <ListView [items]="options" class="list-group" >
+                <ListView [items]="options" class="list-group">
                     <ng-template let-item="item" let-i="index">
-                        <StackLayout >
+                        <StackLayout>
                             <Label [text]="item.name" class="list-group-item-heading" fontSize="20"></Label>
                             <Switch checked="true" color="orangered" (checkedChange)="switch(i)"></Switch>
                         </StackLayout>
                     </ng-template>
                 </ListView>
             </GridLayout>
-            
+
 
         </StackLayout>
         <StackLayout width="50%">
-            <Label padding="20%" text="Last Refresh"></Label>
-            <Label [text]="dateUpdated" fontSize="20" horizontalAlignment="center" color="black"></Label>
+            <StackLayout>
+                <Label padding="20%" text="Last Documents Refresh"></Label>
+                <Image row="2" [src]="test"></Image>
+                <Label [text]="dateDocsUpdated" fontSize="20" horizontalAlignment="center" color="black"></Label>
+            </StackLayout>
+            <StackLayout>
+                <Label padding="20%" text="Last Images Refresh"></Label>
+                <Image row="2" [src]="test"></Image>
+                <Label [text]="dateImagesUpdated" fontSize="20" horizontalAlignment="center" color="black"></Label>
+                <Button (tap)="refreshImages()" text="&#xf142; Refresh Images" verticalAlignment="center" class="options"></Button>
+            </StackLayout>
         </StackLayout>
     </DockLayout>
 </StackLayout>
 
 <StackLayout *ngIf="loadingScreen" verticalAlign="center" horizontalAlign="center" width="50%" backgroundColor="white">
-        <Label paddingTop="200%" [text]="status" fontSize="30"  textAlignment="center" ></Label>
-        <Progress [value]="progressValue" (valueChanged)="onValueChanged($event)" maxValue="100" class="m-20" color="orangered"></Progress>
-        <Button [nsRouterLink]="['/home']" *ngIf="button" text="Accept" width="50%"></Button>
+    <Label paddingTop="200%" [text]="status" fontSize="30" textAlignment="center"></Label>
+    <Progress [value]="progressValue" (valueChanged)="onValueChanged($event)" maxValue="100" class="m-20" color="orangered"></Progress>
+    <Button [nsRouterLink]="['/home']" *ngIf="button" text="Accept" width="50%"></Button>
+</StackLayout>
+
+<StackLayout *ngIf="loadingImagesScreen" verticalAlign="center" horizontalAlign="center" width="50%" backgroundColor="white">
+    <Label paddingTop="200%" [text]="status" fontSize="30" textAlignment="center"></Label>
+    <Progress [value]="progressImageValue" (valueChanged)="onValueChanged($event)" [maxValue]="lengthImages" class="m-20" color="orangered"></Progress>
+    <Button [nsRouterLink]="['/home']" *ngIf="button" text="Accept" width="50%"></Button>
 </StackLayout>

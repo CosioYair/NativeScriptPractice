@@ -50,7 +50,7 @@ export class ShippingAddressService {
         if(doc == undefined)
             return null;
         await doc.map(shipping => {
-            shippingAddressList.push(shipping.ShipToCode);
+            shippingAddressList.push(shipping.ShipToCode + ': ' + shipping.ShipToCity + ', ' + shipping.ShipToState + '. ' + shipping.ShipToZipCode);
         });
         return shippingAddressList;
     }

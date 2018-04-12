@@ -41,11 +41,12 @@ export class LoginComponent implements OnInit {
         if (this.checkDocument()) {
             this._user = this._userService.getUser(this.userId);
             if (this._user != null) {
-                if (this._user.UserPassword == this.userPassword) {
+                if (this._user.UserPassword.toLocaleLowerCase() == this.userPassword.toLocaleLowerCase()) {
                     if (this._couchbaseService.getDocument("product") == null)
                         this._router.navigate(["/sync"]);
                     else
                         this._router.navigate(["/home"]);
+                    this.userPassword = "";
                     SERVER.user = this._user;
                 }
                 else

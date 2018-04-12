@@ -14,6 +14,7 @@ import * as progressModule from "tns-core-modules/ui/progress";
 import { Progress } from "ui/progress";
 import { CouchbaseService } from "../../services/couchbase.service";
 import { SERVER } from "../../config/server.config";
+import { LastRefreshService } from "../../services/lastRefresh.service";
 
 @Component({
     selector: "ns-sync",
@@ -36,13 +37,19 @@ export class SyncComponent {
     public termsCode = true;
     public json: any;
     public options: any;
-    public dateUpdated: any;
+    public dateDocsUpdated: any;
+    public dateImagesUpdated: any;
     public syncScreen: boolean = true;
     public loadingScreen: boolean = false;
+    public loadingImagesScreen: boolean = false;
     public button: boolean = false;
     public refreshButton: boolean = true;
     public progressValue = 0;
+    public progressImageValue = 0;
     public status: string = "Downloading...";
+    public test: any;
+    public lengthImages: number = 0;
+
     constructor(
         private _productService: ProductService,
         private _customerService: CustomerService,
@@ -51,7 +58,8 @@ export class SyncComponent {
         private _shippingAddressService: ShippingAddressService,
         private _termsCodeService: TermsCodeService,
         private _couchbaseService: CouchbaseService,
-        private _userService: UserService
+        private _userService: UserService,
+        private _lastRefreshService: LastRefreshService
     ) {
         this.options = [
             {
@@ -92,7 +100,10 @@ export class SyncComponent {
         ];
         if (this._couchbaseService.getDocument("product") == null)
             this.refresh();
-
+        else {
+            this.dateDocsUpdated = _lastRefreshService.getLastRefresh("docs");
+            this.dateImagesUpdated = _lastRefreshService.getLastRefresh("images");
+        }
     }
 
     /*
@@ -117,7 +128,7 @@ export class SyncComponent {
 
 
 
-    public refresh() {
+    public async refresh() {
         this.syncScreen = false;
         this.loadingScreen = true;
         this.refreshButton = false;
@@ -125,6 +136,7 @@ export class SyncComponent {
         var j = 0;
         var part = 0;
         var res = 0;
+        let counter = 0;
         this.options.map(option => {
             if (option.status)
                 j++;
@@ -132,9 +144,12 @@ export class SyncComponent {
 
         part = 100 / j;
 
-        this.options.map(async (option) => {
-            if (option.status) {
-                await option.service();
+        this._lastRefreshService.setLastRefreshDocument();
+
+        while (counter < this.options.length) {
+            if (this.options[counter].status) {
+                await this.options[counter].service();
+                counter++;
                 this.progressValue += part;
                 res = 100 / this.progressValue;
                 if (res <= 1) {
@@ -143,12 +158,8 @@ export class SyncComponent {
                     this.status = "Downloaded"
                 }
             }
-        });
-
-        var date = new Date();
-        this.dateUpdated = date.toDateString();
-        //console.log(this.dateUpdated);
-        console.log(part);
+        };
+        this._lastRefreshService.setLastRefresh("docs", new Date().toDateString());   
     }
 
     public accept() {
@@ -157,7 +168,22 @@ export class SyncComponent {
         this.refreshButton = true;
     }
 
-    public defaultFunction() {
-
+    public async refreshImages() {
+        this.syncScreen = false;
+        this.loadingImagesScreen = true;
+        let products = this._couchbaseService.getDocument("product")["product"];
+        this.lengthImages = products.length;
+        await products.map(async product => {
+            await this._productService.removeImage(product.ItemCode);
+        });
+        while (this.progressImageValue < products.length) {
+            await this._productService.downloadImage(products[this.progressImageValue].ItemCode);
+            this.progressImageValue++;
+            if (this.progressImageValue == products.length) {
+                this.button = true;
+                this.status = "Downloaded"
+            }
+        };
+        this._lastRefreshService.setLastRefresh("images", new Date().toDateString());   
     }
 }
