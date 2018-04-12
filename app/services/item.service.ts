@@ -5,6 +5,7 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/do";
 import 'rxjs/add/operator/toPromise';
 
+import * as imageCacheModule from "tns-core-modules/ui/image-cache";
 import * as imageSourceModule from "tns-core-modules/image-source";
 import * as imageSource from "tns-core-modules/image-source";
 import * as fs from "tns-core-modules/file-system";
@@ -54,12 +55,13 @@ export class ProductService {
                 return false;
             });
         }
+        else
+            console.log(ItemCode)
     }
 
-    public removeImage(key: string): Promise<any> {
-        alert("remove image");
-        console.log("removeImage");
-        const file = this.folder.getFile(`${key}.jpg`);
+    public removeImage(ItemCode){
+        const file = this.folder.getFile(`${ItemCode}.png`);
+        console.log(ItemCode);
         return file.remove();
     }
 

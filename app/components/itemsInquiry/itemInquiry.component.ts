@@ -55,6 +55,7 @@ export class ItemInquiryComponent implements OnInit {
     public warehouse: any = 0;
     public stdUnitPrice: number = 0;
     public stdUnitCost: number = 0;
+    public productImage:any;
 
     //obtencion de imagen
     public picture: any;
@@ -166,6 +167,7 @@ export class ItemInquiryComponent implements OnInit {
             this.isVisibleScanner = false;
         }
         this.inventoryWarehouse();
+        this.productImage = this._productService.getImage(product.ItemCode);
     }
 
     public cancel() {
