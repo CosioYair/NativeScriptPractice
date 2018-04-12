@@ -14,6 +14,7 @@ import * as progressModule from "tns-core-modules/ui/progress";
 import { Progress } from "ui/progress";
 import { CouchbaseService } from "../../services/couchbase.service";
 import { SERVER } from "../../config/server.config";
+import { LastRefreshService } from "../../services/lastRefresh.service";
 
 @Component({
     selector: "ns-sync",
@@ -36,7 +37,8 @@ export class SyncComponent {
     public termsCode = true;
     public json: any;
     public options: any;
-    public dateUpdated: any;
+    public dateDocsUpdated: any;
+    public dateImagesUpdated: any;
     public syncScreen: boolean = true;
     public loadingScreen: boolean = false;
     public loadingImagesScreen: boolean = false;
@@ -56,7 +58,8 @@ export class SyncComponent {
         private _shippingAddressService: ShippingAddressService,
         private _termsCodeService: TermsCodeService,
         private _couchbaseService: CouchbaseService,
-        private _userService: UserService
+        private _userService: UserService,
+        private _lastRefreshService: LastRefreshService
     ) {
         this.options = [
             {
@@ -97,7 +100,10 @@ export class SyncComponent {
         ];
         if (this._couchbaseService.getDocument("product") == null)
             this.refresh();
-
+        else {
+            this.dateDocsUpdated = _lastRefreshService.getLastRefresh("docs");
+            this.dateImagesUpdated = _lastRefreshService.getLastRefresh("images");
+        }
     }
 
     /*
@@ -138,7 +144,9 @@ export class SyncComponent {
 
         part = 100 / j;
 
-        while(counter < this.options.length) {
+        this._lastRefreshService.setLastRefreshDocument();
+
+        while (counter < this.options.length) {
             if (this.options[counter].status) {
                 await this.options[counter].service();
                 counter++;
@@ -151,11 +159,7 @@ export class SyncComponent {
                 }
             }
         };
-
-        var date = new Date();
-        this.dateUpdated = date.toDateString();
-        //console.log(this.dateUpdated);
-        console.log(part);
+        this._lastRefreshService.setLastRefresh("docs", new Date().toDateString());   
     }
 
     public accept() {
@@ -172,7 +176,7 @@ export class SyncComponent {
         await products.map(async product => {
             await this._productService.removeImage(product.ItemCode);
         });
-        while(this.progressImageValue < products.length) { 
+        while (this.progressImageValue < products.length) {
             await this._productService.downloadImage(products[this.progressImageValue].ItemCode);
             this.progressImageValue++;
             if (this.progressImageValue == products.length) {
@@ -180,5 +184,6 @@ export class SyncComponent {
                 this.status = "Downloaded"
             }
         };
+        this._lastRefreshService.setLastRefresh("images", new Date().toDateString());   
     }
 }
