@@ -1,20 +1,27 @@
-<ActionBar title="Mobile Sales Automation" class="action-bar">
-    <GridLayout columns="*,*" rows="auto, *">
-        <StackLayout col="0" orientation="horizontal" horizontalAlignment="left">
-
-            <Label text="Mobile Sales Automation" verticalAlignment="center"></Label>
+<ActionBar title="Mobile Sales" class="action-bar">
+    <DockLayout>
+        <StackLayout width="33%">
+            <DockLayout>
+                <StackLayout width="15%" horizontalAlignment="left">
+                    <Image src="~/assets/images/iconMS.png" width="100%" height="100%"></Image>
+                </StackLayout>
+                <StackLayout width="75%">
+                    <Label text="Mobile Sales" textAlignment="left" fontSize="20" paddingTop="10%"></Label>
+                </StackLayout>
+            </DockLayout>
         </StackLayout>
-        <StackLayout col="1" orientation="horizontal" horizontalAlignment="right">
-            <Button *ngIf="refreshButton" text="&#xf021; Refresh" verticalAlignment="center" (tap)="refresh()"></Button>
-            <Button text="&#xf142;" verticalAlignment="center" class="options"></Button>
+        <StackLayout width="33%">
         </StackLayout>
-    </GridLayout>
+        <StackLayout width="33%">
+            <DockLayout>
+                <Button *ngIf="refreshButton" text="&#xf021; Refresh" verticalAlignment="center" horizontalAlignment="right" (tap)="refresh()" textSize="15%" backgroundColor="orangered"></Button>
+            </DockLayout>
+        </StackLayout>
+    </DockLayout>
 </ActionBar>
-
 <StackLayout *ngIf="syncScreen" backgroundColor="white">
     <DockLayout padding="10%" paddingTop="0%">
         <StackLayout padding="10%" width="50%">
-
             <GridLayout rows="*">
                 <ListView [items]="options" class="list-group">
                     <ng-template let-item="item" let-i="index">
@@ -25,8 +32,6 @@
                     </ng-template>
                 </ListView>
             </GridLayout>
-
-
         </StackLayout>
         <StackLayout width="50%">
             <StackLayout>
