@@ -42,7 +42,7 @@
             </StackLayout>
         <StackLayout *ngIf="selectedCustomer.CustomerNo != 'Select a customer to view details'" margin="3%" borderRadius="8" borderBottomWidth="2" borderTopWidth="2" borderColor="#DE6427">
             <Label text="ADDRESS:" fontSize="25%" color="gray" paddingTop="10%"></Label>
-            <Label [text]="selectedCustomer.City + ' ' + selectedCustomer.State + ' ' + selectedCustomer.ZipCode" class="list-group-item-heading" color="black" paddingTop="10%" textAlignment="center"></Label>
+            <Label [text]="selectedCustomer.City + ', ' + selectedCustomer.State + '. ' + selectedCustomer.ZipCode" class="list-group-item-heading" color="black" paddingTop="10%" textAlignment="center"></Label>
             <Label [text]="selectedCustomer.AddressLine1" class="list-group-item-heading" color="black" paddingTop="10%" textAlignment="center"></Label>}
 
             <Label text="PHONE:" fontSize="25%" color="gray" paddingTop="10%"></Label>
@@ -52,7 +52,7 @@
             <Label [text]="selectedCustomer.TelephoneNo" class="list-group-item-heading" color="black" paddingTop="10%" textAlignment="center"></Label>
 
             <Label text="TERMS:" fontSize="25%" color="gray" paddingTop="10%"></Label>
-            <Label [text]="selectedCustomer.TermsCode" class="list-group-item-heading" color="black" paddingTop="10%" textAlignment="center"></Label>
+            <Label [text]="selectedCustomer.TermsCode + ': ' + userTermsCode" class="list-group-item-heading" color="black" paddingTop="10%" textAlignment="center"></Label>
 
             <Label text="SALESREP:" fontSize="25%" color="gray" paddingTop="10%"></Label>
             <Label [text]="salesRep" class="list-group-item-heading" color="black" paddingTop="10%" textAlignment="center"></Label>

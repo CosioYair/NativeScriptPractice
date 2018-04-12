@@ -64,6 +64,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     public _saleOrder: SaleOrder;
     public shipMethods: any = ["Delivery", "Pickup"];
     public shipMethod: number = 0;
+    public productImage: any;
     @ViewChild('Qty') Qty: ElementRef;
 
     constructor(private _productService: ProductService,
@@ -273,6 +274,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
         this.lineSubTitle = product.ItemCode;
         this.itemCode = product.ItemCode;
         this.getInventoryQuantit();
+        this.productImage = this._productService.getImage(product.ItemCode);
     }
 
     private searchItemCode(code: string, list: any) {
