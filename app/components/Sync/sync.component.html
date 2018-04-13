@@ -27,7 +27,7 @@
                     <ng-template let-item="item" let-i="index">
                         <StackLayout>
                             <Label [text]="item.name" class="list-group-item-heading" fontSize="20"></Label>
-                            <Switch checked="true" color="orangered" (checkedChange)="switch(i)"></Switch>
+                            <Switch checked="true" (checkedChange)="switch(i)"></Switch>
                         </StackLayout>
                     </ng-template>
                 </ListView>
@@ -43,7 +43,7 @@
                 <Label padding="20%" text="Last Images Refresh"></Label>
                 <Image row="2" [src]="test"></Image>
                 <Label [text]="dateImagesUpdated" fontSize="20" horizontalAlignment="center" color="black"></Label>
-                <Button (tap)="refreshImages()" text="&#xf142; Refresh Images" verticalAlignment="center" class="options"></Button>
+                <Button (tap)="refreshImages()" text="&#xf142; Refresh Images" verticalAlignment="center" class="options" color="white" backgroundColor="orangered"></Button>
             </StackLayout>
         </StackLayout>
     </DockLayout>
