@@ -1,42 +1,37 @@
 <StackLayout padding="20%">
-    <GridLayout class="" columns="340, *" rows="auto">
-        <StackLayout class="" row="0" col="0">
-            <GridLayout class="product-sections" columns="*" rows="*">
-                <StackLayout class="" row="0" col="0">
+        <StackLayout width="60%">
+                <StackLayout>
                     <DockLayout>
-                        <Label text="Qty" verticalAlignment="center" paddingRight="5%"></Label>
-                        <TextField #Qty maxLength="4" [(ngModel)]="selectedCartProduct.quantity" keyboardType="number" hint=""></TextField>
+                        <Label text="Quantity:" verticalAlignment="center" paddingRight="5%"></Label>
+                        <TextField #Qty maxLength="4" [(ngModel)]="selectedCartProduct.quantity" keyboardType="number" hint="" borderColor="orangered" borderWidth="1"></TextField>
                     </DockLayout>
-                    <DockLayout marginTop="50px">
-                        <Label text="Price" verticalAlignment="center" paddingRight="5%"></Label>
+                    <DockLayout>
+                        <Label text="Price:" verticalAlignment="center" paddingRight="5%"></Label>
                         <TextField [(ngModel)]="selectedCartProduct.StandardUnitPrice" hint="" isEnabled="false"></TextField>
                     </DockLayout>
                 </StackLayout>
-            </GridLayout>
-            <StackLayout marginTop="50px">
+            <StackLayout>
                 <DockLayout>
-                    <Label text="Warehouse" verticalAlignment="center" paddingRight="5%"></Label>
+                    <Label text="Warehouse:" verticalAlignment="center" paddingRight="5%"></Label>
                     <TextField [text]="warehouse" class="enabled" isEnabled="false"></TextField>
                 </DockLayout>
-                <TextView backgroundColor="white" style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="300px" marginBottom="60px" marginTop="100px" hint="Comment" [(ngModel)]="selectedCartProduct.comment" class="input input-border"></TextView>
+                <Label></Label>
+                <TextView backgroundColor="white" hint="Comment" [(ngModel)]="selectedCartProduct.comment" borderColor="orangered" borderWidth="1" height="25%" paddingTop="10%"></TextView>
             </StackLayout>
-            <GridLayout class="" columns="125, *, *" rows="*">
-                <StackLayout class="" row="0" col="0" horizontalAlignment="right">
-                    <Label text="QTY ON HAND"></Label>
+            <DockLayout>
+                <StackLayout width="33%">
+                    <Label text="ON HAND"></Label>
                     <Label [text]="selectedCartProduct.quantityOnHand"></Label>
                 </StackLayout>
-                <StackLayout row="0" col="1" horizontalAlignment="right">
-                    <Label text="QTY AVAIL"></Label>
+                <StackLayout width="33%">
+                    <Label text="AVAILABLE"></Label>
                     <Label [text]="selectedCartProduct.quantityAvail"></Label>
                 </StackLayout>
-                <StackLayout row="0" col="2" horizontalAlignment="right">
+                <StackLayout width="33%">
                     <Label text="STD PRICE"></Label>
                     <Label [text]="selectedCartProduct.StandardUnitPrice"></Label>
                 </StackLayout>
-            </GridLayout>
+            </DockLayout>
+            <Button class="option-button" text="Save" verticalAlignment="center" (tap)="close()" color="white" backgroundColor="orangered"></Button>
         </StackLayout>
-        <StackLayout class="" row="0" col="1">
-            <Button class="option-button" text="Save" verticalAlignment="center" (tap)="close()"></Button>
-        </StackLayout>
-    </GridLayout>
 </StackLayout>

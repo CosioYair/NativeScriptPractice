@@ -27,19 +27,19 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Date"></Label>
-                    <TextField hint="Date" [(ngModel)]="_saleOrder.OrderDate" (tap)="showDateModal('OrderDate')"></TextField>
+                    <TextField hint="Date" [(ngModel)]="_saleOrder.OrderDate" (tap)="showDateModal('OrderDate')" borderColor="orangered" borderWidth="1"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Ship Date"></Label>
-                    <TextField hint="Ship Date" [(ngModel)]="_saleOrder.ShipDate" (tap)="showDateModal('ShipDate')"></TextField>
+                    <TextField hint="Ship Date" [(ngModel)]="_saleOrder.ShipDate" (tap)="showDateModal('ShipDate')" borderColor="orangered" borderWidth="1"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Ship Method"></Label>
-                    <DropDown [items]="shipMethods" (ngModelChange)="setShipMethod()" [(ngModel)]="shipMethod" colSpan="2"></DropDown>
+                    <DropDown [items]="shipMethods" (ngModelChange)="setShipMethod()" [(ngModel)]="shipMethod" colSpan="2" borderColor="orangered" borderWidth="1"></DropDown>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Warehouse"></Label>
-                    <DropDown [items]="warehouses" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2"></DropDown>
+                    <DropDown [items]="warehouses" (ngModelChange)="filterInventoryWarehouse()" [(ngModel)]="warehouse" colSpan="2" borderColor="orangered" borderWidth="1"></DropDown>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Terms"></Label>
@@ -52,85 +52,83 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Customer PO"></Label>
-                    <TextField [(ngModel)]="_saleOrder.CustomerPONo"></TextField>
+                    <TextField [(ngModel)]="_saleOrder.CustomerPONo" borderColor="orangered" borderWidth="1"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Confirm To"></Label>
-                    <TextField [(ngModel)]="_saleOrder.CustomerConfirmTo"></TextField>
+                    <TextField [(ngModel)]="_saleOrder.CustomerConfirmTo" borderColor="orangered" borderWidth="1"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="FOB"></Label>
-                    <TextField [(ngModel)]="_saleOrder.CustomerFBO"></TextField>
+                    <TextField [(ngModel)]="_saleOrder.CustomerFBO" borderColor="orangered" borderWidth="1"></TextField>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Comment"></Label>
-                    <TextField [(ngModel)]="_saleOrder.Comment"></TextField>
+                    <TextField [(ngModel)]="_saleOrder.Comment" borderColor="orangered" borderWidth="1"></TextField>
                 </DockLayout>
             </StackLayout>
         </DockLayout>
     </StackLayout>
     <StackLayout *tabItem="{title: '&#xf2ba; ADDRESS'}">
-        <DockLayout class="tab-content" columns="*, *" rows="*">
-            <StackLayout width="50%">
-                <DockLayout>
-                    <Label class="h3" text="BILL TO ADDRESS"></Label>
-                </DockLayout>
-                <DockLayout>
-                    <Label text="Name"></Label>
+        <DockLayout padding="10%">
+            <StackLayout width="50%" padding="10%">
+                    <Label text="BILL TO ADDRESS" color="orangered"></Label>
+                <DockLayout paddingTop="10%">
+                    <Label text="Name" width="20%"></Label>
                     <TextField [text]="_saleOrder.CustomerName" class="enabled" hint="Name" isEnabled="false"></TextField>
                 </DockLayout>
-                <DockLayout>
-                    <Label text="Address"></Label>
-                    <TextField [text]="_saleOrder.BillToAddress1" class="enabled" hint="Address" isEnabled="false"></TextField>
+                <DockLayout paddingTop="10%">
+                    <Label text="Address" width="20%"></Label>
+                    <TextField [text]="_saleOrder.BillToAddress1" class="enabled" hint="Address" isEnabled="false" ></TextField>
                 </DockLayout>
-                <DockLayout>
-                    <Label></Label>
+                <DockLayout paddingTop="10%">
+                    <Label width="20%"></Label>
                     <TextField [text]="_saleOrder.BillToAddress2" class="enabled" isEnabled="false"></TextField>
                 </DockLayout>
-                <DockLayout>
-                    <Label></Label>
+                <DockLayout paddingTop="10%">
+                    <Label width="20%"></Label>
                     <TextField [text]="_saleOrder.BillToAddress3" class="enabled" isEnabled="false"></TextField>
                 </DockLayout>
-                <DockLayout>
-                    <Label></Label>
+                <DockLayout paddingTop="10%">
+                    <Label width="20%"></Label>
                     <TextField [text]="_saleOrder.BillToCity + ', ' + _saleOrder.BillToState + ' ' + _saleOrder.BillToZipCode" class="enabled"
                         hint="City" isEnabled="false"></TextField>
                 </DockLayout>
             </StackLayout>
-            <StackLayout width="50%">
-                <DockLayout>
-                    <Label fontSize="" text="SHIP TO ADDRESS"></Label>
-                </DockLayout>
+            <StackLayout width="50%" padding="10%">
+                    <Label text="SHIP TO ADDRESS" color="orangered"></Label>
                 <StackLayout>
-                    <DockLayout>
-                        <Label text="Ship To"></Label>
+                    <DockLayout paddingTop="10%">
+                        <Label text="Ship To" width="20%"></Label>
                         <DropDown [items]="shippingAddressList" [selectedIndex]="_saleOrder.ShipTo" (selectedIndexChanged)="setCustomerShippingAddress($event)"
-                            colSpan="2"></DropDown>
+                            colSpan="2" borderColor="orangered"
+                            borderWidth="1"></DropDown>
                     </DockLayout>
-                    <DockLayout>
-                        <Label text="Name"></Label>
+                    <DockLayout paddingTop="10%">
+                        <Label text="Name" width="20%"></Label>
                         <TextField class="enabled" [text]="_saleOrder.ShipToName" isEnabled="false"></TextField>
                     </DockLayout>
-                    <DockLayout>
-                        <Label text="Address"></Label>
+                    <DockLayout paddingTop="10%">
+                        <Label text="Address" width="20%"></Label>
                         <TextField class="enabled" [text]="_saleOrder.ShipToAddress1" isEnabled="false"></TextField>
                     </DockLayout>
-                    <DockLayout>
-                        <Label></Label>
+                    <DockLayout paddingTop="10%">
+                        <Label width="20%"></Label>
                         <TextField class="enabled" [text]="_saleOrder.ShipToAddress2" isEnabled="false"></TextField>
                     </DockLayout>
-                    <DockLayout>
-                        <Label></Label>
+                    <DockLayout paddingTop="10%">
+                        <Label width="20%"></Label>
                         <TextField class="enabled" [text]="_saleOrder.ShipToAddress3" isEnabled="false"></TextField>
                     </DockLayout>
-                    <DockLayout>
-                        <Label></Label>
+                    <DockLayout paddingTop="10%">
+                        <Label width="20%"></Label>
                         <TextField [text]="_saleOrder.ShipToCity + ', ' + _saleOrder.ShipToState + '. ' + _saleOrder.ShipToZipCode" class="enabled"
                             hint="City" isEnabled="false"></TextField>
                     </DockLayout>
-                    <DockLayout>
-                        <Label text="Ship Via"></Label>
-                        <TextField [(ngModel)]="_saleOrder.ShipVia"></TextField>
+                    <DockLayout paddingTop="10%">
+                        <Label text="Ship Via" width="20%"></Label>
+                        <TextField [(ngModel)]="_saleOrder.ShipVia" borderColor="orangered"
+                        borderWidth="1"></TextField>
                     </DockLayout>
                 </StackLayout>
             </StackLayout>
@@ -183,7 +181,6 @@
                                     <Label text="Tap to scan:"></Label>
                                     <Button text="&#xf029;" fontSize="20%" (tap)="onScan()" color="white" backgroundColor="orangered"></Button>
                                 </StackLayout>
-
                             </DockLayout>
                             <DockLayout>
                                 <Image class="miniImage" src="~/assets/images/taskList.png"></Image>
@@ -271,7 +268,7 @@
     </StackLayout>
     <StackLayout *tabItem="{title: '&#xf2b5; TOTALS'}">
         <DockLayout>
-            <StackLayout width="22.5%">
+            <StackLayout width="30%">
                 <StackLayout>
                     <Border verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
                         <DockLayout paddingTop="30%" class="">
@@ -319,8 +316,8 @@
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
-            <StackLayout width="70%" backgroundColor="white">
-                <DockLayout color="white" backgroundColor="gray" borderRadius="8" class="" columns="100, *, 120" rows="60">
+            <StackLayout width="60%" backgroundColor="white">
+                <DockLayout color="white" backgroundColor="gray" borderRadius="8">
                     <StackLayout width="15%" verticalAlignment="center">
                         <Label text="Quantity"></Label>
                     </StackLayout>
@@ -354,7 +351,7 @@
                     </ng-template>
                 </ListView>
             </StackLayout>
-            <StackLayout width="7.5%">
+            <StackLayout width="10%">
                 <Button class="option-button" text="&#xf044;" verticalAlignment="center" (tap)="showProductOrderModal()" color="white" backgroundColor="orangered"></Button>
                 <Button class="option-button" text="&#xf1f8;" verticalAlignment="center" (tap)="deleteCartProduct()" color="white" backgroundColor="orangered"></Button>
             </StackLayout>
