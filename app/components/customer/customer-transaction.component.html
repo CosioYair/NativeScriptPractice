@@ -16,13 +16,13 @@
 </ActionBar>
 
 <DockLayout backgroundColor="white">
-    <StackLayout width="50%">
+    <StackLayout padding="10%" width="50%">
         <SearchBar hint="Search" (textChange)="onTextChanged($event)" (clear)="onClear($event)" textFieldBackgroundColor="white"></SearchBar>
         <StackLayout borderRadius="8" borderBottomWidth="2" borderTopWidth="2" borderColor="#DE6427" horizontalAlignment="stretch">
             <GridLayout borderRadius="8" class="" columns="*" rows="*" backgroundColor="white">
                 <ListView [items]="customerList" class="list-group">
                     <ng-template let-item="item">
-                        <StackLayout borderRadius="8" class="item list-group-item" [class.highlight]="selectedCustomer.CustomerNo == item.CustomerNo"
+                        <StackLayout padding="10%" borderRadius="8" class="item list-group-item" [class.highlight]="selectedCustomer.CustomerNo == item.CustomerNo"
                             (tap)="setSelectedCustomer(item)">
                             <Label [text]="item.CustomerName" class="list-group-item-heading h2"></Label>
                             <StackLayout marginLeft="5%">
@@ -35,7 +35,7 @@
             </GridLayout>
         </StackLayout>
     </StackLayout>
-    <StackLayout width="50%">
+    <StackLayout padding="10%" width="50%">
         <StackLayout padding="10%">
             <Label [text]="selectedCustomer.CustomerName" padding="5%" fontSize="30%" color="orangered"></Label>
             <Label [text]="selectedCustomer.CustomerNo" fontSize="15%"></Label>

@@ -10,10 +10,10 @@
                 </StackLayout>
             </DockLayout>
         </StackLayout>
-        <StackLayout width="33%">
+        <StackLayout width="18%">
         </StackLayout>
-        <StackLayout width="33%">
-            <Button text="&#xf187; SAVE" verticalAlignment="center" horizontalAlignment="right" (tap)="save()" fontSize="15%" backgroundColor="orangered"></Button>
+        <StackLayout width="33%" verticalAlignment="center">
+            <Button padding="5%" text="&#xf187; SAVE" verticalAlignment="center" horizontalAlignment="right" (tap)="save()" fontSize="15%" backgroundColor="orangered"></Button>
         </StackLayout>
     </DockLayout>
 </ActionBar>
@@ -99,40 +99,38 @@
             </StackLayout>
             <StackLayout width="50%">
                 <DockLayout>
-                    <Label fontSize="" text="SHIP TO ADDRESS"></Label>
+                    <Label class="h3" text="SHIP TO ADDRESS"></Label>
                 </DockLayout>
-                <StackLayout>
-                    <DockLayout>
-                        <Label text="Ship To"></Label>
-                        <DropDown [items]="shippingAddressList" [selectedIndex]="_saleOrder.ShipTo" (selectedIndexChanged)="setCustomerShippingAddress($event)"
-                            colSpan="2"></DropDown>
-                    </DockLayout>
-                    <DockLayout>
-                        <Label text="Name"></Label>
-                        <TextField class="enabled" [text]="_saleOrder.ShipToName" isEnabled="false"></TextField>
-                    </DockLayout>
-                    <DockLayout>
-                        <Label text="Address"></Label>
-                        <TextField class="enabled" [text]="_saleOrder.ShipToAddress1" isEnabled="false"></TextField>
-                    </DockLayout>
-                    <DockLayout>
-                        <Label></Label>
-                        <TextField class="enabled" [text]="_saleOrder.ShipToAddress2" isEnabled="false"></TextField>
-                    </DockLayout>
-                    <DockLayout>
-                        <Label></Label>
-                        <TextField class="enabled" [text]="_saleOrder.ShipToAddress3" isEnabled="false"></TextField>
-                    </DockLayout>
-                    <DockLayout>
-                        <Label></Label>
-                        <TextField [text]="_saleOrder.ShipToCity + ', ' + _saleOrder.ShipToState + '. ' + _saleOrder.ShipToZipCode" class="enabled"
-                            hint="City" isEnabled="false"></TextField>
-                    </DockLayout>
-                    <DockLayout>
-                        <Label text="Ship Via"></Label>
-                        <TextField [(ngModel)]="_saleOrder.ShipVia"></TextField>
-                    </DockLayout>
-                </StackLayout>
+                <DockLayout>
+                    <Label text="Ship To"></Label>
+                    <DropDown [items]="shippingAddressList" [selectedIndex]="_saleOrder.ShipTo" (selectedIndexChanged)="setCustomerShippingAddress($event)"
+                        colSpan="2"></DropDown>
+                </DockLayout>
+                <DockLayout>
+                    <Label text="Name"></Label>
+                    <TextField class="enabled" [text]="_saleOrder.ShipToName" isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
+                    <Label text="Address"></Label>
+                    <TextField class="enabled" [text]="_saleOrder.ShipToAddress1" isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
+                    <Label></Label>
+                    <TextField class="enabled" [text]="_saleOrder.ShipToAddress2" isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
+                    <Label></Label>
+                    <TextField class="enabled" [text]="_saleOrder.ShipToAddress3" isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
+                    <Label></Label>
+                    <TextField [text]="_saleOrder.ShipToCity + ', ' + _saleOrder.ShipToState + ' ' + _saleOrder.ShipToZipCode" class="enabled"
+                        hint="City" isEnabled="false"></TextField>
+                </DockLayout>
+                <DockLayout>
+                    <Label text="Ship Via"></Label>
+                    <TextField [(ngModel)]="_saleOrder.ShipVia"></TextField>
+                </DockLayout>
             </StackLayout>
         </DockLayout>
     </StackLayout>
@@ -159,8 +157,8 @@
                     </GridLayout>
                 </Border>
             </StackLayout>
-            <StackLayout width="50%">
-                <StackLayout paddingTop="10%">
+            <StackLayout padding="10%" width="50%">
+                <StackLayout>
                     <Border borderBottomWidth="2" borderColor="orangered" horizontalAlignment="stretch">
                         <DockLayout borderRadius="8">
                             <StackLayout class="product-detail-title" width="90%">
@@ -175,9 +173,9 @@
                     <StackLayout class="product-description" margin="3%">
                         <StackLayout *ngIf="!showingProduct">
                             <DockLayout>
-                                <StackLayout width="50%">
+                                <StackLayout marginRight="4%" width="50%">
                                     <Label text="Item Code"></Label>
-                                    <TextField [(ngModel)]="itemCode" hint="" (returnPress)="validateProductList()"></TextField>
+                                    <TextField padding="7%" [(ngModel)]="itemCode" hint="" (returnPress)="validateProductList()"></TextField>
                                 </StackLayout>
                                 <StackLayout>
                                     <Label text="Tap to scan:"></Label>
@@ -193,7 +191,7 @@
                                     <Border borderBottomWidth="2">
                                         <DockLayout>
                                             <Label text="Total Qty:"></Label>
-                                            <Label class="h2" [text]="cartQuantity | number:'1.0-5'"></Label>
+                                            <Label class="h2" text="1"></Label>
                                         </DockLayout>
                                     </Border>
                                 </StackLayout>
@@ -201,7 +199,7 @@
                                     <Border borderBottomWidth="2">
                                         <DockLayout>
                                             <Label text="Total Amt:"></Label>
-                                            <Label class="h2" [text]="totalCartAmount | number:'1.2-5'"></Label>
+                                            <Label class="h2" text="$79.00"></Label>
                                         </DockLayout>
                                     </Border>
                                 </StackLayout>
@@ -241,28 +239,31 @@
                                     <Image class="productImage" [src]="productImage" width="30%" height="30%"></Image>
                                 </StackLayout>
                             </DockLayout>
-                            <StackLayout>
-                                <TextView backgroundColor="white" borderColor="orangered" borderWidth="1" [(ngModel)]="selectedProduct.comment" class="input input-border"
-                                    maxLenght="150" height="40%"></TextView>
-                                <DockLayout>
-                                    <StackLayout width="33%">
-                                        <Label text="ON HAND"></Label>
-                                        <Label [text]="selectedProduct.quantityOnHand" textSize="30%" textAlignment="center" color="black"></Label>
-                                    </StackLayout>
-                                    <StackLayout width="33%">
-                                        <Label text="AVAILABLE"></Label>
-                                        <Label [text]="selectedProduct.quantityAvail" textSize="30%" textAlignment="center" color="black"></Label>
-                                    </StackLayout>
-                                    <StackLayout width="33%">
-                                        <Label text="STD PRICE"></Label>
-                                        <Label [text]="selectedProduct.StandardUnitPrice | number:'1.2-5'" textSize="30%" textAlignment="center" color="black"></Label>
-                                    </StackLayout>
-                                </DockLayout>
-                                <DockLayout>
-                                    <Button text="Add" verticalAlignment="center" (tap)="addProduct()" color="white" backgroundColor="orangered" width="50%"></Button>
-                                    <Button text="Cancel" verticalAlignment="center" (tap)="cancel()" color="white" backgroundColor="orangered" width="50%"></Button>
-                                </DockLayout>
-                            </StackLayout>
+                            <TextView backgroundColor="white" borderColor="orangered" borderWidth="1" [(ngModel)]="selectedProduct.comment" class="input input-border"
+                                maxLenght="150" height="30%"></TextView>
+                            <DockLayout>
+                                <StackLayout width="33%">
+                                    <Label text="ON HAND"></Label>
+                                    <Label [text]="selectedProduct.quantityOnHand" textSize="30%" textAlignment="center" color="black"></Label>
+                                </StackLayout>
+                                <StackLayout width="33%">
+                                    <Label text="AVAILABLE"></Label>
+                                    <Label [text]="selectedProduct.quantityAvail" textSize="30%" textAlignment="center" color="black"></Label>
+                                </StackLayout>
+                                <StackLayout width="33%">
+                                    <Label text="STD PRICE"></Label>
+                                    <Label [text]="selectedProduct.StandardUnitPrice | number:'1.2-5'" textSize="30%" textAlignment="center" color="black"></Label>
+                                </StackLayout>
+                            </DockLayout>
+                            <DockLayout>
+                                <Button class="option-button" text="Add" verticalAlignment="center" (tap)="addProduct()" color="white" backgroundColor="orangered"
+                                    width="50%"></Button>
+                                <Button class="option-button" text="Cancel" verticalAlignment="center" (tap)="cancel()" color="white" backgroundColor="orangered"
+                                    width="50%"></Button>
+                            </DockLayout>
+
+
+
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
@@ -270,8 +271,8 @@
         </DockLayout>
     </StackLayout>
     <StackLayout *tabItem="{title: '&#xf2b5; TOTALS'}">
-        <DockLayout>
-            <StackLayout width="22.5%">
+        <DockLayout padding="10%">
+            <StackLayout paddingRight="5%" width="22.5%">
                 <StackLayout>
                     <Border verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
                         <DockLayout paddingTop="30%" class="">
@@ -279,7 +280,7 @@
                                 <Label text="Total Qty" class="" paddingRight="25%"></Label>
                             </StackLayout>
                             <StackLayout width="30%">
-                                <Label borderBottomWidth="0" width="100%" class="textRight h1" isEnabled="false" [text]="cartQuantity | number:'1.0-5'"></Label>
+                                <Label borderBottomWidth="0" width="100%" class="textRight h1" isEnabled="false" [text]="cartQuantity"></Label>
                             </StackLayout>
                         </DockLayout>
                     </Border>
@@ -336,7 +337,7 @@
                     <ng-template let-item="item">
                         <GridLayout borderRadius="8" class="" columns="100, *, 120" rows="100" (tap)="setSelectedCartProduct(item)" [class.highlight]="item.ItemCode == selectedCartProduct.ItemCode">
                             <StackLayout col="0" verticalAlignment="center" paddingRight="20%">
-                                <Label width="100%" class="textRight" [text]="item.quantity | number:'1.0-5'" horizontalAlignment="right"></Label>
+                                <Label width="100%" class="textRight" [text]="item.quantity" horizontalAlignment="right"></Label>
                                 <Label width="100%" class="totals-subtitle textRight" text="EACH" horizontalAlignment="right"></Label>
                             </StackLayout>
                             <StackLayout col="1" verticalAlignment="center">
@@ -345,7 +346,7 @@
                             </StackLayout>
                             <StackLayout col="2" verticalAlignment="center" paddingRight="20%">
                                 <Label width="100%" class="textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
-                                <Label width="100%" class="totals-subtitle textRight" [text]="item.quantityPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
+                                <Label width="100%" class="totals-subtitle textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
                             </StackLayout>
                             <StackLayout>
 

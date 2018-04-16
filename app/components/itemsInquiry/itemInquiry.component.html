@@ -67,7 +67,7 @@
                         <StackLayout>
                             <Label text="WAREHOUSE:" class="itemInquiry-labelBold"></Label>
                             <DropDown [items]="warehouses" class="enabled" [(ngModel)]="warehouse" colSpan="2" isEnabled="true" hint="Select..." backgroundColor="white"
-                                color="black" (selectedIndexChanged)="onchangeWarehouse($event)">
+                                color="black" colSpan="2" borderColor="orangered" (selectedIndexChanged)="onchangeWarehouse($event)">
                                 <TextField [text]="warehouse" [(ngModel)]="userName"></TextField>
                             </DropDown>
                         </StackLayout>

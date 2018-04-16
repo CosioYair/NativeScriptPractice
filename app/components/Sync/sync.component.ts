@@ -63,7 +63,7 @@ export class SyncComponent {
     ) {
         this.options = [
             {
-                name: "address",
+                name: "Address",
                 status: true,
                 service: this._shippingAddressService.setShippingAddressDoc.bind(this._shippingAddressService),
             },
