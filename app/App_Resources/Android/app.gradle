@@ -8,7 +8,7 @@
 android {  
   defaultConfig {  
     generatedDensities = []
-    applicationId = "org.nativescript.IFurniture"  
+    applicationId = "org.internationalFurniture.MobileSales"  
   }  
   aaptOptions {  
     additionalParameters "--no-version-vectors"  

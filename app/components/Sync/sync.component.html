@@ -3,19 +3,18 @@
         <StackLayout width="33%">
             <DockLayout>
                 <StackLayout width="15%" horizontalAlignment="left">
-                    <Image src="~/assets/images/iconMS.png" width="100%" height="100%"></Image>
+                        <Image src="~/assets/images/iconMS.png" width="100%" height="100%"></Image>
                 </StackLayout>
                 <StackLayout width="75%">
-                    <Label text="Mobile Sales" textAlignment="left" fontSize="20" paddingTop="10%"></Label>
-                </StackLayout>
+                        <Label text="Mobile Sales" textAlignment="left" fontSize="20" paddingTop="10%"></Label>
+                </StackLayout> 
             </DockLayout>
         </StackLayout>
-        <StackLayout width="33%">
+        <StackLayout width="18%">
+
         </StackLayout>
-        <StackLayout width="33%">
-            <DockLayout>
-                <Button *ngIf="refreshButton" text="&#xf021; Refresh" verticalAlignment="center" horizontalAlignment="right" (tap)="refresh()" textSize="15%" backgroundColor="orangered"></Button>
-            </DockLayout>
+        <StackLayout width="33%" verticalAlignment="center">
+            <Button padding="5%" text="&#xf021; Refresh"  horizontalAlignment="right" (tap)="refresh()" fontSize="15%" backgroundColor="orangered"></Button>
         </StackLayout>
     </DockLayout>
 </ActionBar>
@@ -25,7 +24,7 @@
             <GridLayout rows="*">
                 <ListView [items]="options" class="list-group">
                     <ng-template let-item="item" let-i="index">
-                        <StackLayout>
+                        <StackLayout verticalAlignment="center">
                             <Label [text]="item.name" class="list-group-item-heading" fontSize="20"></Label>
                             <Switch checked="true" (checkedChange)="switch(i)"></Switch>
                         </StackLayout>
@@ -50,13 +49,13 @@
 </StackLayout>
 
 <StackLayout *ngIf="loadingScreen" verticalAlign="center" horizontalAlign="center" width="50%" backgroundColor="white">
-    <Label paddingTop="200%" [text]="status" fontSize="30" textAlignment="center"></Label>
+    <Label padding="10%" paddingTop="200%" [text]="status" fontSize="30" textAlignment="center"></Label>
     <Progress [value]="progressValue" (valueChanged)="onValueChanged($event)" maxValue="100" class="m-20" color="orangered"></Progress>
     <Button [nsRouterLink]="['/home']" *ngIf="button" text="Accept" width="50%"></Button>
 </StackLayout>
 
 <StackLayout *ngIf="loadingImagesScreen" verticalAlign="center" horizontalAlign="center" width="50%" backgroundColor="white">
-    <Label paddingTop="200%" [text]="status" fontSize="30" textAlignment="center"></Label>
+    <Label padding="10%" paddingTop="200%" [text]="status" fontSize="30" textAlignment="center"></Label>
     <Progress [value]="progressImageValue" (valueChanged)="onValueChanged($event)" [maxValue]="lengthImages" class="m-20" color="orangered"></Progress>
     <Button [nsRouterLink]="['/home']" *ngIf="button" text="Accept" width="50%"></Button>
 </StackLayout>

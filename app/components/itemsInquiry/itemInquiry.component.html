@@ -22,7 +22,7 @@
                 <GridLayout rows="*">
                     <ListView [items]="productList" class="list-group">
                         <ng-template let-item="item">
-                            <StackLayout [(ngModal)]="warehouse" class="item list-group-item" [class.highlight]="item.ItemCode == selectedProduct.ItemCode" (tap)="setSelectedProduct(item)">
+                            <StackLayout backgroudColor="white" [(ngModal)]="warehouse" class="item list-group-item" [class.highlight]="item.ItemCode == selectedProduct.ItemCode" (tap)="setSelectedProduct(item)">
                                 <label [text]="item.ItemCode" class="list-group-item-heading" fontSize="20"></label>
                                 <label [text]="item.ItemCodeDesc" class="list-group-item-heading"></label>
                             </StackLayout>
@@ -67,7 +67,7 @@
                         <StackLayout>
                             <Label text="WAREHOUSE:" class="itemInquiry-labelBold"></Label>
                             <DropDown [items]="warehouses" class="enabled" [(ngModel)]="warehouse" colSpan="2" isEnabled="true" hint="Select..." backgroundColor="white"
-                                color="black" (selectedIndexChanged)="onchangeWarehouse($event)">
+                                color="black" colSpan="2" borderColor="orangered" (selectedIndexChanged)="onchangeWarehouse($event)">
                                 <TextField [text]="warehouse" [(ngModel)]="userName"></TextField>
                             </DropDown>
                         </StackLayout>

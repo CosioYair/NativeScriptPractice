@@ -4,7 +4,7 @@
 	"readme": "NativeScript Application",
 	"repository": "<fill-your-repository-here>",
 	"nativescript": {
-		"id": "org.nativescript.IFurniture",
+		"id": "org.internationalFurniture.MobileSales",
 		"tns-ios": {
 			"version": "3.4.1"
 		},

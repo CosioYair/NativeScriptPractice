@@ -10,10 +10,10 @@
                 </StackLayout>
             </DockLayout>
         </StackLayout>
-        <StackLayout width="33%">
+        <StackLayout width="18%">
         </StackLayout>
-        <StackLayout width="33%">
-            <Button text="&#xf187; SAVE" verticalAlignment="center" horizontalAlignment="right" (tap)="save()" fontSize="15%" backgroundColor="orangered"></Button>
+        <StackLayout width="33%" verticalAlignment="center">
+            <Button padding="5%" text="&#xf187; SAVE" verticalAlignment="center" horizontalAlignment="right" (tap)="save()" fontSize="15%" backgroundColor="orangered"></Button>
         </StackLayout>
     </DockLayout>
 </ActionBar>
@@ -131,7 +131,7 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Ship Via"></Label>
-                    <DropDown [items]="shipVias" (selectedIndexChanged)="setCustomerShipVia($event)" [(ngModel)]="shipVia"></DropDown>
+                    <TextField [(ngModel)]="_saleOrder.ShipVia"></TextField>
                 </DockLayout>
             </StackLayout>
         </DockLayout>
@@ -160,8 +160,8 @@
                     </GridLayout>
                 </Border>
             </StackLayout>
-            <StackLayout width="50%">
-                <StackLayout paddingTop="10%">
+            <StackLayout padding="10%" width="50%">
+                <StackLayout>
                     <Border borderBottomWidth="2" borderColor="orangered" horizontalAlignment="stretch">
                         <DockLayout borderRadius="8">
                             <StackLayout class="product-detail-title" width="90%">
@@ -176,9 +176,9 @@
                     <StackLayout class="product-description" margin="3%">
                         <StackLayout *ngIf="!showingProduct">
                             <DockLayout>
-                                <StackLayout width="50%">
+                                <StackLayout marginRight="4%" width="50%">
                                     <Label text="Item Code"></Label>
-                                    <TextField [(ngModel)]="itemCode" hint="" (returnPress)="validateProductList()"></TextField>
+                                    <TextField padding="7%" [(ngModel)]="itemCode" hint="" (returnPress)="validateProductList()"></TextField>
                                 </StackLayout>
                                 <StackLayout>
                                     <Label text="Tap to scan:"></Label>
@@ -209,7 +209,7 @@
                             </DockLayout>
                         </StackLayout>
                         <StackLayout *ngIf="showingProduct">
-                            <DockLayout>/////aqui me quede
+                            <DockLayout>
                                 <StackLayout width="50%">
                                     <StackLayout>
                                         <StackLayout>
@@ -275,8 +275,8 @@
     </GridLayout>
 
     <GridLayout rows="*" visibility="{{ selectionTabs[3].visibility ? 'visible' : 'collapsed' }}">
-        <DockLayout>
-            <StackLayout width="22.5%">
+        <DockLayout padding="10%">
+            <StackLayout paddingRight="5%" width="22.5%">
                 <StackLayout>
                     <Border verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
                         <DockLayout paddingTop="30%" class="">
