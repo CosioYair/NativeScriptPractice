@@ -28,7 +28,7 @@ export class LastRefreshService {
     }
 
     public setLastRefresh(type, date) {
-        this._doc = this._couchbaseService.getDocument(this._docId)[this._docId];
+        this._doc = this._couchbaseService.getDocument(this._docId);
         this._doc[this._docId][type] = date;
         this._couchbaseService.updateDocument(this._docId, this._doc);
     }
