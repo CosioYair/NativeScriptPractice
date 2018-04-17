@@ -14,7 +14,7 @@
         </StackLayout>
     </DockLayout>
 </ActionBar>
-<StackLayout class="page" backgroundColor="">
+<StackLayout>
     <DockLayout>
         <StackLayout class="itemInquiry-layout" width="50%">
             <SearchBar row="0" hint="Search" (textChange)="onTextChanged($event)"></SearchBar>
@@ -57,7 +57,7 @@
                         <Label class="itemInquiry-labelBold" text="STYLES"></Label>
                         <Label class="itemInquiry-label" [text]="selectedProduct.Category1" textAlignment="center"></Label>
                         <Label class="itemInquiry-labelBold" text="PACKAGE"></Label>
-                        <Label class="itemInquiry-label" [text]="selectedProduct.Category2" textAlignment="center"></Label>
+                        <Label padding="10%" class="itemInquiry-label" [text]="selectedProduct.Category2" textAlignment="center"></Label>
                         <label class="itemInquiry-labelBold" text="CUBES"></label>
                         <label [text]="selectedProduct.Category4" class="itemInquiry-label" textAlignment="center"></label>
                     </StackLayout>
@@ -67,13 +67,13 @@
                         <StackLayout>
                             <Label text="WAREHOUSE:" class="itemInquiry-labelBold"></Label>
                             <DropDown [items]="warehouses" class="enabled" [(ngModel)]="warehouse" colSpan="2" isEnabled="true" hint="Select..." backgroundColor="white"
-                                color="black" colSpan="2" borderColor="orangered" (selectedIndexChanged)="onchangeWarehouse($event)">
+                                color="black" colSpan="2" (selectedIndexChanged)="onchangeWarehouse($event)">
                                 <TextField [text]="warehouse" [(ngModel)]="userName"></TextField>
                             </DropDown>
                         </StackLayout>
                     </StackLayout>
-                    <StackLayout width="33%">
-                        <Image src="{{ picture }}"></Image>
+                    <StackLayout width="33%" height="45%">
+                        <Image [src]="productImage"></Image>
                     </StackLayout>
                 </DockLayout>
                 <DockLayout padding="10%">
