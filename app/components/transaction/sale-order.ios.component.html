@@ -22,7 +22,7 @@
     <SegmentedBar color="black" selectedBackgroundColor="#A0A0A0" [items]="tabs" (selectedIndexChange)="onSelectedIndexChange($event)"></SegmentedBar>
     <GridLayout visibility="{{ selectionTabs[0].visibility ? 'visible' : 'collapsed' }}">
         <DockLayout class="tab-content">
-            <StackLayout width="50%">
+            <StackLayout width="50%" fontSize="20%">
                 <DockLayout>
                     <Label text="Customer No"></Label>
                     <TextField [text]="_saleOrder.CustomerNo" class="enabled" hint="Customer No" isEnabled="false"></TextField>
@@ -48,7 +48,7 @@
                     <TextField [text]="_saleOrder.TermsCode + ': ' + userTermsCode" class="enabled" hint="Terms" isEnabled="false"></TextField>
                 </DockLayout>
             </StackLayout>
-            <StackLayout width="50%">
+            <StackLayout width="50%" fontSize="70%">
                 <DockLayout horizontalAlignment="left">
                     <TextField [text]="_saleOrder.CustomerName" class="enabled" hint="371 FURNITURE" isEnabled="false"></TextField>
                 </DockLayout>
@@ -73,7 +73,7 @@
     </GridLayout>
 
     <GridLayout rows="*" visibility="{{ selectionTabs[1].visibility ? 'visible' : 'collapsed' }}">
-        <DockLayout class="tab-content" columns="*, *" rows="*">
+        <DockLayout class="tab-content" fontSize="20%" columns="*, *" rows="*">
             <StackLayout width="50%">
                 <DockLayout>
                     <Label class="h3" text="BILL TO ADDRESS"></Label>
@@ -258,11 +258,11 @@
                                     <Label [text]="selectedProduct.StandardUnitPrice | number:'1.2-5'" textSize="30%" textAlignment="center" color="black"></Label>
                                 </StackLayout>
                             </DockLayout>
-                            <DockLayout>
-                                <Button class="option-button" text="Add" verticalAlignment="center" (tap)="addProduct()" color="white" backgroundColor="orangered"
-                                    width="50%"></Button>
+                            <DockLayout class="cart-options">
+                                <Button class="option-button" text="Add" verticalAlignment="center" (tap)="addProduct()" backgroundColor="orangered"
+                                    width="50%" height="50%"></Button>
                                 <Button class="option-button" text="Cancel" verticalAlignment="center" (tap)="cancel()" color="white" backgroundColor="orangered"
-                                    width="50%"></Button>
+                                    width="50%" height="50%"></Button>
                             </DockLayout>
                         </StackLayout>
                     </StackLayout>
