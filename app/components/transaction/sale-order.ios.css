@@ -1,0 +1,129 @@
+TabView {
+    font-size: 22%;
+}
+
+.tab-content {
+    margin: 1%; 
+    margin-left: 4%;
+    font-size: 20%;
+}
+
+.tab-content Label {
+    font-weight: bold;
+    margin-top: 1%;
+    width: 30%;
+}
+
+.tab-content .h3 {
+    width: 100%;
+    text-align: center;
+    color: #DE6427;
+    font-size: 19%;
+}
+
+.tab-content TextField, .tab-content Dropdown {
+    width: 60%;
+    margin-right: 10%;
+}
+
+.tab-content Dropdown {
+    padding: 5%;
+}
+
+.tab-content DockLayout {
+    margin-top: 3%;
+}
+
+.tab-suContent Label {
+    width: 20%;
+}
+
+.tab-list {
+    margin-right: 5%;
+}
+
+.tab-list Label, .tab-list StackLayout, .tab-list DockLayout, .tab-list GridLayout {
+    width: 100%;
+    font-size: 15%;
+}
+
+.tab-list ListView Label {
+    font-weight: normal;
+}
+
+.product-detail-title Label, .product-detail StackLayout, .product-detail DockLayout, .product-detail GridLayout {
+    width: 100%;
+    font-size: 20%;
+}
+
+.icon {
+    height: 10%;
+    width: 10%;
+    margin-right: 2%;
+}
+
+.miniImage {
+    height: 50%;
+    width: 50%;
+}
+
+.product-description Label {
+    font-size: 17%;
+}
+
+.product-total Label {
+    width: 50%;
+    padding-top: 40%;
+    margin-left: 0;
+}
+
+.product-quantity Label, .product-quantity TextField {
+    width: auto;
+    padding: 0;
+    margin: 0;
+    margin-top: 4%;
+    margin-bottom: 10%;
+}
+
+.product-quantity Dropdown {
+    width: auto;
+    margin: 0;
+    padding: 5%;
+}
+
+.product-quantity Label, .product-quantity TextField {
+    margin-right: 10%;
+}
+
+.product-sections TextField {
+    height: 50px;
+}
+
+.totals Label {
+    width: auto;
+    padding: 0;
+    margin: 0;
+    font-size: 18%;
+}
+
+.totals .h1 {
+    font-size: 25%;
+}
+
+.totals-subtitle {
+    color: #D7D7D7;
+}
+
+.product-detail-icons {
+    padding-top: 100%;
+    padding-left: 20%;
+}
+
+.option-button {
+    min-width: 20%;
+    min-height: 120px;
+}
+
+.textRight {
+    text-align: right;
+}
