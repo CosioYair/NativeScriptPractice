@@ -21,10 +21,8 @@ export class LastRefreshService {
     public setLastRefreshDocument() {
         this._couchbaseService.deleteDocument(this._docId);
         this._doc[this._docId] = {
-            lastrefresh: {
-                docs: "",
-                images: ""
-            }
+            docs: "",
+            images: ""
         };
         this._couchbaseService.createDocument(this._doc, this._docId);
     }
