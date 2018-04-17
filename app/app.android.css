@@ -78,3 +78,8 @@ TextField, Dropdown {
 .enabled {
     background-color: #D7D7D7;
 }
+
+.h2 {
+    font-size: 18%;
+    font-weight: bold;
+} 
