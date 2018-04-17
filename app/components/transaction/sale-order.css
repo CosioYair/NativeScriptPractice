@@ -3,14 +3,14 @@ TabView {
 }
 
 .tab-content {
-    margin: 2%;
+    margin: 1%; 
     margin-left: 4%;
-    font-size: 20%;
+    font-size: 16%;
 }
 
 .tab-content Label {
     font-weight: bold;
-    margin-top: 2%;
+    margin-top: 1%;
     width: 30%;
 }
 
@@ -18,7 +18,7 @@ TabView {
     width: 100%;
     text-align: center;
     color: #DE6427;
-    font-size: 22%;
+    font-size: 19%;
 }
 
 .tab-content TextField, .tab-content Dropdown {
@@ -27,11 +27,11 @@ TabView {
 }
 
 .tab-content Dropdown {
-    padding: 8%;
+    padding: 5%;
 }
 
 .tab-content DockLayout {
-    margin-top: 4%;
+    margin-top: 3%;
 }
 
 .tab-suContent Label {
@@ -81,7 +81,7 @@ TabView {
     width: auto;
     padding: 0;
     margin: 0;
-    margin-top: 5%;
+    margin-top: 4%;
     margin-bottom: 10%;
 }
 

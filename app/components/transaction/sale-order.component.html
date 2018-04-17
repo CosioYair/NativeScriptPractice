@@ -18,7 +18,7 @@
         </StackLayout>
     </DockLayout>
 </ActionBar>
-<TabView selectedIndex="0" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton backgroundColor="white">
+<TabView selectedIndex="0" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton>
     <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
         <DockLayout class="tab-content">
             <StackLayout width="50%">
@@ -104,8 +104,7 @@
                 </DockLayout>
                 <DockLayout>
                     <Label text="Ship To"></Label>
-                    <DropDown [items]="shippingAddressList" [selectedIndex]="_saleOrder.ShipTo" (selectedIndexChanged)="setCustomerShippingAddress($event)"
-                        colSpan="2"></DropDown>
+                    <DropDown [items]="shippingAddressList" [selectedIndex]="_saleOrder.ShipTo" (selectedIndexChanged)="setCustomerShippingAddress($event)"></DropDown>
                 </DockLayout>
                 <DockLayout>
                     <Label text="Name"></Label>
@@ -136,7 +135,7 @@
         </DockLayout>
     </StackLayout>
     <StackLayout *tabItem="{title: '&#xf02e; LINES'}">
-        <DockLayout padding="10%">
+        <DockLayout padding="10%" paddingBottom="2%">
             <StackLayout padding="10%" class="tab-list" width="50%">
                 <SearchBar hint="Search" (textChange)="onTextChanged($event)" (clear)="onClear($event)" textFieldBackgroundColor="white"></SearchBar>
                 <Border backgroundColor="white" borderRadius="8" borderBottomWidth="2" borderTopWidth="2" borderColor="#DE6427" horizontalAlignment="stretch">
@@ -144,9 +143,9 @@
                         <StackLayout col="0" class="tab-list" row="0" col="0">
                             <ListView [items]="productList" class="list-group">
                                 <ng-template let-item="item">
-                                    <GridLayout borderRadius="8" class="" columns="*" rows="100" (tap)="viewProduct(item)" [class.highlight]="item.ItemCode == selectedProduct.ItemCode">
+                                    <GridLayout borderRadius="8" class="" columns="*" rows="70" (tap)="viewProduct(item)" [class.highlight]="item.ItemCode == selectedProduct.ItemCode">
                                         <StackLayout col="0" verticalAlignment="center" paddingLeft="20%">
-                                            <Label [text]="item.ItemCode" class="list-group-item-heading" fontSize="24ID"></Label>
+                                            <Label [text]="item.ItemCode" class="list-group-item-heading h2"></Label>
                                             <StackLayout marginLeft="5%">
                                                 <Label [text]="item.ItemCodeDesc" class="list-group-item-heading"></Label>
                                             </StackLayout>
@@ -235,12 +234,12 @@
                                         </DockLayout>
                                     </StackLayout>
                                 </StackLayout>
-                                <StackLayout padding="5%" paddingBottom="10%" height="45%" width="50%">
+                                <StackLayout padding="5%" paddingBottom="10%" height="35%" width="50%">
                                     <Image [src]="productImage"></Image>
                                 </StackLayout>
                             </DockLayout>
                             <TextView backgroundColor="white" borderColor="orangered" borderWidth="1" [(ngModel)]="selectedProduct.comment" class="input input-border"
-                                maxLenght="150" height="30%"></TextView>
+                                maxLenght="150" height="25%"></TextView>
                             <DockLayout>
                                 <StackLayout width="33%">
                                     <Label text="ON HAND"></Label>
@@ -352,10 +351,10 @@
                     </ng-template>
                 </ListView>
             </StackLayout>
-            <StackLayout width="7.5%" padding="10%">
-                <Button height="8%" class="option-button" text="&#xf044;" verticalAlignment="center" (tap)="showProductOrderModal()" color="white"
+            <StackLayout width="7.5%" padding="6%">
+                <Button height="13%" class="option-button" text="&#xf044;" verticalAlignment="center" (tap)="showProductOrderModal()" color="white"
                     backgroundColor="orangered"></Button>
-                <Button height="8%" class="option-button" text="&#xf1f8;" verticalAlignment="center" (tap)="deleteCartProduct()" color="white"
+                <Button height="13%" class="option-button" text="&#xf1f8;" verticalAlignment="center" (tap)="deleteCartProduct()" color="white"
                     backgroundColor="orangered"></Button>
             </StackLayout>
         </DockLayout>
