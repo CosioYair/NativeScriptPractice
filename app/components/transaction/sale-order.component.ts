@@ -106,6 +106,14 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
             segmentedBarItem.title = tab.title;
             this.tabs.push(segmentedBarItem);
         });
+        SERVER.isQuote = JSON.parse(this.route.snapshot.params["IsQuote"]);
+        this.getCustomer(this.route.snapshot.params["CustomerNo"]);
+        this.setShippingAddress();
+        this.setInventory();
+        this.userTermsCode = this._termsCodeService.getUserTermsCode(this.customer);
+        this.setDocument();
+        this.warehouses = GLOBALFUNCTIONS.getWarehouses();
+        this.refreshSaleOrder();
     }
 
     ngOnDestroy() {
@@ -113,21 +121,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     }
 
     async ngOnInit() {
-        SERVER.isQuote = JSON.parse(this.route.snapshot.params["IsQuote"]);
-        await this.getCustomer(this.route.snapshot.params["CustomerNo"]);
-        await this.setShippingAddress();
-        await this.setInventory();
-        this.userTermsCode = await this._termsCodeService.getUserTermsCode(this.customer);
-        await this.setDocument();
-        this.warehouses = GLOBALFUNCTIONS.getWarehouses();
-        await this.refreshSaleOrder();
-        if (!SERVER.editTransaction.edit) {
-            this._saleOrder.ShipDate = `${this._saleOrder.ShipDate.getDate() + 1}/${this._saleOrder.ShipDate.getMonth() + 1}/${this._saleOrder.ShipDate.getFullYear()}`;
-            this._saleOrder.OrderDate = `${this._saleOrder.OrderDate.getDate()}/${this._saleOrder.OrderDate.getMonth()}/${this._saleOrder.OrderDate.getFullYear()}`;
-        }
-        else {
-            await this.getTransaction();
-        }
+        
     }
 
     public getTransaction() {
@@ -458,6 +452,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     }
 
     private refreshSaleOrder() {
+        let currentDate = new Date(); 
         this._saleOrder = {
             IsQuote: SERVER.isQuote,
             Saved: false,
@@ -500,6 +495,13 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
             Comment: "",
             Detail: []
         };
+        if (!SERVER.editTransaction.edit) {
+            this._saleOrder.ShipDate = `${currentDate.getDate() + 1}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
+            this._saleOrder.OrderDate = `${currentDate.getDate()}/${currentDate.getMonth()}/${currentDate.getFullYear()}`;
+        }
+        else {
+            this.getTransaction();
+        }
     }
 
     private validations() {

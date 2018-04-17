@@ -60,13 +60,13 @@ export class ReviewTransactionComponent {
     }
 
     public checkList(list) {
-        if (list == null || list == undefined) {
+        if (list == null || list == undefined || list == []) {
             this.selectedTransaction = {};
             this.selectedTransaction.Detail = [];
             return [];
         }
         else {
-            this.selectedTransaction = list[0];
+            this.selectedTransaction = list;
             return list;
         }
     }

@@ -77,10 +77,6 @@ TabView {
     margin-left: 0;
 }
 
-.productImage {
-    margin-top: 100px;
-}
-
 .product-quantity Label, .product-quantity TextField {
     width: auto;
     padding: 0;

@@ -60,7 +60,7 @@
                 </StackLayout>
             </GridLayout>
             <GridLayout class="" columns="*" rows="*" backgroundColor="white">
-                <ListView [items]="selectedTransaction.Detail" class="list-group">
+                <ListView [items]="detail" class="list-group">
                     <ng-template let-item="item">
                         <GridLayout borderRadius="8" class="" columns="100, *, 120" rows="100">
                             <StackLayout col="0" verticalAlignment="center" paddingRight="20%">
