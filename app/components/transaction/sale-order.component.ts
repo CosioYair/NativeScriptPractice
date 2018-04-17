@@ -121,7 +121,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     }
 
     async ngOnInit() {
-        
+
     }
 
     public getTransaction() {
@@ -183,6 +183,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
             this.shippingAddressList = [];
         else {
             this.shippingAddressList = await this._shippingAddressService.getCustomerShippingAddressList(this.customer);
+            this.setSaleOrderShipAddress(0);
         }
     }
 
@@ -193,17 +194,24 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
 
     public setCustomerShippingAddress(args: SelectedIndexChangedEventData) {
         setTimeout(() => {
-            this._saleOrder.ShipVia = this._customerShippingAddress[args.newIndex].ShipVia;
-            this._saleOrder.ShipToCity = this._customerShippingAddress[args.newIndex].ShipToCity;
-            this._saleOrder.ShipToState = this._customerShippingAddress[args.newIndex].ShipToState;
-            this._saleOrder.ShipToZipCode = this._customerShippingAddress[args.newIndex].ShipToZipCode;
-            this._saleOrder.ShipToName = this._customerShippingAddress[args.newIndex].ShipToName;
-            this._saleOrder.ShipToAddress1 = this._customerShippingAddress[args.newIndex].ShipToAddress1;
-            this._saleOrder.ShipToAddress2 = this._customerShippingAddress[args.newIndex].ShipToAddress2;
-            this._saleOrder.ShipToAddress3 = this._customerShippingAddress[args.newIndex].ShipToAddress3;
-            this._saleOrder.ShipToCountryCode = this._customerShippingAddress[args.newIndex].ShipToCountryCode;
-            this._saleOrder.ShipTo = args.newIndex;
+            this.setSaleOrderShipAddress(args.newIndex);
         }, 500);
+    }
+
+    public setSaleOrderShipAddress(index) {
+        this._saleOrder.ShipVia = this._customerShippingAddress[index].ShipVia;
+        this._saleOrder.ShipToCity = this._customerShippingAddress[index].ShipToCity;
+        this._saleOrder.ShipToCity = this._customerShippingAddress[index].ShipToCity;
+        this._saleOrder.ShipToCity = this._customerShippingAddress[index].ShipToCity;
+        this._saleOrder.ShipToCity = this._customerShippingAddress[index].ShipToCity;
+        this._saleOrder.ShipToZipCode = this._customerShippingAddress[index].ShipToZipCode;
+        this._saleOrder.ShipToName = this._customerShippingAddress[index].ShipToName;
+        this._saleOrder.ShipToAddress1 = this._customerShippingAddress[index].ShipToAddress1;
+        this._saleOrder.ShipToAddress2 = this._customerShippingAddress[index].ShipToAddress2;
+        this._saleOrder.ShipToAddress3 = this._customerShippingAddress[index].ShipToAddress3;
+        this._saleOrder.ShipToCountryCode = this._customerShippingAddress[index].ShipToCountryCode;
+        this._saleOrder.ShipToCity = this._customerShippingAddress[index].ShipToCity;
+        this._saleOrder.ShipTo = index;
     }
 
     public filterInventoryWarehouse() {
@@ -406,7 +414,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
                 this.selectedProduct.quantityAvail = quantityAvail < 0 ? 0 : quantityAvail;
             }
         });
-        if(this.selectedProduct.quantityOnHand == null) {
+        if (this.selectedProduct.quantityOnHand == null) {
             this.selectedProduct.quantityOnHand = 0;
             this.selectedProduct.quantityAvail = 0;
         }
@@ -452,7 +460,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
     }
 
     private refreshSaleOrder() {
-        let currentDate = new Date(); 
+        let currentDate = new Date();
         this._saleOrder = {
             IsQuote: SERVER.isQuote,
             Saved: false,
