@@ -13,7 +13,8 @@
         <StackLayout width="18%">
         </StackLayout>
         <StackLayout width="33%" verticalAlignment="center">
-            <Button padding="5%" text="&#xf187; SAVE" verticalAlignment="center" horizontalAlignment="right" (tap)="save()" fontSize="15%" backgroundColor="orangered"></Button>
+            <Button padding="5%" text="&#xf187; SAVE" verticalAlignment="center" horizontalAlignment="right" (tap)="save()" fontSize="15%"
+                backgroundColor="orangered"></Button>
         </StackLayout>
     </DockLayout>
 </ActionBar>
@@ -138,8 +139,8 @@
     </GridLayout>
 
     <GridLayout rows="*" visibility="{{ selectionTabs[2].visibility ? 'visible' : 'collapsed' }}">
-        <DockLayout>
-            <StackLayout class="tab-list" width="50%">
+        <DockLayout padding="10%">
+            <StackLayout padding="10%" class="tab-list" width="50%">
                 <SearchBar hint="Search" (textChange)="onTextChanged($event)" (clear)="onClear($event)" textFieldBackgroundColor="white"></SearchBar>
                 <Border backgroundColor="white" borderRadius="8" borderBottomWidth="2" borderTopWidth="2" borderColor="#DE6427" horizontalAlignment="stretch">
                     <GridLayout backgroundColor="white" class="tab-content" columns="*" rows="*">
@@ -236,7 +237,6 @@
                                             <DropDown [items]="warehouses" class="enabled" [(ngModel)]="warehouse" colSpan="2" isEnabled="false" borderColor="orangered"></DropDown>
                                         </DockLayout>
                                     </StackLayout>
-
                                 </StackLayout>
                                 <StackLayout padding="5%" paddingBottom="10%" height="45%" width="50%">
                                     <Image [src]="productImage"></Image>
@@ -264,19 +264,15 @@
                                 <Button class="option-button" text="Cancel" verticalAlignment="center" (tap)="cancel()" color="white" backgroundColor="orangered"
                                     width="50%"></Button>
                             </DockLayout>
-
-
-
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
         </DockLayout>
     </GridLayout>
-
     <GridLayout rows="*" visibility="{{ selectionTabs[3].visibility ? 'visible' : 'collapsed' }}">
         <DockLayout padding="10%">
-            <StackLayout paddingRight="5%" width="22.5%">
+            <StackLayout padding="10%" width="22.5%">
                 <StackLayout>
                     <Border verticalAlignment="center" colSpan="2" borderBottomWidth="2" borderColor="#F7A176" horizontalAlignment="stretch">
                         <DockLayout paddingTop="30%" class="">
@@ -337,7 +333,7 @@
                         <Label text="Extension" horizontalAlignment="left" textAlignment="right"></Label>
                     </StackLayout>
                 </DockLayout>
-                <ListView [items]="_saleOrder.Detail" class="list-group">
+                <ListView [items]="_saleOrder.Detail" class="list-group" height="100%">
                     <ng-template let-item="item">
                         <GridLayout borderRadius="8" class="" columns="100, *, 120" rows="100" (tap)="setSelectedCartProduct(item)" [class.highlight]="item.ItemCode == selectedCartProduct.ItemCode">
                             <StackLayout col="0" verticalAlignment="center" paddingRight="20%">
@@ -359,9 +355,11 @@
                     </ng-template>
                 </ListView>
             </StackLayout>
-            <StackLayout width="7.5%">
-                <Button class="option-button" text="&#xf044;" verticalAlignment="center" (tap)="showProductOrderModal()" color="white" backgroundColor="orangered"></Button>
-                <Button class="option-button" text="&#xf1f8;" verticalAlignment="center" (tap)="deleteCartProduct()" color="white" backgroundColor="orangered"></Button>
+            <StackLayout width="7.5%" padding="10%">
+                <Button height="8%" class="option-button" text="&#xf044;" verticalAlignment="center" (tap)="showProductOrderModal()" color="white"
+                    backgroundColor="orangered"></Button>
+                <Button height="8%" class="option-button" text="&#xf1f8;" verticalAlignment="center" (tap)="deleteCartProduct()" color="white"
+                    backgroundColor="orangered"></Button>
             </StackLayout>
         </DockLayout>
     </GridLayout>
