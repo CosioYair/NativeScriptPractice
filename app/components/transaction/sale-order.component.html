@@ -192,7 +192,7 @@
                                     <Border borderBottomWidth="2">
                                         <DockLayout>
                                             <Label text="Total Qty:"></Label>
-                                            <Label class="h2" text="1"></Label>
+                                            <Label class="h2" [text]="cartQuantity"></Label>
                                         </DockLayout>
                                     </Border>
                                 </StackLayout>
@@ -200,7 +200,7 @@
                                     <Border borderBottomWidth="2">
                                         <DockLayout>
                                             <Label text="Total Amt:"></Label>
-                                            <Label class="h2" text="$79.00"></Label>
+                                            <Label class="h2" [text]="totalCartAmount | number:'1.2-5'"></Label>
                                         </DockLayout>
                                     </Border>
                                 </StackLayout>
@@ -286,7 +286,7 @@
                             <StackLayout>
                                 <Label text="NET AMOUNT" class=""></Label>
                                 <Label [text]="totalCartAmount | number:'1.2-5'" textAlignment="center" color="black"></Label>
-                            </StackLayout>>
+                            </StackLayout>
                             <StackLayout>
                                 <Label text="TOTAL CUBES" class=""></Label>
                                 <Label width="100%" [text]="totalCubes | number:'1.2-5'" textAlignment="center" color="black"></Label>
