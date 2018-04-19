@@ -51,11 +51,11 @@
 <StackLayout *ngIf="loadingScreen" verticalAlign="center" horizontalAlign="center" width="50%" backgroundColor="white">
     <Label padding="10%" paddingTop="200%" [text]="status" fontSize="30" textAlignment="center"></Label>
     <Progress [value]="progressValue" (valueChanged)="onValueChanged($event)" maxValue="100" class="m-20" color="orangered"></Progress>
-    <Button [nsRouterLink]="['/home']" *ngIf="button" text="Accept" width="50%"></Button>
+    <Button (tap)="accept()" *ngIf="button" text="Accept" width="50%"></Button>
 </StackLayout>
 
 <StackLayout *ngIf="loadingImagesScreen" verticalAlign="center" horizontalAlign="center" width="50%" backgroundColor="white">
     <Label padding="10%" paddingTop="200%" [text]="status" fontSize="30" textAlignment="center"></Label>
     <Progress [value]="progressImageValue" (valueChanged)="onValueChanged($event)" [maxValue]="lengthImages" class="m-20" color="orangered"></Progress>
-    <Button [nsRouterLink]="['/home']" *ngIf="button" text="Accept" width="50%"></Button>
+    <Button (tap)="accept()" *ngIf="button" text="Accept" width="50%"></Button>
 </StackLayout>
