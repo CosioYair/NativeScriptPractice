@@ -24,7 +24,7 @@
                     <ng-template let-item="item">
                         <StackLayout padding="10%" borderRadius="8" class="item list-group-item" [class.highlight]="selectedCustomer.CustomerNo == item.CustomerNo"
                             (tap)="setSelectedCustomer(item)">
-                            <Label [text]="item.CustomerName" class="list-group-item-heading h2"></Label>
+                            <Label [text]="item.CustomerName" class="list-group-item-heading h2" padding="10%"></Label>
                             <StackLayout marginLeft="5%">
                                 <Label [text]="item.CustomerNo" class="list-group-item-heading"></Label>
                                 <Label [text]="item.City + ', ' + item.State + '. ' + item.ZipCode" class="list-group-item-heading"></Label>

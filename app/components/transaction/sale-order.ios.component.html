@@ -149,7 +149,7 @@
                                 <ng-template let-item="item">
                                     <GridLayout borderRadius="8" class="" columns="*" rows="100" (tap)="viewProduct(item)" [class.highlight]="item.ItemCode == selectedProduct.ItemCode">
                                         <StackLayout col="0" verticalAlignment="center" paddingLeft="20%">
-                                            <Label [text]="item.ItemCode" class="list-group-item-heading" fontSize="24ID"></Label>
+                                            <Label [text]="item.ItemCode" class="list-group-item-heading" fontSize="24ID" padding="10%"></Label>
                                             <StackLayout marginLeft="5%">
                                                 <Label [text]="item.ItemCodeDesc" class="list-group-item-heading"></Label>
                                             </StackLayout>
