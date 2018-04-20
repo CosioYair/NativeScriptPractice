@@ -55,7 +55,7 @@
 </StackLayout>
 
 <StackLayout *ngIf="loadingImagesScreen" verticalAlign="center" horizontalAlign="center" width="50%" backgroundColor="white">
-    <Label padding="10%" paddingTop="200%" [text]="status" fontSize="30" textAlignment="center"></Label>
+    <Label padding="10%" paddingTop="200%" [text]="status + ' '+ progressImageValue + '/' + lengthImages" fontSize="30" textAlignment="center" isEnabled="false"></Label>
     <Progress [value]="progressImageValue" (valueChanged)="onValueChanged($event)" [maxValue]="lengthImages" class="m-20" color="orangered"></Progress>
     <Button (tap)="accept()" *ngIf="button" text="Accept" width="50%"></Button>
 </StackLayout>
