@@ -200,10 +200,7 @@ export class SaleOrderComponent implements OnInit, OnDestroy {
 
     public setSaleOrderShipAddress(index) {
         this._saleOrder.ShipVia = this._customerShippingAddress[index].ShipVia;
-        this._saleOrder.ShipToCity = this._customerShippingAddress[index].ShipToCity;
-        this._saleOrder.ShipToCity = this._customerShippingAddress[index].ShipToCity;
-        this._saleOrder.ShipToCity = this._customerShippingAddress[index].ShipToCity;
-        this._saleOrder.ShipToCity = this._customerShippingAddress[index].ShipToCity;
+        this._saleOrder.ShipToState = this._customerShippingAddress[index].ShipToState;
         this._saleOrder.ShipToZipCode = this._customerShippingAddress[index].ShipToZipCode;
         this._saleOrder.ShipToName = this._customerShippingAddress[index].ShipToName;
         this._saleOrder.ShipToAddress1 = this._customerShippingAddress[index].ShipToAddress1;
