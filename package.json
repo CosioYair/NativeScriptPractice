@@ -6,10 +6,10 @@
 	"nativescript": {
 		"id": "org.internationalFurniture.MobileSales",
 		"tns-android": {
-			"version": "3.4.2"
+			"version": "4.1.0-2018.4.24.3"
 		},
 		"tns-ios": {
-			"version": "4.0.1"
+			"version": "4.1.0-2018-04-24-01"
 		}
 	},
 	"dependencies": {
@@ -36,7 +36,7 @@
 		"nativescript-zip": "^2.0.4",
 		"reflect-metadata": "~0.1.8",
 		"rxjs": "~5.5.2",
-		"tns-core-modules": "^3.4.1",
+		"tns-core-modules": "^4.0.0-2018-04-23-01",
 		"zone.js": "~0.8.2"
 	},
 	"devDependencies": {

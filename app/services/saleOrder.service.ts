@@ -31,8 +31,9 @@ export class SaleOrderService {
                 this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]].push(saleOrder);
         }
 
-        if (!existingTransaction)
-            this._couchbaseService.createDocument(this._saleOrderDoc, "saleorder");
+        if (!existingTransaction){
+            this._saleOrderDoc = JSON.parse(JSON.stringify(this._saleOrderDoc));
+            this._couchbaseService.createDocument(this._saleOrderDoc, "saleorder");}
     }
 
     public getUnsavedUserTransactions() {
@@ -84,6 +85,7 @@ export class SaleOrderService {
         });
         if (exist) {
             this._saleOrderDoc["saleorder"][SERVER.user["UserCode"]] = transactions;
+            this._saleOrderDoc = JSON.parse(JSON.stringify(this._saleOrderDoc));
             this._couchbaseService.createDocument(this._saleOrderDoc, "saleorder");
         }
         return exist;
