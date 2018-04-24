@@ -1,20 +1,17 @@
 <ActionBar title="Mobile Sales" class="action-bar">
-    <DockLayout>
-        <StackLayout width="33%">
-            <DockLayout>
-                <StackLayout width="15%" horizontalAlignment="left">
-                        <Image src="~/assets/images/iconMS.png" width="100%" height="100%"></Image>
+    <DockLayout width="100%">
+        <StackLayout width="50%">
+            <DockLayout horizontalAlignment="left">
+                <StackLayout width="8%" paddingRight="4%">
+                    <Image src="~/assets/images/iconMS.png"></Image>
                 </StackLayout>
-                <StackLayout width="75%">
-                        <Label text="Mobile Sales" textAlignment="left" fontSize="20" paddingTop="10%"></Label>
-                </StackLayout> 
+                <StackLayout width="90%" verticalAlignment="center">
+                    <Label text="Mobile Sales" textAlignment="left" fontSize="20%"></Label>
+                </StackLayout>
             </DockLayout>
         </StackLayout>
-        <StackLayout width="28%">
-
-        </StackLayout>
-        <StackLayout width="33%" verticalAlignment="center">
-            <Button padding="5%" text="&#xf021; Refresh"  horizontalAlignment="right" (tap)="checkDocument()" fontSize="15%" backgroundColor="orangered"></Button>
+        <StackLayout width="45%" verticalAlignment="center">
+            <Button padding="10%" text="&#xf021; Refresh" horizontalAlignment="right" (tap)="checkDocument()" fontSize="15%" backgroundColor="orangered"></Button>
         </StackLayout>
     </DockLayout>
 </ActionBar>

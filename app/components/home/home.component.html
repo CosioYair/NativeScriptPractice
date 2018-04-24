@@ -1,26 +1,26 @@
 <ActionBar title="Mobile Sales" class="action-bar">
-    <DockLayout>
-        <StackLayout width="33%">
-            <DockLayout>
-                <StackLayout width="15%" horizontalAlignment="left">
-                    <Image src="~/assets/images/iconMS.png" width="100%" height="100%"></Image>
+    <DockLayout width="100%">
+        <StackLayout width="50%">
+            <DockLayout horizontalAlignment="left">
+                <StackLayout width="8%" paddingRight="4%">
+                    <Image src="~/assets/images/iconMS.png"></Image>
                 </StackLayout>
-                <StackLayout width="75%">
-                    <Label text="Mobile Sales" textAlignment="left" fontSize="20" paddingTop="10%"></Label>
+                <StackLayout width="90%" verticalAlignment="center">
+                    <Label text="Mobile Sales" textAlignment="left" fontSize="20%"></Label>
                 </StackLayout>
             </DockLayout>
         </StackLayout>
-        <StackLayout width="66%">
-
+        <StackLayout width="45%" verticalAlignment="center">
         </StackLayout>
     </DockLayout>
 </ActionBar>
+
 <StackLayout class="page">
     <DockLayout>
         <StackLayout class="home-transaction">
             <Image src="~/assets/images/ifd.png" width="30%" height="40%"></Image>
             <StackLayout>
-                <label text="Adrian Cortes" fontSize="32"></label>
+                <label [text]="userName" fontSize="32" padding="10%"></label>
                 <DockLayout>
                     <label text="Unsend Transactions:" fontSize="16"></label>
                     <label [text]="unsetTransactions | number:'1.0-5'" horizontalAlignment="right" verticalAligment="center" fontSize="28"></label>
@@ -52,9 +52,9 @@
                     class="buttonStyle" padding="8%" margin="3%"></button>
                 <label text="Data" fontSize="30%"></label>
                 <button [nsRouterLink]="['/sendData']" text="&#xf093;  Send Data" fontSize="20%" color="white" backgroundColor="#006064"
-                    class="buttonStyle" padding="8%" margin="3%"></button>
-                <button [nsRouterLink]="['/sync']" text="&#xf021;  Refresh Data" fontSize="20%" color="white" backgroundColor="#006064"
-                    class="buttonStyle" padding="8%" margin="3%"></button>
+                    class="buttonStyle" padding="13%" margin="3%"></button>
+                <button [nsRouterLink]="['/sync']" text="&#xf021;  Refresh Data" fontSize="20%" color="white" backgroundColor="#006064" class="buttonStyle"
+                    padding="13%" margin="3%"></button>
             </StackLayout>
             <StackLayout>
                 <label text="Inquiries" fontSize="30%"></label>

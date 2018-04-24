@@ -15,6 +15,7 @@ import { Progress } from "ui/progress";
 import { CouchbaseService } from "../../services/couchbase.service";
 import { SERVER } from "../../config/server.config";
 import { LastRefreshService } from "../../services/lastRefresh.service";
+import { RouterExtensions } from "nativescript-angular/router";
 
 @Component({
     selector: "ns-sync",
@@ -59,7 +60,8 @@ export class SyncComponent {
         private _termsCodeService: TermsCodeService,
         private _couchbaseService: CouchbaseService,
         private _userService: UserService,
-        private _lastRefreshService: LastRefreshService
+        private _lastRefreshService: LastRefreshService,
+        private _router: RouterExtensions
     ) {
         this.options = [
             {
@@ -155,7 +157,7 @@ export class SyncComponent {
                 if (res <= 1) {
                     this.refreshButton = true;
                     this.button = true;
-                    this.status = "Downloaded"
+                    this.status = "Downloaded";
                 }
             }
         };
@@ -163,9 +165,7 @@ export class SyncComponent {
     }
 
     public accept() {
-        this.syncScreen = true;
-        this.loadingScreen = false;
-        this.refreshButton = true;
+        this._router.back();
     }
 
     public async refreshImages() {
@@ -173,6 +173,7 @@ export class SyncComponent {
         this.loadingImagesScreen = true;
         let products = this._couchbaseService.getDocument("product")["product"];
         this.lengthImages = products.length;
+        this.progressValue = 0;
         await products.map(async product => {
             await this._productService.removeImage(product.ItemCode);
         });

@@ -1,24 +1,23 @@
 <ActionBar title="Mobile Sales" class="action-bar">
-    <DockLayout>
-        <StackLayout width="33%">
-            <DockLayout>
-                <StackLayout width="15%" horizontalAlignment="left">
-                    <Image src="~/assets/images/iconMS.png" width="100%" height="100%"></Image>
+    <DockLayout width="100%">
+        <StackLayout width="50%">
+            <DockLayout horizontalAlignment="left">
+                <StackLayout width="8%" paddingRight="4%">
+                    <Image src="~/assets/images/iconMS.png"></Image>
                 </StackLayout>
-                <StackLayout width="75%">
-                    <Label text="Mobile Sales" textAlignment="left" fontSize="20" paddingTop="10%"></Label>
+                <StackLayout width="90%" verticalAlignment="center">
+                    <Label text="Mobile Sales" textAlignment="left" fontSize="20%"></Label>
                 </StackLayout>
             </DockLayout>
         </StackLayout>
-        <StackLayout width="18%">
-        </StackLayout>
-        <StackLayout width="33%" verticalAlignment="center">
-            <Button padding="5%" text="&#xf187; SAVE" verticalAlignment="center" horizontalAlignment="right" (tap)="save()" fontSize="15%"
+        <StackLayout width="40%" verticalAlignment="center">
+            <Button padding="10%" text="&#xf187; SAVE" verticalAlignment="center" horizontalAlignment="right" (tap)="save()" fontSize="15%"
                 backgroundColor="orangered"></Button>
         </StackLayout>
     </DockLayout>
 </ActionBar>
-<TabView selectedIndex="0" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton>
+
+<TabView selectedIndex="0" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton backgroundColor="white">
     <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
         <DockLayout class="tab-content">
             <StackLayout width="50%">
@@ -145,7 +144,7 @@
                                 <ng-template let-item="item">
                                     <GridLayout borderRadius="8" class="" columns="*" rows="70" (tap)="viewProduct(item)" [class.highlight]="item.ItemCode == selectedProduct.ItemCode">
                                         <StackLayout col="0" verticalAlignment="center" paddingLeft="20%">
-                                            <Label [text]="item.ItemCode" class="list-group-item-heading h2"></Label>
+                                            <Label [text]="item.ItemCode" class="list-group-item-heading" fontSize="24ID" padding="10%"></Label>
                                             <StackLayout marginLeft="5%">
                                                 <Label [text]="item.ItemCodeDesc" class="list-group-item-heading"></Label>
                                             </StackLayout>
@@ -191,7 +190,7 @@
                                     <Border borderBottomWidth="2">
                                         <DockLayout>
                                             <Label text="Total Qty:"></Label>
-                                            <Label class="h2" text="1"></Label>
+                                            <Label class="h2" [text]="cartQuantity"></Label>
                                         </DockLayout>
                                     </Border>
                                 </StackLayout>
@@ -199,7 +198,7 @@
                                     <Border borderBottomWidth="2">
                                         <DockLayout>
                                             <Label text="Total Amt:"></Label>
-                                            <Label class="h2" text="$79.00"></Label>
+                                            <Label class="h2" [text]="totalCartAmount | number:'1.2-5'"></Label>
                                         </DockLayout>
                                     </Border>
                                 </StackLayout>
@@ -285,7 +284,7 @@
                             <StackLayout>
                                 <Label text="NET AMOUNT" class=""></Label>
                                 <Label [text]="totalCartAmount | number:'1.2-5'" textAlignment="center" color="black"></Label>
-                            </StackLayout>>
+                            </StackLayout>
                             <StackLayout>
                                 <Label text="TOTAL CUBES" class=""></Label>
                                 <Label width="100%" [text]="totalCubes | number:'1.2-5'" textAlignment="center" color="black"></Label>
@@ -337,8 +336,8 @@
                                 <Label width="100%" class="totals-subtitle textRight" text="EACH" horizontalAlignment="right"></Label>
                             </StackLayout>
                             <StackLayout col="1" verticalAlignment="center">
-                                <Label [text]="item.ItemCodeDesc" horizontalAlignment="left" paddingRight="20%"></Label>
-                                <Label class="totals-subtitle" [text]="item.ItemCode" horizontalAlignment="left"></Label>
+                                <Label [text]="item.ItemCode" horizontalAlignment="left" paddingRight="20%"></Label>
+                                <Label class="totals-subtitle" [text]="item.ItemCodeDesc" horizontalAlignment="left"></Label>
                             </StackLayout>
                             <StackLayout col="2" verticalAlignment="center" paddingRight="20%">
                                 <Label width="100%" class="textRight" [text]="item.StandardUnitPrice | number:'1.2-5'" horizontalAlignment="center"></Label>
