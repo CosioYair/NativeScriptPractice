@@ -1,23 +1,21 @@
 <ActionBar title="Mobile Sales" class="action-bar">
-    <DockLayout>
-        <StackLayout width="33%">
-            <DockLayout>
-                <StackLayout width="15%" horizontalAlignment="left">
-                        <Image src="~/assets/images/iconMS.png" width="100%" height="100%"></Image>
+    <DockLayout width="100%">
+        <StackLayout width="50%">
+            <DockLayout horizontalAlignment="left">
+                <StackLayout width="8%" paddingRight="4%">
+                    <Image src="~/assets/images/iconMS.png"></Image>
                 </StackLayout>
-                <StackLayout width="75%">
-                        <Label text="Mobile Sales" textAlignment="left" fontSize="20" paddingTop="10%"></Label>
-                </StackLayout> 
+                <StackLayout width="90%" verticalAlignment="center">
+                    <Label text="Mobile Sales" textAlignment="left" fontSize="20%"></Label>
+                </StackLayout>
             </DockLayout>
         </StackLayout>
-        <StackLayout width="18%">
-
-        </StackLayout>
-        <StackLayout width="33%" verticalAlignment="center">
-            <Button padding="5%" text="&#xf021; Refresh"  horizontalAlignment="right" (tap)="refresh()" fontSize="15%" backgroundColor="orangered"></Button>
+        <StackLayout width="40%" verticalAlignment="center">
+            <Button padding="10%" text="&#xf021; Refresh" horizontalAlignment="right" (tap)="refresh()" fontSize="15%" backgroundColor="orangered"></Button>
         </StackLayout>
     </DockLayout>
 </ActionBar>
+
 <StackLayout *ngIf="syncScreen" backgroundColor="white">
     <DockLayout padding="10%" paddingTop="0%">
         <StackLayout padding="10%" width="50%">
@@ -55,7 +53,8 @@
 </StackLayout>
 
 <StackLayout *ngIf="loadingImagesScreen" verticalAlign="center" horizontalAlign="center" width="50%" backgroundColor="white">
-    <Label padding="10%" paddingTop="200%" [text]="status + ' '+ progressImageValue + '/' + lengthImages" fontSize="30" textAlignment="center" isEnabled="false"></Label>
+    <Label padding="10%" paddingTop="200%" [text]="status + ' '+ progressImageValue + '/' + lengthImages" fontSize="30" textAlignment="center"
+        isEnabled="false"></Label>
     <Progress [value]="progressImageValue" (valueChanged)="onValueChanged($event)" [maxValue]="lengthImages" class="m-20" color="orangered"></Progress>
     <Button (tap)="accept()" *ngIf="button" text="Accept" width="50%"></Button>
 </StackLayout>

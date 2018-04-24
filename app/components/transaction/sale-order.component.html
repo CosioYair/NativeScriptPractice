@@ -1,23 +1,22 @@
 <ActionBar title="Mobile Sales" class="action-bar">
-    <DockLayout>
-        <StackLayout width="33%">
-            <DockLayout>
-                <StackLayout width="15%" horizontalAlignment="left">
-                
+    <DockLayout width="100%">
+        <StackLayout width="50%">
+            <DockLayout horizontalAlignment="left">
+                <StackLayout width="8%" paddingRight="4%">
+                    <Image src="~/assets/images/iconMS.png"></Image>
                 </StackLayout>
-                <StackLayout width="75%">
-                    <Label text="Mobile Sales" textAlignment="left" fontSize="20" paddingTop="10%"></Label>
+                <StackLayout width="90%" verticalAlignment="center">
+                    <Label text="Mobile Sales" textAlignment="left" fontSize="20%"></Label>
                 </StackLayout>
             </DockLayout>
         </StackLayout>
-        <StackLayout width="18%">
-        </StackLayout>
-        <StackLayout width="33%" verticalAlignment="center">
-            <Button padding="5%" text="&#xf187; SAVE" verticalAlignment="center" horizontalAlignment="right" (tap)="save()" fontSize="15%"
+        <StackLayout width="40%" verticalAlignment="center">
+            <Button padding="10%" text="&#xf187; SAVE" verticalAlignment="center" horizontalAlignment="right" (tap)="save()" fontSize="15%"
                 backgroundColor="orangered"></Button>
         </StackLayout>
     </DockLayout>
 </ActionBar>
+
 <TabView selectedIndex="0" selectedColor="#DE6427" sdkExampleTitle sdkToggleNavButton backgroundColor="white">
     <StackLayout *tabItem="{title: '&#xf05a; HEADER'}">
         <DockLayout class="tab-content">
